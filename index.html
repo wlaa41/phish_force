@@ -1,250 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShadowPhish</title>
+<!-- WIN SCREEN -->
+<div id="winScreen" class="endScreen">
+    <div class="card win">
+        <h1>🏆 LEVEL COMPLETE</h1>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+        <div class="stars">
+            ⭐⭐⭐
+        </div>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Orbitron', sans-serif;
-}
+        <h2>+150 Coins</h2>
 
-body {
-  height: 100vh;
-  overflow: hidden;
-  background: radial-gradient(circle at top, #1a0033, #000);
-}
+        <p>You successfully stopped the Quiz Express!</p>
 
-/* glowing background */
-.background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(140,0,255,0.25), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(0,255,200,0.15), transparent 40%);
-  animation: pulse 6s infinite alternate;
-}
-
-@keyframes pulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
-}
-
-/* particles */
-#particles span {
-  position: absolute;
-  font-size: 20px;
-  opacity: 0.25;
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(100vh) rotate(0deg); }
-  100% { transform: translateY(-10vh) rotate(360deg); }
-}
-
-/* center card */
-.login-wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.card {
-  width: 340px;
-  padding: 30px;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.1);
-  text-align: center;
-  color: white;
-  box-shadow: 0 0 40px rgba(140,0,255,0.3);
-}
-
-.title {
-  font-size: 28px;
-  letter-spacing: 4px;
-  color: #b300ff;
-  text-shadow: 0 0 10px #b300ff, 0 0 20px #6a00ff;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { text-shadow: 0 0 5px #b300ff; }
-  to { text-shadow: 0 0 20px #ff00cc, 0 0 40px #6a00ff; }
-}
-
-.subtitle {
-  font-size: 12px;
-  margin-bottom: 20px;
-  color: #ccc;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  outline: none;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background: linear-gradient(90deg, #7a00ff, #ff00cc);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #a000ff;
-}
-
-.guest-btn {
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-}
-
-.options {
-  text-align: left;
-  font-size: 12px;
-  margin-top: 5px;
-  color: #aaa;
-}
-
-#msg {
-  margin-top: 10px;
-  font-size: 12px;
-}
-
-.shake {
-  animation: shake 0.3s;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  100% { transform: translateX(0); }
-}
-</style>
-</head>
-
-<body>
-
-<div class="background"></div>
-
-<div id="particles"></div>
-
-<div class="login-wrapper">
-  <div class="card">
-
-    <h1 class="title">SHADOWPHISH</h1>
-    <p class="subtitle">Enter the Shadow Network</p>
-
-    <input id="user" type="text" placeholder="Username">
-    <input id="pass" type="password" placeholder="Password">
-
-    <div class="options">
-      <label>
-        <input type="checkbox" id="remember">
-        Remember me
-      </label>
+        <button onclick="restartGame()">Play Again</button>
+        <button onclick="goHome()">Home</button>
     </div>
-
-    <button onclick="login()">LOGIN</button>
-
-    <button class="guest-btn" onclick="guestLogin()">
-      PLAY AS GUEST
-    </button>
-
-    <p id="msg"></p>
-
-  </div>
 </div>
 
-<script>
-const emojis = ["🎮","👾","🔥","💀","⚔️","🕹️","🚀","💻","🎯"];
+<!-- LOSE SCREEN -->
+<div id="loseScreen" class="endScreen">
+    <div class="card lose">
+        <h1>💥 MISSION FAILED</h1>
 
-const particleContainer = document.getElementById("particles");
+        <div class="broken">
+            🚂🔥
+        </div>
 
-function createParticles() {
-  for (let i = 0; i < 25; i++) {
-    let span = document.createElement("span");
-    span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    span.style.left = Math.random() * 100 + "vw";
-    span.style.animationDuration = (5 + Math.random() * 10) + "s";
-    span.style.fontSize = (15 + Math.random() * 25) + "px";
-    particleContainer.appendChild(span);
-  }
-}
+        <h2>Train Crashed!</h2>
 
-createParticles();
+        <p>Better luck next time.</p>
 
-function login() {
-  let user = document.getElementById("user");
-  let pass = document.getElementById("pass");
-  let msg = document.getElementById("msg");
-  let card = document.querySelector(".card");
-  let remember = document.getElementById("remember");
-
-  if (user.value === "" || pass.value === "") {
-    error("Fields cannot be empty!");
-    return;
-  }
-
-  if (user.value === "shadow" && pass.value === "phish") {
-    msg.style.color = "#00ff99";
-    msg.innerText = "Access Granted... Welcome to ShadowPhish";
-
-    if (remember.checked) {
-      localStorage.setItem("user", user.value);
-    }
-  } else {
-    error("Access Denied!");
-  }
-
-  function error(text) {
-    msg.style.color = "red";
-    msg.innerText = text;
-
-    card.classList.add("shake");
-    setTimeout(() => card.classList.remove("shake"), 300);
-  }
-}
-
-function guestLogin() {
-  let msg = document.getElementById("msg");
-  msg.style.color = "#00c6ff";
-  msg.innerText = "Playing as Guest... Loading Shadow World 👾";
-}
-
-window.onload = () => {
-  let savedUser = localStorage.getItem("user");
-
-  if (savedUser) {
-    document.getElementById("user").value = savedUser;
-  }
-};
-</script>
-
-</body>
-</html>
+        <button onclick="restartGame()">Retry</button>
+        <button onclick="goHome()">Home</button>
+    </div>
+</div>

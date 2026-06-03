@@ -1,0 +1,136 @@
+.endScreen{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.9);
+    z-index:9999;
+}
+
+.card{
+    width:400px;
+    max-width:90%;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    animation:popUp 0.5s ease;
+}
+
+.win{
+    background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+.lose{
+    background:linear-gradient(135deg,#cb2d3e,#ef473a);
+}
+
+.stars{
+    font-size:50px;
+    margin:20px 0;
+    animation:starBounce 1s infinite alternate;
+}
+
+.broken{
+    font-size:70px;
+    margin:20px;
+}
+
+.card h1{
+    margin-bottom:15px;
+}
+
+.card h2{
+    margin:15px 0;
+}
+
+.card button{
+    margin:10px;
+    padding:12px 25px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+@keyframes popUp{
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+@keyframes starBounce{
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-10px);
+    }
+}
+
+dailyRewards
+#dailyRewardBox{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    width:300px;
+    margin:20px auto;
+}
+
+#claimBtn{
+    background:#FFD700;
+    color:black;
+    font-weight:bold;
+}
+
+#claimBtn:disabled{
+    background:gray;
+    cursor:not-allowed;
+}
+#dailyRewardBox{
+    width:350px;
+    margin:20px auto;
+    padding:20px;
+    background:#222;
+    border-radius:15px;
+    color:white;
+    text-align:center;
+}
+
+.daily-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin:15px 0;
+}
+
+.daily-grid div{
+    background:#333;
+    padding:10px;
+    border-radius:8px;
+}
+
+#claimBtn{
+    background:#FFD700;
+    color:black;
+    font-weight:bold;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#claimBtn:disabled{
+    background:gray;
+    cursor:not-allowed;
+}
