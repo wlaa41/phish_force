@@ -1,35 +1,304 @@
-<!-- WIN SCREEN -->
-<div id="winScreen" class="endScreen">
-    <div class="card win">
-        <h1>🏆 LEVEL COMPLETE</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShadowPhish</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Orbitron',sans-serif; }
 
-        <div class="stars">
-            ⭐⭐⭐
-        </div>
+body {
+  height: 100vh; overflow: hidden;
+  background: radial-gradient(circle at top, #1a0033, #000);
+}
 
-        <h2>+150 Coins</h2>
+.background {
+  position: absolute; width:100%; height:100%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(140,0,255,0.25), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0,255,200,0.15), transparent 40%);
+  animation: pulse 6s infinite alternate;
+}
+@keyframes pulse { from{transform:scale(1)} to{transform:scale(1.1)} }
 
-        <p>You successfully stopped the Quiz Express!</p>
+#particles span {
+  position:absolute; opacity:0.25;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0%{transform:translateY(100vh) rotate(0deg)}
+  100%{transform:translateY(-10vh) rotate(360deg)}
+}
 
-        <button onclick="restartGame()">Play Again</button>
-        <button onclick="goHome()">Home</button>
+.login-wrapper {
+  height:100vh; display:flex;
+  justify-content:center; align-items:center;
+  position:relative;
+}
+
+.card {
+  width: 340px; padding: 30px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center; color: white;
+  box-shadow: 0 0 40px rgba(140,0,255,0.3);
+  transition: 0.3s;
+}
+
+.title {
+  font-size: 28px; letter-spacing: 4px;
+  color: #b300ff;
+  text-shadow: 0 0 10px #b300ff, 0 0 20px #6a00ff;
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+  from{text-shadow:0 0 5px #b300ff}
+  to{text-shadow:0 0 20px #ff00cc, 0 0 40px #6a00ff}
+}
+
+.subtitle { font-size:12px; margin-bottom:20px; color:#ccc; }
+
+/* ── FORM PANELS ── */
+.form-panel { display:none; }
+.form-panel.active { display:block; }
+
+input[type="text"],
+input[type="password"] {
+  width:100%; padding:11px 12px; margin:7px 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  background: rgba(255,255,255,0.08);
+  color:white; outline:none;
+  font-family:'Orbitron',sans-serif; font-size:11px;
+  transition:border-color 0.2s;
+}
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: rgba(179,0,255,0.5);
+}
+input::placeholder { color:#666; }
+
+.btn-main {
+  width:100%; padding:11px; margin-top:12px;
+  background: linear-gradient(90deg, #7a00ff, #ff00cc);
+  border:none; border-radius:8px;
+  color:white; font-family:'Orbitron',sans-serif;
+  font-size:11px; font-weight:bold; letter-spacing:2px;
+  cursor:pointer; transition:0.3s;
+}
+.btn-main:hover { transform:scale(1.04); box-shadow:0 0 20px #a000ff; }
+
+.btn-guest {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+
+.divider {
+  display:flex; align-items:center; gap:10px;
+  margin:14px 0 4px;
+  font-size:9px; color:#444; letter-spacing:2px;
+}
+.divider::before, .divider::after {
+  content:''; flex:1;
+  height:1px; background:rgba(255,255,255,0.08);
+}
+
+.switch-link {
+  margin-top:14px; font-size:10px; color:#666;
+  letter-spacing:1px;
+}
+.switch-link span {
+  color:#b300ff; cursor:pointer; text-decoration:underline;
+}
+.switch-link span:hover { color:#ff00cc; }
+
+#msg {
+  margin-top:10px; font-size:11px; min-height:16px;
+  line-height:1.5;
+}
+
+.shake { animation:shake 0.3s; }
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  100%{transform:translateX(0)}
+}
+
+/* panel switch animation */
+.form-panel {
+  animation: panelIn 0.3s ease;
+}
+@keyframes panelIn {
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+
+<div class="background"></div>
+<div id="particles"></div>
+
+<div class="login-wrapper">
+  <div class="card" id="card">
+
+    <h1 class="title">SHADOWPHISH</h1>
+    <p class="subtitle" id="card-subtitle">Enter the Shadow Network</p>
+
+    <!-- ── LOGIN PANEL ── -->
+    <div class="form-panel active" id="panel-login">
+      <input id="login-user" type="text"     placeholder="Codename / Username">
+      <input id="login-pass" type="password" placeholder="Password">
+
+      <button class="btn-main" onclick="login()">LOGIN</button>
+      <button class="btn-main btn-guest" onclick="guestLogin()">PLAY AS GUEST</button>
+
+      <div class="divider">OR</div>
+
+      <div class="switch-link">
+        New agent? <span onclick="showPanel('signup')">Create an Account</span>
+      </div>
     </div>
+
+    <!-- ── SIGN UP PANEL ── -->
+    <div class="form-panel" id="panel-signup">
+      <input id="reg-user"    type="text"     placeholder="Choose a Codename">
+      <input id="reg-pass"    type="password" placeholder="Set Password">
+      <input id="reg-confirm" type="password" placeholder="Confirm Password">
+
+      <button class="btn-main" onclick="register()">CREATE ACCOUNT</button>
+
+      <div class="switch-link">
+        Already an agent? <span onclick="showPanel('login')">Log In</span>
+      </div>
+    </div>
+
+    <p id="msg"></p>
+
+  </div>
 </div>
 
-<!-- LOSE SCREEN -->
-<div id="loseScreen" class="endScreen">
-    <div class="card lose">
-        <h1>💥 MISSION FAILED</h1>
+<script>
+/* ── PARTICLES ── */
+const emojis = ["🎮","👾","🔥","💀","⚔️","🕹️","🚀","💻","🎯"];
+(function createParticles() {
+  const c = document.getElementById("particles");
+  for (let i = 0; i < 25; i++) {
+    let s = document.createElement("span");
+    s.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.animationDuration = (5 + Math.random() * 10) + "s";
+    s.style.fontSize = (15 + Math.random() * 25) + "px";
+    c.appendChild(s);
+  }
+})();
 
-        <div class="broken">
-            🚂🔥
-        </div>
+/* ── PANEL SWITCH ── */
+const subtitles = {
+  login:  "Enter the Shadow Network",
+  signup: "Join the Cyber Defense Academy"
+};
 
-        <h2>Train Crashed!</h2>
+function showPanel(name) {
+  document.querySelectorAll(".form-panel").forEach(p => p.classList.remove("active"));
+  document.getElementById("panel-" + name).classList.add("active");
+  document.getElementById("card-subtitle").textContent = subtitles[name];
+  document.getElementById("msg").innerText = "";
+}
 
-        <p>Better luck next time.</p>
+/* ── ACCOUNTS ── */
+function getAccounts() {
+  return JSON.parse(localStorage.getItem("sp_accounts")) || { shadow: "phish" };
+}
+function saveAccounts(acc) {
+  localStorage.setItem("sp_accounts", JSON.stringify(acc));
+}
 
-        <button onclick="restartGame()">Retry</button>
-        <button onclick="goHome()">Home</button>
-    </div>
-</div>
+/* ── LOGIN ── */
+function login() {
+  const user = document.getElementById("login-user").value.trim();
+  const pass = document.getElementById("login-pass").value;
+
+  if (!user || !pass) { showError("Fields cannot be empty!"); return; }
+
+  const accounts = getAccounts();
+  if (accounts[user.toLowerCase()] === pass) {
+    showSuccess("Access Granted... Welcome back, " + user);
+    initState(user);
+    setTimeout(() => window.location.href = "home.html", 1200);
+  } else {
+    showError("Access Denied! Invalid codename or password.");
+  }
+}
+
+/* ── GUEST ── */
+function guestLogin() {
+  showSuccess("Loading Shadow World... 👾");
+  initState("Ghost");
+  setTimeout(() => window.location.href = "home.html", 900);
+}
+
+/* ── REGISTER ── */
+function register() {
+  const user    = document.getElementById("reg-user").value.trim();
+  const pass    = document.getElementById("reg-pass").value;
+  const confirm = document.getElementById("reg-confirm").value;
+
+  if (!user || !pass || !confirm) { showError("All fields are required!"); return; }
+  if (user.length < 3) { showError("Codename must be at least 3 characters."); return; }
+  if (pass.length < 4) { showError("Password must be at least 4 characters."); return; }
+  if (pass !== confirm) { showError("Passwords do not match!"); return; }
+
+  const accounts = getAccounts();
+  if (accounts[user.toLowerCase()]) {
+    showError("Codename already taken. Choose another.");
+    return;
+  }
+
+  accounts[user.toLowerCase()] = pass;
+  saveAccounts(accounts);
+
+  showSuccess("Account created! Welcome, Agent " + user + " 🎯");
+  initState(user);
+  setTimeout(() => window.location.href = "home.html", 1400);
+}
+
+/* ── INIT STATE ── */
+function initState(codename) {
+  const existing = JSON.parse(localStorage.getItem("sp_state"));
+  if (existing && existing.codename === codename) return;
+  localStorage.setItem("sp_state", JSON.stringify({
+    codename,
+    coins: 50, hintTokens: 3, hearts: 5, maxHearts: 5,
+    lastHeartTime: Date.now(),
+    xp: 0, level: 1,
+    intelDone: 0, chaseDone: 0,
+    highestDistance: 0, longestStreak: 0
+  }));
+}
+
+/* ── FEEDBACK ── */
+function showError(text) {
+  const msg = document.getElementById("msg");
+  msg.style.color = "#ff4466";
+  msg.innerText = text;
+  document.getElementById("card").classList.add("shake");
+  setTimeout(() => document.getElementById("card").classList.remove("shake"), 300);
+}
+function showSuccess(text) {
+  const msg = document.getElementById("msg");
+  msg.style.color = "#00ff99";
+  msg.innerText = text;
+}
+
+/* ── AUTO-FILL saved user ── */
+window.onload = () => {
+  const saved = localStorage.getItem("sp_last_user");
+  if (saved) document.getElementById("login-user").value = saved;
+};
+</script>
+</body>
+</html>
