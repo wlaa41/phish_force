@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShadowPhish — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; background:#000; font-family:'Orbitron',sans-serif; }
+
+/* ── ROOT WRAPPER — all absolute positioning relative to this ── */
+#root {
+  position: relative;
+  width: 1280px; height: 720px;
+  overflow: hidden;
+  margin: 0 auto;
+  background: #000;
+}
+
+/* ── SCENE CANVAS (full background) ── */
+#scene { position:absolute; inset:0; width:100%; height:100%; }
+
+/* ── ATMOSPHERIC OVERLAY ── */
+.atmos {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 72% 45%, rgba(0,200,255,0.08), transparent 45%),
+    radial-gradient(ellipse at 30% 80%, rgba(140,0,255,0.18), transparent 40%),
+    linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.1) 100%);
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  position:absolute; left:0; top:0; bottom:0;
+  width:360px;
+  display:flex; flex-direction:column;
+  padding:110px 0 50px 56px;
+}
+
+/* LOGO */
+.logo-wrap { margin-bottom: 52px; }
+.logo-line1 {
+  font-size: 11px; letter-spacing: 6px; color: #5588aa;
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  margin-bottom: 6px; text-transform:uppercase;
+}
+.logo-main {
+  font-size: 38px; font-weight: 900; letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(0,200,255,0.6), 0 0 60px rgba(100,0,255,0.4);
+  line-height: 1;
+}
+.logo-main span { color: #00ccff; }
+.logo-tagline {
+  font-size: 9px; letter-spacing: 4px;
+  color: rgba(0,200,255,0.5);
+  margin-top: 8px; font-family:'Rajdhani',sans-serif;
+}
+
+/* MENU ITEMS */
+.menu-list { flex:1; display:flex; flex-direction:column; justify-content:center; gap:4px; }
+
+.menu-item {
+  display:flex; align-items:center; gap:22px;
+  padding: 14px 0;
+  cursor:pointer;
+  position:relative;
+  transition:0.2s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.menu-item:hover .menu-label { color:#00ccff; }
+.menu-item:hover .menu-icon  { opacity:1; color:#00ccff; }
+.menu-item:hover::before {
+  content:'';
+  position:absolute; left:-56px; top:0; bottom:0; width:4px;
+  background: linear-gradient(180deg, #00ccff, #7a00ff);
+  box-shadow: 0 0 14px #00ccff;
+}
+
+.menu-icon {
+  font-size: 16px; color: rgba(255,255,255,0.3);
+  opacity:0.5; width:20px; text-align:center;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:0;
+}
+.menu-label {
+  font-size: 22px; font-weight: 700; letter-spacing: 3px;
+  color: rgba(255,255,255,0.85);
+  transition:0.2s; font-family:'Rajdhani',sans-serif;
+  text-transform:uppercase;
+}
+.menu-item.active .menu-label { color:#00ccff; }
+.menu-item.active .menu-icon  { color:#00ccff; opacity:1; }
+.menu-item.active::before {
+  content:'';
+  position:absolute; left:-56px; top:0; bottom:0; width:4px;
+  background: linear-gradient(180deg, #00ccff, #7a00ff);
+  box-shadow: 0 0 14px #00ccff;
+}
+
+/* BOTTOM STATS */
+.bottom-stats {
+  display:flex; flex-direction:column; gap:8px;
+}
+.stat-row {
+  display:flex; align-items:center; gap:10px;
+  font-size:11px; font-family:'Rajdhani',sans-serif; letter-spacing:2px;
+}
+.stat-row .lbl { color:rgba(255,255,255,0.3); font-weight:300; width:60px; }
+.stat-row .val { color:#fff; font-weight:600; }
+.stat-row .bar-track {
+  flex:1; height:3px; background:rgba(255,255,255,0.08); border-radius:2px;
+}
+.stat-row .bar-fill {
+  height:100%; border-radius:2px;
+  background: linear-gradient(90deg, #7a00ff, #00ccff);
+  box-shadow: 0 0 6px rgba(0,200,255,0.5);
+}
+.hearts-row { display:flex; gap:5px; }
+.heart { font-size:13px; }
+.heart.empty { opacity:0.2; }
+
+/* ── TOP-LEFT PROFILE (PUBG-style) ── */
+.profile-hud {
+  position:absolute; top:22px; left:24px;
+  display:flex; align-items:center; gap:14px;
+  background: rgba(0,0,0,0.55);
+  border:1px solid rgba(0,200,255,0.2);
+  border-radius: 12px;
+  padding: 10px 18px 10px 10px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,200,255,0.08);
+}
+.profile-avatar {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: linear-gradient(135deg, #1a0040, #003060);
+  border: 2px solid rgba(0,200,255,0.55);
+  display:flex; align-items:center; justify-content:center;
+  font-size: 24px; flex-shrink:0;
+  box-shadow: 0 0 14px rgba(0,200,255,0.35);
+  position:relative;
+}
+.profile-level-badge {
+  position:absolute; bottom:-4px; right:-4px;
+  background: linear-gradient(135deg, #7a00ff, #00ccff);
+  border-radius:10px; font-size:8px; font-weight:800;
+  padding: 1px 5px; letter-spacing:1px; color:#fff;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.profile-info { display:flex; flex-direction:column; gap:4px; min-width:110px; }
+.profile-name {
+  font-size: 14px; font-weight: 800; letter-spacing:2px;
+  color:#fff;
+  text-shadow: 0 0 8px rgba(0,200,255,0.4);
+  font-family:'Orbitron',sans-serif;
+}
+.profile-rank {
+  font-size: 8px; letter-spacing:3px; color:rgba(0,200,255,0.6);
+  font-family:'Rajdhani',sans-serif; text-transform:uppercase;
+}
+.profile-xp-track {
+  height: 3px; background: rgba(255,255,255,0.1);
+  border-radius:3px; overflow:hidden; width:100%;
+}
+.profile-xp-fill {
+  height:100%; width:45%;
+  background: linear-gradient(90deg, #7a00ff, #00ccff);
+  border-radius:3px;
+  box-shadow: 0 0 6px rgba(0,200,255,0.6);
+}
+.profile-xp-label {
+  font-size:7px; color:rgba(255,255,255,0.3);
+  font-family:'Rajdhani',sans-serif; letter-spacing:2px; margin-top:1px;
+}
+
+/* ── TOP-RIGHT RESOURCES (PUBG-style) ── */
+.resources-hud {
+  position:absolute; top:22px; right:24px;
+  display:flex; gap:10px; align-items:center;
+}
+.res-chip {
+  display:flex; align-items:center; gap:10px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding: 8px 16px 8px 10px;
+  backdrop-filter:blur(14px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition:0.2s; cursor:pointer; min-width:100px;
+}
+.res-chip:hover { border-color:rgba(255,255,255,0.25); }
+.res-chip-icon {
+  width:36px; height:36px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; flex-shrink:0;
+}
+.res-chip-icon.coins-icon {
+  background: linear-gradient(135deg, rgba(255,180,0,0.25), rgba(255,100,0,0.15));
+  border:1px solid rgba(255,180,0,0.35);
+  box-shadow: 0 0 10px rgba(255,180,0,0.2);
+}
+.res-chip-icon.hearts-icon {
+  background: linear-gradient(135deg, rgba(255,50,80,0.25), rgba(180,0,60,0.15));
+  border:1px solid rgba(255,80,100,0.35);
+  box-shadow: 0 0 10px rgba(255,50,80,0.2);
+}
+.res-chip-info { display:flex; flex-direction:column; gap:2px; }
+.res-chip-label {
+  font-size:7px; letter-spacing:3px; color:rgba(255,255,255,0.35);
+  font-family:'Rajdhani',sans-serif; text-transform:uppercase;
+}
+.res-chip-value {
+  font-size:16px; font-weight:800; letter-spacing:1px;
+  font-family:'Orbitron',sans-serif; color:#fff;
+  line-height:1;
+}
+.res-chip-value.gold { color:#ffd700; text-shadow:0 0 8px rgba(255,200,0,0.5); }
+.res-chip-value.red  { color:#ff5577; text-shadow:0 0 8px rgba(255,50,80,0.5); }
+.res-chip-sub {
+  font-size:8px; color:rgba(255,150,170,0.6);
+  font-family:'Rajdhani',sans-serif; letter-spacing:1px; margin-top:1px;
+}
+
+/* ── CENTER HOLOGRAPHIC ELEMENT ── */
+.holo-wrap {
+  position:absolute;
+  left:50%; top:50%;
+  transform:translate(-20%, -55%);
+}
+.holo-ring-outer {
+  width:160px; height:160px; border-radius:50%;
+  border:1px solid rgba(0,200,255,0.2);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 0 40px rgba(0,200,255,0.15), inset 0 0 40px rgba(0,200,255,0.05);
+  animation: rotateSlow 12s linear infinite;
+}
+.holo-ring-mid {
+  width:120px; height:120px; border-radius:50%;
+  border:1.5px solid rgba(0,200,255,0.35);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 0 24px rgba(0,200,255,0.2);
+  animation: rotateSlow 8s linear infinite reverse;
+}
+.holo-ring-inner {
+  width:84px; height:84px; border-radius:50%;
+  border:2px solid rgba(0,200,255,0.6);
+  display:flex; align-items:center; justify-content:center;
+  background: radial-gradient(circle, rgba(0,30,60,0.9), rgba(0,0,20,0.95));
+  box-shadow:
+    0 0 30px rgba(0,200,255,0.5),
+    0 0 60px rgba(0,200,255,0.2),
+    inset 0 0 20px rgba(0,200,255,0.3);
+}
+@keyframes rotateSlow {
+  from { transform:rotate(0deg); }
+  to   { transform:rotate(360deg); }
+}
+.holo-badge { font-size:32px; animation:badgePulse 3s ease-in-out infinite; }
+@keyframes badgePulse {
+  0%,100% { filter:drop-shadow(0 0 8px rgba(0,200,255,0.8)) brightness(1); }
+  50%     { filter:drop-shadow(0 0 20px rgba(0,200,255,1)) brightness(1.3); }
+}
+.holo-label {
+  position:absolute; top:calc(100% + 14px); left:50%;
+  transform:translateX(-50%);
+  font-size:8px; letter-spacing:4px; color:rgba(0,200,255,0.6);
+  white-space:nowrap; font-family:'Rajdhani',sans-serif;
+}
+
+/* ── BOTTOM CENTER ── */
+.bottom-center {
+  position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+  text-align:center;
+}
+.tagline-bottom {
+  font-size:9px; letter-spacing:5px; color:rgba(255,255,255,0.2);
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* ── DECORATIVE LINES ── */
+.deco-line-v {
+  position:absolute; top:0; left:360px; bottom:0;
+  width:1px; background:linear-gradient(to bottom, transparent, rgba(0,200,255,0.2) 30%, rgba(0,200,255,0.2) 70%, transparent);
+}
+
+/* corner badge */
+.corner-badge {
+  position:absolute; top:28px; left:56px;
+  font-size:8px; letter-spacing:3px; color:rgba(0,200,255,0.4);
+  font-family:'Rajdhani',sans-serif;
+  border:1px solid rgba(0,200,255,0.15);
+  padding:3px 8px; border-radius:2px;
+}
+</style>
+</head>
+<body>
+<div id="root">
+
+<!-- SCENE CANVAS -->
+<canvas id="scene"></canvas>
+
+<!-- ATMOSPHERIC OVERLAY -->
+<div class="atmos"></div>
+
+<!-- DECORATIVE LINE -->
+<div class="deco-line-v"></div>
+
+<!-- TOP-LEFT PROFILE (PUBG-style) -->
+<div class="profile-hud">
+  <div class="profile-avatar">
+    🕵️
+    <div class="profile-level-badge">LV2</div>
+  </div>
+  <div class="profile-info">
+    <div class="profile-name">GHOST</div>
+    <div class="profile-rank">◈ FIELD OPERATIVE</div>
+    <div class="profile-xp-track">
+      <div class="profile-xp-fill"></div>
+    </div>
+    <div class="profile-xp-label">170 / 400 XP</div>
+  </div>
+</div>
+
+<!-- TOP-RIGHT RESOURCES (PUBG-style) -->
+<div class="resources-hud">
+  <div class="res-chip">
+    <div class="res-chip-icon coins-icon">◈</div>
+    <div class="res-chip-info">
+      <div class="res-chip-label">COINS</div>
+      <div class="res-chip-value gold">275</div>
+    </div>
+  </div>
+  <div class="res-chip">
+    <div class="res-chip-icon hearts-icon">♥</div>
+    <div class="res-chip-info">
+      <div class="res-chip-label">LIVES</div>
+      <div class="res-chip-value red">3 / 5</div>
+      <div class="res-chip-sub">+18:42</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <div class="logo-wrap">
+    <div class="logo-line1">◈ CYBER DEFENSE ACADEMY</div>
+    <div class="logo-main">SHADOW<span>PHISH</span></div>
+    <div class="logo-tagline">TRUST NOTHING · VERIFY EVERYTHING</div>
+  </div>
+
+  <div class="menu-list">
+    <div class="menu-item active">
+      <div class="menu-icon">▶</div>
+      <div class="menu-label">Continue</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-icon">⊞</div>
+      <div class="menu-label">Levels / Modes</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-icon">◉</div>
+      <div class="menu-label">Leaderboard</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-icon">⚙</div>
+      <div class="menu-label">Settings</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOLOGRAPHIC CSA BADGE -->
+<div class="holo-wrap">
+  <div class="holo-ring-outer">
+    <div class="holo-ring-mid">
+      <div class="holo-ring-inner">
+        <div class="holo-badge">🛡️</div>
+      </div>
+    </div>
+  </div>
+  <div class="holo-label">CSA · CYBER SECURITY AGENCY</div>
+</div>
+
+<!-- BOTTOM CENTER -->
+<div class="bottom-center">
+  <div class="tagline-bottom">SHADOWPHISH CYBER DEFENSE ACADEMY  v3.0  ·  ALL AGENTS ACTIVE</div>
+</div>
+
+<script>
+// ── Draw the scene background on canvas ──
+const canvas = document.getElementById("scene");
+canvas.width  = 1280;
+canvas.height = 720;
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  // ── Sky / Background ──
+  const sky = ctx.createLinearGradient(0, 0, 0, 720);
+  sky.addColorStop(0.0, "#00020a");
+  sky.addColorStop(0.3, "#010510");
+  sky.addColorStop(0.6, "#02080f");
+  sky.addColorStop(1.0, "#030208");
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, 1280, 720);
+
+  // ── Star field ──
+  const stars = [];
+  const rng = mulberry32(42);
+  for (let i = 0; i < 320; i++) {
+    stars.push({ x: rng()*1280, y: rng()*400, r: rng()*1.4+0.2, a: rng()*0.7+0.15 });
+  }
+  stars.forEach(s => {
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(180,210,255,${s.a})`; ctx.fill();
+  });
+
+  // ── Distant neon city silhouette (far back) ──
+  drawCity(ctx, 340, 340, 0.18, "rgba(0,80,140,0.5)");
+  drawCity(ctx, 360, 300, 0.12, "rgba(0,50,120,0.4)");
+
+  // ── Horizon glow ──
+  const hGlow = ctx.createLinearGradient(0, 320, 0, 520);
+  hGlow.addColorStop(0, "rgba(0,180,255,0.0)");
+  hGlow.addColorStop(0.3, "rgba(0,100,200,0.12)");
+  hGlow.addColorStop(0.6, "rgba(80,0,180,0.08)");
+  hGlow.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = hGlow;
+  ctx.fillRect(360, 280, 920, 300);
+
+  // ── Highway — perspective road ──
+  drawHighway(ctx);
+
+  // ── Tall neon data tower (center-right) ──
+  drawDataTower(ctx, 800, 60, 720);
+
+  // ── Ground / terrain ──
+  drawTerrain(ctx);
+
+  // ── Neon data streams (light rays) ──
+  drawDataStreams(ctx);
+
+  // ── Foreground atmospheric haze ──
+  const fog = ctx.createLinearGradient(0, 500, 0, 720);
+  fog.addColorStop(0, "rgba(0,5,20,0)");
+  fog.addColorStop(0.4, "rgba(0,5,20,0.25)");
+  fog.addColorStop(1, "rgba(0,2,10,0.75)");
+  ctx.fillStyle = fog;
+  ctx.fillRect(0, 480, 1280, 240);
+
+  // ── Side vignette ──
+  const vigL = ctx.createLinearGradient(0,0,400,0);
+  vigL.addColorStop(0,"rgba(0,0,0,0.85)"); vigL.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle = vigL; ctx.fillRect(0,0,400,720);
+
+  const vigR = ctx.createLinearGradient(1280,0,900,0);
+  vigR.addColorStop(0,"rgba(0,0,0,0.5)"); vigR.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle = vigR; ctx.fillRect(900,0,380,720);
+}
+
+function drawCity(ctx, baseY, spread, dens, color) {
+  const rng = mulberry32(77);
+  for (let x = 360; x < 1280; x += 18) {
+    const h = 40 + rng()*180;
+    const w = 12 + rng()*28;
+    ctx.fillStyle = color;
+    ctx.fillRect(x, baseY - h, w, h);
+    // windows
+    for (let wy = baseY-h+8; wy < baseY-6; wy+=12) {
+      for (let wx = x+3; wx < x+w-3; wx+=9) {
+        if (rng()>0.45) {
+          const wc = ["rgba(255,200,60,0.4)","rgba(0,200,255,0.3)","rgba(180,0,255,0.3)"];
+          ctx.fillStyle = wc[Math.floor(rng()*3)];
+          ctx.fillRect(wx, wy, 4, 5);
+        }
+      }
+    }
+  }
+}
+
+function drawHighway(ctx) {
+  // Perspective vanishing point at ~(800, 350)
+  const vx = 800, vy = 360;
+
+  // Road surface
+  const rg = ctx.createLinearGradient(0, vy, 0, 720);
+  rg.addColorStop(0, "#050508");
+  rg.addColorStop(1, "#0a0a12");
+  ctx.fillStyle = rg;
+  ctx.beginPath();
+  ctx.moveTo(vx-10, vy);
+  ctx.lineTo(vx+10, vy);
+  ctx.lineTo(1280, 720); ctx.lineTo(400, 720);
+  ctx.closePath(); ctx.fill();
+
+  // Neon lane lines — left
+  const laneColors = ["rgba(0,200,255,0.6)", "rgba(120,0,255,0.4)"];
+  [-1,1].forEach((side,i) => {
+    ctx.shadowBlur = 12; ctx.shadowColor = laneColors[i];
+    ctx.strokeStyle = laneColors[i]; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(vx + side*8, vy+2);
+    ctx.lineTo(vx + side*340, 720);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  });
+
+  // Road glow strip in center
+  const cg = ctx.createLinearGradient(0, vy, 0, 720);
+  cg.addColorStop(0,"rgba(0,180,255,0.12)"); cg.addColorStop(1,"rgba(0,180,255,0)");
+  ctx.fillStyle = cg;
+  ctx.beginPath();
+  ctx.moveTo(vx-5,vy); ctx.lineTo(vx+5,vy);
+  ctx.lineTo(vx+180,720); ctx.lineTo(vx-180,720);
+  ctx.closePath(); ctx.fill();
+}
+
+function drawDataTower(ctx, cx, top, bottom) {
+  const w = 36;
+  // Main pillar
+  const pg = ctx.createLinearGradient(cx-w/2,0,cx+w/2,0);
+  pg.addColorStop(0,"rgba(0,180,255,0.05)");
+  pg.addColorStop(0.5,"rgba(0,220,255,0.55)");
+  pg.addColorStop(1,"rgba(0,180,255,0.05)");
+  ctx.fillStyle = pg;
+  ctx.fillRect(cx-w/2, top, w, bottom-top);
+
+  // Core glow beam
+  const bg = ctx.createLinearGradient(cx-8,0,cx+8,0);
+  bg.addColorStop(0,"rgba(0,220,255,0)");
+  bg.addColorStop(0.5,"rgba(120,240,255,0.9)");
+  bg.addColorStop(1,"rgba(0,220,255,0)");
+  ctx.fillStyle = bg;
+  ctx.fillRect(cx-8, top+20, 16, bottom-top-20);
+
+  // Outer glow
+  ctx.shadowBlur = 60; ctx.shadowColor = "rgba(0,200,255,0.7)";
+  ctx.fillStyle = "rgba(180,240,255,0.1)";
+  ctx.fillRect(cx-w*2, top, w*4, bottom-top);
+  ctx.shadowBlur = 0;
+
+  // Horizontal scan lines
+  for (let y=top+40; y<bottom-20; y+=28) {
+    const sg = ctx.createLinearGradient(cx-60,0,cx+60,0);
+    sg.addColorStop(0,"rgba(0,200,255,0)");
+    sg.addColorStop(0.5,"rgba(0,200,255,0.35)");
+    sg.addColorStop(1,"rgba(0,200,255,0)");
+    ctx.fillStyle = sg;
+    ctx.fillRect(cx-60, y, 120, 1.5);
+  }
+
+  // Top crystal
+  ctx.shadowBlur = 30; ctx.shadowColor = "#00ccff";
+  ctx.fillStyle = "rgba(100,230,255,0.9)";
+  ctx.beginPath();
+  ctx.moveTo(cx, top-40); ctx.lineTo(cx+20, top+10);
+  ctx.lineTo(cx, top+30); ctx.lineTo(cx-20, top+10);
+  ctx.closePath(); ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function drawTerrain(ctx) {
+  // Dark foreground ground
+  const tg = ctx.createLinearGradient(0, 550, 0, 720);
+  tg.addColorStop(0, "rgba(5,2,15,0)");
+  tg.addColorStop(0.3, "rgba(8,4,20,0.9)");
+  tg.addColorStop(1, "rgba(4,2,10,1)");
+  ctx.fillStyle = tg;
+  ctx.beginPath();
+  ctx.moveTo(360,720);
+  ctx.lineTo(360,620); ctx.lineTo(430,590); ctx.lineTo(500,610);
+  ctx.lineTo(580,580); ctx.lineTo(650,600); ctx.lineTo(730,560);
+  ctx.lineTo(760,580); ctx.lineTo(820,550); ctx.lineTo(900,575);
+  ctx.lineTo(980,545); ctx.lineTo(1060,570); ctx.lineTo(1140,555);
+  ctx.lineTo(1280,580); ctx.lineTo(1280,720);
+  ctx.closePath(); ctx.fill();
+
+  // Neon ground edge line
+  ctx.shadowBlur = 10; ctx.shadowColor = "rgba(100,0,255,0.6)";
+  ctx.strokeStyle = "rgba(100,0,255,0.3)"; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(360,620); ctx.lineTo(430,590); ctx.lineTo(500,610);
+  ctx.lineTo(580,580); ctx.lineTo(650,600); ctx.lineTo(730,560);
+  ctx.lineTo(760,580); ctx.lineTo(820,550); ctx.lineTo(900,575);
+  ctx.lineTo(980,545); ctx.lineTo(1060,570); ctx.lineTo(1140,555); ctx.lineTo(1280,580);
+  ctx.stroke(); ctx.shadowBlur = 0;
+}
+
+function drawDataStreams(ctx) {
+  // Diagonal light rays from tower
+  const rays = [
+    { a:210, len:400, color:"rgba(0,200,255,0.06)" },
+    { a:225, len:500, color:"rgba(0,160,255,0.04)" },
+    { a:195, len:350, color:"rgba(100,0,255,0.05)" },
+    { a:240, len:450, color:"rgba(0,200,255,0.03)" },
+  ];
+  const cx = 800, cy = 100;
+  rays.forEach(r => {
+    const rad = r.a * Math.PI/180;
+    const ex = cx + Math.cos(rad)*r.len;
+    const ey = cy + Math.sin(rad)*r.len;
+    const rg = ctx.createLinearGradient(cx,cy,ex,ey);
+    rg.addColorStop(0, r.color.replace("0.","0.7*0."));
+    rg.addColorStop(0.5, r.color);
+    rg.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.strokeStyle = r.color; ctx.lineWidth = 40;
+    ctx.shadowBlur = 20; ctx.shadowColor = "rgba(0,200,255,0.1)";
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey); ctx.stroke();
+    ctx.shadowBlur = 0;
+  });
+}
+
+// Simple deterministic pseudo-random
+function mulberry32(seed) {
+  let s = seed;
+  return function() {
+    s |= 0; s = s + 0x6D2B79F5 | 0;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+draw();
+</script>
+
+</div><!-- end #root -->
+</body>
+</html>
