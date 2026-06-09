@@ -151,7 +151,10 @@ input::placeholder { color:#666; }
     <!-- ── LOGIN PANEL ── -->
     <div class="form-panel active" id="panel-login">
       <input id="login-user" type="text"     placeholder="Codename / Username">
-      <input id="login-pass" type="password" placeholder="Password">
+      <div style="position:relative;">
+      <input id="login-pass" type="password" placeholder="Password" style="padding-right:38px;width:100%;">
+      <span onclick="togglePwd('login-pass',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:13px;color:#666;user-select:none;">👁</span>
+    </div>
 
       <button class="btn-main" onclick="login()">LOGIN</button>
       <button class="btn-main btn-guest" onclick="guestLogin()">PLAY AS GUEST</button>
@@ -304,6 +307,13 @@ function showSuccess(text) {
   const msg = document.getElementById("msg");
   msg.style.color = "#00ff99";
   msg.innerText = text;
+}
+
+/* ── PASSWORD TOGGLE ── */
+function togglePwd(id, icon) {
+  const inp = document.getElementById(id);
+  if (inp.type === "password") { inp.type = "text"; icon.style.color="#b300ff"; }
+  else { inp.type = "password"; icon.style.color="#666"; }
 }
 
 /* ── ENTER KEY SUPPORT ── */
