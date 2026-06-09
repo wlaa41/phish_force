@@ -148,6 +148,18 @@ Played the game? We'd love to hear your thoughts!
 
 ---
 
+## 🔐 Quick Cybersecurity Tips
+
+> Learn these before you play — test yourself in the game!
+
+- **Never click links in unexpected emails** — go to the website directly
+- **Check the sender domain** — `paypa1.com` ≠ `paypal.com`
+- **Enable MFA** on every account that supports it
+- **Urgency is a red flag** — scammers rush you so you don't think clearly
+- **When in doubt, verify through a separate channel** — call the company directly
+
+---
+
 ## 🤝 How to Contribute
 
 Want to help improve ShadowPhish?
