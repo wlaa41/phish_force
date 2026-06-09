@@ -1105,6 +1105,13 @@ setInterval(cycleThreat,6000);
 setTimeout(showBeta,3500);
 setInterval(showBeta,22000);
 
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    ["modal-modes","modal-lb","modal-settings"].forEach(id => closeModal(id));
+    closeProfile();
+  }
+});
+
 window.addEventListener("resize",()=>{
   const cv=document.getElementById("scene-bg");
   cv.width=window.innerWidth; cv.height=window.innerHeight;
