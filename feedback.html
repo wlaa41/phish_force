@@ -268,6 +268,7 @@
   <div class="header">
     <div class="logo">SHADOW<span>PHISH</span></div>
     <div class="sub">Cyber Defense Academy &nbsp;·&nbsp; Player Feedback</div>
+    <div id="response-count-badge" style="margin-top:8px;font-size:11px;color:#555e80;letter-spacing:1px;"></div>
   </div>
 
   <!-- Form -->
@@ -490,6 +491,11 @@
     form.style.display='none';
     thanks.style.display='block';
     renderResponses();
+  // Update badge
+  const all2 = JSON.parse(localStorage.getItem('shadowphish_feedback') || '[]');
+  const badge = document.getElementById('response-count-badge');
+  if (badge) badge.textContent = all2.length > 0 ? all2.length + ' response' + (all2.length>1?'s':'') + ' collected' : '';
+
   });
 
   function newEntry(){
