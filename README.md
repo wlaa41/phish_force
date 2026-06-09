@@ -100,12 +100,12 @@ No installation needed. No frameworks. Just open a browser and play.
 
 | # | Name | Student ID | GitHub | Role |
 |---|------|-----------|--------|------|
-| 1 | Prateek Rana | | [RanaPrateek](https://github.com/RanaPrateek) | Project Lead / Backend / Deployment |
-| 2 | Prathish Thangaraj | | | UI Developer / Documentation |
-| 3 | Allen Twins George | | | UI/UX Designer / Account System |
-| 4 | Bishal Raut | | | Game Logic / Hint System / QA |
-| 5 | Dipesh Regmi | | | Frontend / Leaderboard / Cross-browser |
-| 6 | Avtar | | | Content Developer / QA / Logo |
+| 1 | Prateek Rana | 15646051 | [RanaPrateek](https://github.com/RanaPrateek) | Project Lead / Backend / Deployment |
+| 2 | Prathish Thangaraj | 15973717 | [prathish-5327](https://github.com/prathish-5327) | UI Developer / Documentation |
+| 3 | Allen Twins George | 15629722 | [allentgeorge17-oss](https://github.com/allentgeorge17-oss) | UI/UX Designer / Account System |
+| 4 | Bishal Raut | 15899532 | [rautb-del](https://github.com/rautb-del) | Game Logic / Hint System / QA |
+| 5 | Dipesh Regmi | 15175919 | [deepeshf555-dotcom](https://github.com/deepeshf555-dotcom) | Frontend / Leaderboard / Cross-browser |
+| 6 | Avtar | 15643832 | [avtarpanchal](https://github.com/avtarpanchal)| Content Developer / QA / Logo |
 
 ---
 
