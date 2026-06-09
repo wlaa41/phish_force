@@ -936,7 +936,11 @@ function endGame(win) {
     if (state.gap >= 100) sub.textContent = "The operative escaped with the data. Regroup and try again.";
     else sub.textContent = "Your vehicle was disabled. The chase is over for now.";
   }
-  rewards.textContent = "+" + coins + " coins  •  " + Math.floor(state.distance) + "m distance  •  +" + xp + " XP";
+  const ps2 = getPlayerState();
+  const bestDist = ps2.highestDistance || 0;
+  const isNewBest = Math.floor(state.distance) > bestDist;
+  rewards.textContent = "+" + coins + " coins  •  " + Math.floor(state.distance) + "m" +
+    (isNewBest ? " 🏆 NEW BEST!" : " (best: " + bestDist + "m)") + "  •  +" + xp + " XP";
   ov.classList.add("show");
 }
 
