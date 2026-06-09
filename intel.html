@@ -447,8 +447,9 @@ html, body {
 <!-- ── BOTTOM BAR ── -->
 <div class="bottom-bar">
   <!-- HEARTS here (bottom-left, swapped) -->
-  <div class="hearts-bottom">
-    ♥ <span id="st-hearts">5</span><span class="regen-cd" id="regen-cd"></span>
+  <div class="hearts-bottom" style="display:flex;align-items:center;gap:14px;">
+    <span>♥ <span id="st-hearts">5</span><span class="regen-cd" id="regen-cd"></span></span>
+    <span style="font-size:10px;color:#555;letter-spacing:2px;">SCORE: <span id="live-score" style="color:#00ccff;font-weight:700;">0</span></span>
   </div>
   <div class="hint-btns">
     <button class="hint-btn" onclick="useHint('eliminate')">✂ ELIMINATE</button>
@@ -806,6 +807,7 @@ function answer(idx){
     fb.className="feedback-bar correct-fb show";
     fb.textContent="✓ Correct! "+q.explanation;
     score++;
+    document.getElementById("live-score").textContent = score;
     setTimeout(nextQuestion,1900);
   } else {
     // ── WRONG ──
