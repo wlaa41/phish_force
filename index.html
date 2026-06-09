@@ -306,6 +306,15 @@ function showSuccess(text) {
   msg.innerText = text;
 }
 
+/* ── ENTER KEY SUPPORT ── */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    const panel = document.querySelector(".form-panel.active");
+    if (panel && panel.id === "panel-login") login();
+    else if (panel && panel.id === "panel-signup") register();
+  }
+});
+
 /* ── AUTO-FILL saved user ── */
 window.onload = () => {
   const saved = localStorage.getItem("sp_last_user");
