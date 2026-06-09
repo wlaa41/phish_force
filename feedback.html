@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShadowPhish — Feedback</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #05060e;
+      font-family: 'Segoe UI', Calibri, sans-serif;
+      color: #c8d0e8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 60px;
+    }
+
+    /* ── hex canvas background ── */
+    canvas#bg {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: 680px; }
+
+    /* ── header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header .logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+    .header .logo span { color: #8b00ff; }
+    .header .sub {
+      margin-top: 6px;
+      font-size: 0.95rem;
+      color: #6670a0;
+    }
+
+    /* ── card ── */
+    .card {
+      background: rgba(12,14,30,0.92);
+      border: 1px solid rgba(139,0,255,0.30);
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(6px);
+    }
+    .card-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #8b00ff;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ── form elements ── */
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #8890b0;
+      margin-bottom: 6px;
+      margin-top: 18px;
+    }
+    label:first-of-type { margin-top: 0; }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      background: rgba(5,6,20,0.85);
+      border: 1px solid rgba(139,0,255,0.25);
+      border-radius: 8px;
+      color: #e0e8ff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #8b00ff;
+      box-shadow: 0 0 0 3px rgba(139,0,255,0.12);
+    }
+    textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    select option { background: #0c0e1e; }
+
+    /* ── star rating ── */
+    .stars {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .stars input { display: none; }
+    .stars label {
+      font-size: 1.9rem;
+      color: #2a2d50;
+      cursor: pointer;
+      margin: 0;
+      transition: color 0.15s, transform 0.15s;
+      user-select: none;
+    }
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label { color: #2a2d50; }
+    .stars input:checked + label,
+    .stars label:hover { color: #ffb300; transform: scale(1.15); }
+    /* fill stars up to checked */
+    .stars { flex-direction: row-reverse; justify-content: flex-end; }
+    .stars input:checked ~ label { color: #ffb300; }
+
+    /* ── checkboxes ── */
+    .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .check-group label {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(5,6,20,0.7);
+      border: 1px solid rgba(139,0,255,0.20);
+      border-radius: 20px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #c0c8e0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .check-group input[type="checkbox"] { display: none; }
+    .check-group label:has(input:checked) {
+      border-color: #8b00ff;
+      background: rgba(139,0,255,0.14);
+      color: #fff;
+    }
+
+    /* ── radio pills ── */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .radio-group label {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(5,6,20,0.7);
+      border: 1px solid rgba(139,0,255,0.20);
+      border-radius: 20px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #c0c8e0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group label:has(input:checked) {
+      border-color: #00c8ff;
+      background: rgba(0,200,255,0.12);
+      color: #fff;
+    }
+
+    /* ── submit ── */
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      background: linear-gradient(135deg, #8b00ff, #5500cc);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn:active { transform: scale(0.98); }
+
+    /* ── success message ── */
+    #thanks {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    #thanks .icon { font-size: 3rem; margin-bottom: 12px; }
+    #thanks h2 { font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+    #thanks p  { color: #6670a0; }
+
+    /* ── responses table ── */
+    #responses-section { margin-top: 32px; }
+    #responses-section h3 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #444c68;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .response-card {
+      background: rgba(12,14,30,0.80);
+      border: 1px solid rgba(139,0,255,0.18);
+      border-left: 3px solid #8b00ff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .response-card .rc-name {
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .response-card .rc-meta {
+      font-size: 0.78rem;
+      color: #555e80;
+      margin-bottom: 10px;
+    }
+    .response-card .rc-row {
+      font-size: 0.85rem;
+      color: #9098b8;
+      margin-bottom: 5px;
+    }
+    .response-card .rc-row span { color: #c8d0e8; }
+    .rc-stars { color: #ffb300; letter-spacing: 2px; }
+    .no-responses { color: #333850; font-size: 0.88rem; font-style: italic; }
+
+    .clear-btn {
+      margin-top: 10px;
+      background: none;
+      border: 1px solid rgba(255,60,60,0.25);
+      color: #664444;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .clear-btn:hover { border-color: #ff4444; color: #ff6666; }
+  </style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">SHADOW<span>PHISH</span></div>
+    <div class="sub">Cyber Defense Academy &nbsp;·&nbsp; Player Feedback</div>
+  </div>
+
+  <!-- Form -->
+  <form id="feedbackForm">
+
+    <!-- Section 1: Who are you -->
+    <div class="card">
+      <div class="card-title">01 &nbsp;·&nbsp; About You</div>
+
+      <label for="fname">Your Name *</label>
+      <input type="text" id="fname" placeholder="e.g. Alex Johnson" required />
+
+      <label for="femail">Email (optional)</label>
+      <input type="email" id="femail" placeholder="your@email.com" />
+
+      <label>How did you play?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="playtype" value="Guest" checked /> Guest</label>
+        <label><input type="radio" name="playtype" value="Registered Account" /> Registered Account</label>
+        <label><input type="radio" name="playtype" value="Watched Demo" /> Watched Demo</label>
+      </div>
+    </div>
+
+    <!-- Section 2: Overall experience -->
+    <div class="card">
+      <div class="card-title">02 &nbsp;·&nbsp; Overall Experience</div>
+
+      <label>Overall Rating *</label>
+      <div class="stars">
+        <input type="radio" name="rating" id="s5" value="5" /><label for="s5">★</label>
+        <input type="radio" name="rating" id="s4" value="4" /><label for="s4">★</label>
+        <input type="radio" name="rating" id="s3" value="3" /><label for="s3">★</label>
+        <input type="radio" name="rating" id="s2" value="2" /><label for="s2">★</label>
+        <input type="radio" name="rating" id="s1" value="1" /><label for="s1">★</label>
+      </div>
+
+      <label>How would you describe the game?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="feel" value="Fun & Engaging" /> Fun & Engaging</label>
+        <label><input type="radio" name="feel" value="Educational" /> Educational</label>
+        <label><input type="radio" name="feel" value="Challenging" /> Challenging</label>
+        <label><input type="radio" name="feel" value="Too Easy" /> Too Easy</label>
+        <label><input type="radio" name="feel" value="Confusing" /> Confusing</label>
+        <label><input type="radio" name="feel" value="Needs Work" /> Needs Work</label>
+      </div>
+
+      <label for="fgood">What did you like most about the game? *</label>
+      <textarea id="fgood" placeholder="e.g. The cyberpunk design, the quiz questions were realistic..."></textarea>
+    </div>
+
+    <!-- Section 3: Games specifically -->
+    <div class="card">
+      <div class="card-title">03 &nbsp;·&nbsp; The Games</div>
+
+      <label>Which game(s) did you play?</label>
+      <div class="check-group">
+        <label><input type="checkbox" name="games" value="Intel Mission" /> Intel Mission</label>
+        <label><input type="checkbox" name="games" value="Highway Chase" /> Highway Chase</label>
+        <label><input type="checkbox" name="games" value="Both" /> Both</label>
+      </div>
+
+      <label for="fintel">Intel Mission — your thoughts</label>
+      <textarea id="fintel" placeholder="Was the quiz fair? Were questions clear? Too easy or too hard?" style="min-height:80px"></textarea>
+
+      <label for="fchase">Highway Chase — your thoughts</label>
+      <textarea id="fchase" placeholder="Was the runner smooth? Did the question checkpoints make sense?" style="min-height:80px"></textarea>
+    </div>
+
+    <!-- Section 4: Improvements -->
+    <div class="card">
+      <div class="card-title">04 &nbsp;·&nbsp; What We Should Improve</div>
+
+      <label>Areas that need improvement (select all that apply)</label>
+      <div class="check-group">
+        <label><input type="checkbox" name="improve" value="Game Difficulty" /> Game Difficulty</label>
+        <label><input type="checkbox" name="improve" value="UI / Design" /> UI / Design</label>
+        <label><input type="checkbox" name="improve" value="Question Quality" /> Question Quality</label>
+        <label><input type="checkbox" name="improve" value="Controls" /> Controls</label>
+        <label><input type="checkbox" name="improve" value="Sound / Audio" /> Sound / Audio</label>
+        <label><input type="checkbox" name="improve" value="Performance" /> Performance</label>
+        <label><input type="checkbox" name="improve" value="More Levels" /> More Levels</label>
+        <label><input type="checkbox" name="improve" value="Instructions" /> Instructions / Tutorial</label>
+      </div>
+
+      <label for="fimprove">Describe what needs improvement *</label>
+      <textarea id="fimprove" placeholder="Be as specific as possible — your feedback helps us improve the game..."></textarea>
+
+      <label for="ffeature">Any features you wish the game had?</label>
+      <textarea id="ffeature" placeholder="e.g. Multiplayer mode, more attack types, mobile support..." style="min-height:80px"></textarea>
+    </div>
+
+    <!-- Section 5: Final thoughts -->
+    <div class="card">
+      <div class="card-title">05 &nbsp;·&nbsp; Final Thoughts</div>
+
+      <label>Would you recommend this game to others?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="recommend" value="Definitely" /> Definitely</label>
+        <label><input type="radio" name="recommend" value="Probably" /> Probably</label>
+        <label><input type="radio" name="recommend" value="Not Sure" /> Not Sure</label>
+        <label><input type="radio" name="recommend" value="Probably Not" /> Probably Not</label>
+      </div>
+
+      <label for="fother">Anything else you want to tell us?</label>
+      <textarea id="fother" placeholder="Any extra comments, bugs you noticed, or shoutouts..." style="min-height:80px"></textarea>
+
+      <button type="submit" class="btn">SUBMIT FEEDBACK</button>
+    </div>
+
+  </form>
+
+  <!-- Thank you message -->
+  <div id="thanks" class="card">
+    <div class="icon">✅</div>
+    <h2>Thanks for your feedback!</h2>
+    <p>Your response has been saved. We really appreciate you taking the time.</p>
+    <br/>
+    <button class="btn" onclick="newEntry()" style="max-width:260px;margin:0 auto;">Submit Another</button>
+  </div>
+
+  <!-- Saved responses -->
+  <div id="responses-section">
+    <h3>Collected Responses</h3>
+    <div id="responses-list"></div>
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+      <button class="btn" onclick="downloadCSV()" style="max-width:220px;font-size:0.85rem;padding:10px 16px;">
+        ⬇ Download as CSV
+      </button>
+      <button class="btn" onclick="downloadJSON()" style="max-width:220px;font-size:0.85rem;padding:10px 16px;background:linear-gradient(135deg,#005fa3,#003d6e);">
+        ⬇ Download as JSON
+      </button>
+      <button class="clear-btn" onclick="clearAll()" style="align-self:center;">Clear All Responses</button>
+    </div>
+    <p style="font-size:0.75rem;color:#333850;margin-top:10px;">
+      💡 Download CSV to open in Excel / Google Sheets &nbsp;·&nbsp; All data stays on your computer
+    </p>
+  </div>
+
+</div>
+
+<script>
+  // ── Hex grid background ──────────────────────────────
+  (function(){
+    const c=document.getElementById('bg');
+    const ctx=c.getContext('2d');
+    function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; draw(); }
+    function draw(){
+      const W=c.width, H=c.height, s=32;
+      const s3=Math.sqrt(3);
+      ctx.clearRect(0,0,W,H);
+      const cols=Math.ceil(W/(s*1.5))+2;
+      const rows=Math.ceil(H/(s*s3))+2;
+      for(let col=-1;col<cols;col++){
+        for(let row=-1;row<rows;row++){
+          const cx=col*s*1.5;
+          const cy=row*s*s3+(col%2?s*s3/2:0);
+          const t=Math.max(0,cy/H);
+          const op=0.03+t*0.10;
+          ctx.beginPath();
+          for(let i=0;i<6;i++){
+            const a=Math.PI/180*(60*i-30);
+            const x=cx+s*Math.cos(a), y2=cy+s*Math.sin(a);
+            i===0?ctx.moveTo(x,y2):ctx.lineTo(x,y2);
+          }
+          ctx.closePath();
+          ctx.strokeStyle=`rgba(139,0,255,${op})`;
+          ctx.lineWidth=0.8;
+          ctx.stroke();
+        }
+      }
+    }
+    window.addEventListener('resize',resize);
+    resize();
+  })();
+
+  // ── Form logic ───────────────────────────────────────
+  const form = document.getElementById('feedbackForm');
+  const thanks = document.getElementById('thanks');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // validate required
+    const name = document.getElementById('fname').value.trim();
+    const good = document.getElementById('fgood').value.trim();
+    const improve = document.getElementById('fimprove').value.trim();
+    const ratingEl = document.querySelector('input[name="rating"]:checked');
+
+    if(!name){ alert('Please enter your name.'); return; }
+    if(!ratingEl){ alert('Please give an overall rating.'); return; }
+    if(!good){ alert('Please tell us what you liked.'); return; }
+    if(!improve){ alert('Please describe what needs improvement.'); return; }
+
+    const gamesPlayed = [...document.querySelectorAll('input[name="games"]:checked')].map(x=>x.value);
+    const improveareas = [...document.querySelectorAll('input[name="improve"]:checked')].map(x=>x.value);
+
+    const entry = {
+      timestamp: new Date().toLocaleString(),
+      name,
+      email: document.getElementById('femail').value.trim(),
+      playType: document.querySelector('input[name="playtype"]:checked')?.value || '',
+      rating: ratingEl.value,
+      feel: document.querySelector('input[name="feel"]:checked')?.value || '',
+      liked: good,
+      gamesPlayed: gamesPlayed.join(', '),
+      intelThoughts: document.getElementById('fintel').value.trim(),
+      chaseThoughts: document.getElementById('fchase').value.trim(),
+      improveAreas: improveareas.join(', '),
+      improveDesc: improve,
+      featureWish: document.getElementById('ffeature').value.trim(),
+      recommend: document.querySelector('input[name="recommend"]:checked')?.value || '',
+      other: document.getElementById('fother').value.trim(),
+    };
+
+    // save to localStorage
+    const all = JSON.parse(localStorage.getItem('shadowphish_feedback') || '[]');
+    all.push(entry);
+    localStorage.setItem('shadowphish_feedback', JSON.stringify(all));
+
+    form.style.display='none';
+    thanks.style.display='block';
+    renderResponses();
+  });
+
+  function newEntry(){
+    form.reset();
+    form.style.display='block';
+    thanks.style.display='none';
+  }
+
+  function clearAll(){
+    if(confirm('Delete all saved responses?')){
+      localStorage.removeItem('shadowphish_feedback');
+      renderResponses();
+    }
+  }
+
+  function stars(n){
+    return '★'.repeat(Number(n)) + '☆'.repeat(5-Number(n));
+  }
+
+  function renderResponses(){
+    const list = document.getElementById('responses-list');
+    const all = JSON.parse(localStorage.getItem('shadowphish_feedback') || '[]');
+    if(all.length===0){
+      list.innerHTML='<p class="no-responses">No responses yet.</p>';
+      return;
+    }
+    list.innerHTML = all.slice().reverse().map((e,i)=>`
+      <div class="response-card">
+        <div class="rc-name">${e.name}</div>
+        <div class="rc-meta">${e.timestamp} &nbsp;·&nbsp; ${e.playType}</div>
+        <div class="rc-row">Rating: <span class="rc-stars">${stars(e.rating)}</span></div>
+        ${e.feel ? `<div class="rc-row">Feel: <span>${e.feel}</span></div>` : ''}
+        ${e.gamesPlayed ? `<div class="rc-row">Played: <span>${e.gamesPlayed}</span></div>` : ''}
+        <div class="rc-row">Liked: <span>${e.liked}</span></div>
+        ${e.improveAreas ? `<div class="rc-row">Improve areas: <span>${e.improveAreas}</span></div>` : ''}
+        <div class="rc-row">Needs improvement: <span>${e.improveDesc}</span></div>
+        ${e.featureWish ? `<div class="rc-row">Wishes: <span>${e.featureWish}</span></div>` : ''}
+        ${e.recommend ? `<div class="rc-row">Recommend: <span>${e.recommend}</span></div>` : ''}
+        ${e.other ? `<div class="rc-row">Other: <span>${e.other}</span></div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  renderResponses();
+
+  // ── Download as CSV ──────────────────────────────────
+  function downloadCSV(){
+    const all = JSON.parse(localStorage.getItem('shadowphish_feedback') || '[]');
+    if(all.length === 0){ alert('No responses to download yet.'); return; }
+
+    const headers = [
+      'Timestamp','Name','Email','Play Type','Rating','Feel',
+      'Games Played','Liked Most','Intel Thoughts','Chase Thoughts',
+      'Improve Areas','Needs Improvement','Feature Wish','Recommend','Other'
+    ];
+
+    const rows = all.map(e => [
+      e.timestamp, e.name, e.email, e.playType, e.rating, e.feel,
+      e.gamesPlayed, e.liked, e.intelThoughts, e.chaseThoughts,
+      e.improveAreas, e.improveDesc, e.featureWish, e.recommend, e.other
+    ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"'));
+
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    triggerDownload('ShadowPhish_Feedback.csv', 'text/csv', csv);
+  }
+
+  // ── Download as JSON ─────────────────────────────────
+  function downloadJSON(){
+    const all = JSON.parse(localStorage.getItem('shadowphish_feedback') || '[]');
+    if(all.length === 0){ alert('No responses to download yet.'); return; }
+    triggerDownload('ShadowPhish_Feedback.json', 'application/json', JSON.stringify(all, null, 2));
+  }
+
+  function triggerDownload(filename, type, content){
+    const blob = new Blob([content], { type });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>
