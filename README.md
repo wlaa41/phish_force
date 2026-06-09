@@ -148,6 +148,25 @@ Played the game? We'd love to hear your thoughts!
 
 ---
 
+## 🤝 How to Contribute
+
+Want to help improve ShadowPhish?
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Make your changes and commit: `git commit -m "feat: describe your change"`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+### Ideas for contributions
+- New phishing scenario questions
+- Additional game levels
+- Sound effects and music
+- Multiplayer leaderboard backend
+- Mobile app version
+
+---
+
 ## 📄 License
 
 This project was created for **academic purposes** as part of Module 503IT at Coventry University.
