@@ -734,6 +734,15 @@ function update() {
   state.frame++;
   state.distance += state.speed * 0.35;
 
+  // Milestone celebrations
+  if (Math.floor(state.distance) === 1000 || Math.floor(state.distance) === 2000 ||
+      Math.floor(state.distance) === 3000 || Math.floor(state.distance) === 5000) {
+    if (!state["milestone_"+Math.floor(state.distance)]) {
+      state["milestone_"+Math.floor(state.distance)] = true;
+      showFlash("🎯 " + Math.floor(state.distance) + "m REACHED!", "#00ccff");
+    }
+  }
+
   // Speed scaling
   state.speed = Math.min(12, 3.5 + state.distance / 600);
   if (state.boosting > 0) { state.speed = Math.min(16, state.speed + 4); state.boosting--; }
