@@ -943,6 +943,21 @@ function spawnConfetti(count,containerId){
   }
 }
 
+/* ── KEYBOARD SHORTCUTS ── */
+document.addEventListener("keydown", function(e) {
+  const map = {"1":0,"2":1,"3":2,"4":3};
+  if (e.key in map) {
+    const btn = document.getElementById("ans-"+map[e.key]);
+    if (btn && !btn.disabled) btn.click();
+  }
+  if (e.key === "Escape") {
+    ["win-overlay","lose-overlay","levelup-overlay"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && el.classList.contains("show")) el.classList.remove("show");
+    });
+  }
+});
+
 init();
 </script>
 </body>
