@@ -938,6 +938,10 @@ function mobileMove(dir) {
 // ────────────────── INPUT ──────────────────
 document.addEventListener("keydown", e => {
   if (!state.running || state.paused) return;
+  if (e.key === "p" || e.key === "P") {
+    if (state.running) { state.paused = !state.paused; if (!state.paused) loop(); }
+    return;
+  }
   if (e.key === "ArrowLeft"  || e.key === "a" || e.key === "A") {
     if (state.playerLane > 0) { state.playerLane--; state.targetX = LANES[state.playerLane]; }
   }
