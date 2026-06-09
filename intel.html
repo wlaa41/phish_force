@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShadowPhish — Intel Mission</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  background:#050010; color:#fff;
+  font-family:'Orbitron',sans-serif;
+  display:flex; flex-direction:column;
+}
+
+/* ── BACKGROUND ── */
+#intel-bg {
+  position:fixed; inset:0; z-index:0;
+  width:100%; height:100%;
+}
+
+/* ── FLASH OVERLAY — disabled; color feedback is on answer buttons only ── */
+#flash-overlay { display:none; }
+
+/* ── TOP BAR ── */
+.topbar {
+  flex-shrink:0; height:54px;
+  position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 22px;
+  background:rgba(0,0,0,0.55);
+  border-bottom:1px solid rgba(140,0,255,0.3);
+  backdrop-filter:blur(14px);
+}
+.back-btn {
+  font-size:10px; color:#666; cursor:pointer;
+  letter-spacing:2px; text-decoration:none; transition:color 0.2s;
+  flex-shrink:0;
+}
+.back-btn:hover { color:#b300ff; }
+
+.mission-info { text-align:center; }
+.mission-title { font-size:11px; font-weight:700; letter-spacing:3px; color:#b300ff; }
+.q-counter { font-size:9px; color:#555; margin-top:1px; }
+
+/* TOP-RIGHT: CHANCES + hints + timer */
+.top-right-hud {
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+}
+.chances-wrap { display:flex; align-items:center; gap:6px; }
+.chances-label { font-size:8px; color:#555; letter-spacing:2px; }
+.chance-dot {
+  width:9px; height:9px; border-radius:50%;
+  background:#b300ff; box-shadow:0 0 7px #b300ff; transition:0.3s;
+}
+.chance-dot.lost { background:#2a2a2a; box-shadow:none; }
+.hints-display { font-size:12px; font-weight:600; color:#00ccff; }
+.timer-secs {
+  font-size:15px; font-weight:800; min-width:38px; text-align:center;
+  color:#fff; transition:color 0.3s;
+}
+.timer-secs.warn { color:#ffcc00; }
+.timer-secs.crit { color:#ff4444; animation:timerPulse 0.45s infinite alternate; }
+@keyframes timerPulse { from{transform:scale(1)} to{transform:scale(1.18)} }
+
+/* ── TIMER BAR ── */
+.timer-wrap { flex-shrink:0; height:5px; background:rgba(255,255,255,0.07); position:relative; z-index:10; }
+.timer-bar  { height:100%; background:linear-gradient(90deg,#7a00ff,#ff00cc); transition:width 0.1s linear; }
+
+/* ── GAME AREA (fills remaining height) ── */
+.game-area {
+  flex:1; position:relative; z-index:5;
+  display:flex; flex-direction:column;
+  padding:14px 48px 10px;
+  gap:12px; min-height:0; overflow:hidden;
+}
+
+/* ── QUESTION SECTION (? bubble + card) ── */
+.q-section {
+  flex:0 0 auto; position:relative;
+  padding-top:28px;
+  display:flex; flex-direction:column;
+}
+
+/* Floating ? bubble */
+.q-bubble {
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:56px; height:56px; border-radius:50%; z-index:2;
+  background:linear-gradient(135deg,#7a00ff,#00ccff);
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:900; color:#fff;
+  box-shadow:0 0 24px rgba(0,200,255,0.7), 0 0 50px rgba(120,0,255,0.4);
+  font-family:'Orbitron',sans-serif;
+  animation:bubblePulse 2.5s ease-in-out infinite;
+}
+@keyframes bubblePulse {
+  0%,100% { box-shadow:0 0 18px rgba(0,200,255,0.6),0 0 40px rgba(120,0,255,0.3); }
+  50%     { box-shadow:0 0 32px rgba(0,200,255,0.9),0 0 70px rgba(120,0,255,0.6); }
+}
+
+/* The card itself */
+.q-card {
+  background:rgba(255,255,255,0.05);
+  border:1.5px solid rgba(0,200,255,0.22);
+  border-radius:18px;
+  padding:36px 28px 18px;
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 40px rgba(0,200,255,0.08), inset 0 0 30px rgba(0,0,20,0.3);
+  display:flex; flex-direction:column; gap:10px;
+}
+
+/* scenario strip inside the card */
+.scenario-strip {
+  font-size:11px; line-height:1.7; color:#bbb;
+  border-radius:8px; padding:10px 14px;
+  background:rgba(0,0,0,0.3);
+  border-left:3px solid rgba(0,200,255,0.4);
+  flex-shrink:0;
+}
+.scenario-strip.email-bg { border-left-color:rgba(255,0,128,0.5); background:rgba(30,0,15,0.5); }
+.scenario-strip.sms-bg   { border-left-color:rgba(0,200,255,0.5); background:rgba(0,10,25,0.5); }
+.scenario-strip.url-bg   { border-left-color:rgba(255,200,0,0.5); background:rgba(20,15,0,0.5); }
+.scenario-strip.call-bg  { border-left-color:rgba(0,255,128,0.5); background:rgba(0,20,10,0.5); }
+
+.scenario-tag {
+  font-size:8px; letter-spacing:3px; color:#555;
+  text-transform:uppercase; margin-bottom:6px;
+  font-family:'Rajdhani',sans-serif;
+}
+.s-from   { color:#ff6699; font-size:11px; }
+.s-subj   { color:#ffd700; font-weight:700; font-size:11px; margin:2px 0; }
+.s-body   { color:#aaa; margin-top:5px; font-size:10px; }
+.s-link   { color:#00ccff; text-decoration:underline; font-size:10px; }
+
+.q-divider {
+  flex-shrink:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(0,200,255,0.25), transparent);
+}
+
+.question-text {
+  font-size:15px; font-weight:700; letter-spacing:1px;
+  color:#fff; text-align:center; line-height:1.55;
+  flex:1; display:flex; align-items:center; justify-content:center;
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* ── ANSWERS GRID ── */
+.answers {
+  flex-shrink:0;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px;
+  grid-template-rows:1fr 1fr;
+  height:180px;
+}
+
+.ans-btn {
+  border-radius:14px;
+  border:1.5px solid rgba(255,255,255,0.13);
+  background:rgba(255,255,255,0.06);
+  color:#ccc;
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px; font-weight:600; letter-spacing:1px;
+  cursor:pointer; text-align:left;
+  padding:0 22px;
+  display:flex; align-items:center; gap:14px;
+  transition:background 0.18s, border-color 0.18s, transform 0.15s, box-shadow 0.18s, color 0.15s;
+  backdrop-filter:blur(8px);
+  position:relative; overflow:hidden;
+}
+.ans-btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(0,200,255,0.12), rgba(120,0,255,0.08));
+  opacity:0; transition:opacity 0.2s;
+}
+.ans-btn:hover:not(:disabled)::before { opacity:1; }
+.ans-btn:hover:not(:disabled) {
+  border-color:rgba(0,200,255,0.65);
+  background:rgba(0,200,255,0.1);
+  color:#fff; transform:translateY(-3px);
+  box-shadow:0 6px 24px rgba(0,200,255,0.25), 0 0 0 1px rgba(0,200,255,0.2);
+}
+.ans-btn:active:not(:disabled) { transform:translateY(-1px); }
+.ans-btn:disabled { cursor:default; }
+
+/* Letter badge */
+.ans-key {
+  width:28px; height:28px; border-radius:7px; flex-shrink:0;
+  background:rgba(255,255,255,0.1);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:800; color:#aaa;
+  font-family:'Orbitron',sans-serif;
+  transition:background 0.15s, color 0.15s;
+}
+.ans-text { flex:1; }
+
+/* ── ANSWER STATES ── */
+.ans-btn.correct {
+  background:rgba(0,220,100,0.88) !important;
+  border-color:#00ff80 !important; color:#000 !important;
+  box-shadow:0 0 30px rgba(0,220,100,0.7) !important;
+  transform:scale(1.02) !important;
+}
+.ans-btn.correct .ans-key { background:rgba(0,0,0,0.25); color:#000; }
+
+.ans-btn.wrong {
+  background:rgba(255,40,55,0.82) !important;
+  border-color:#ff3355 !important; color:#fff !important;
+  box-shadow:0 0 30px rgba(255,40,55,0.6) !important;
+}
+.ans-btn.wrong .ans-key { background:rgba(255,255,255,0.2); color:#fff; }
+
+.ans-btn.dim {
+  opacity:0.35; transform:scale(0.98);
+}
+
+/* ── FEEDBACK BAR ── */
+.feedback-bar {
+  flex-shrink:0;
+  min-height:56px; padding:10px 16px;
+  border-radius:8px; font-size:11px; line-height:1.65;
+  font-family:'Rajdhani',sans-serif; letter-spacing:0.5px;
+  visibility:hidden; opacity:0;
+  transition:opacity 0.2s, visibility 0.2s;
+  border:1px solid transparent;
+}
+.feedback-bar.show {
+  visibility:visible; opacity:1;
+}
+.feedback-bar.correct-fb { background:rgba(0,255,128,0.12); border-color:rgba(0,255,128,0.35); color:#00ff80; }
+.feedback-bar.wrong-fb   { background:rgba(255,50,50,0.12);  border-color:rgba(255,50,50,0.35);  color:#ff6666; }
+
+/* ── BOTTOM BAR ── */
+.bottom-bar {
+  flex-shrink:0; height:52px;
+  position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 22px;
+  background:rgba(0,0,0,0.5);
+  border-top:1px solid rgba(255,255,255,0.06);
+  backdrop-filter:blur(14px);
+}
+
+/* HEARTS on bottom-left (swapped) */
+.hearts-bottom {
+  display:flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:700; color:#ff4466;
+}
+.regen-cd { font-size:9px; color:#ff8899; letter-spacing:1px; }
+
+.hint-btns { display:flex; gap:8px; }
+.hint-btn {
+  padding:6px 11px; border-radius:7px;
+  border:1px solid rgba(0,200,255,0.28);
+  background:rgba(0,200,255,0.07);
+  color:#00ccff; font-family:'Orbitron',sans-serif;
+  font-size:9px; letter-spacing:1px; cursor:pointer; transition:0.2s;
+}
+.hint-btn:hover:not(:disabled) { background:rgba(0,200,255,0.18); }
+.hint-btn:disabled { opacity:0.3; cursor:default; }
+
+/* ── HINT TOAST ── */
+.hint-toast {
+  position:fixed; bottom:62px; left:50%; transform:translateX(-50%);
+  z-index:50; background:rgba(0,5,30,0.96);
+  border:1px solid rgba(0,200,255,0.4); border-radius:10px;
+  padding:12px 18px; font-size:11px; color:#00ccff;
+  max-width:460px; text-align:center; display:none;
+  font-family:'Rajdhani',sans-serif; letter-spacing:0.5px;
+}
+.hint-toast.show { display:block; animation:fadeIn 0.3s; }
+@keyframes fadeIn { from{opacity:0;transform:translate(-50%,8px)} to{opacity:1;transform:translate(-50%,0)} }
+
+/* ── OVERLAYS ── */
+.overlay {
+  position:fixed; inset:0; z-index:100;
+  display:none; flex-direction:column;
+  align-items:center; justify-content:center; gap:14px;
+  backdrop-filter:blur(10px);
+}
+.overlay.show { display:flex; }
+
+/* WIN overlay */
+#win-overlay {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(179,0,255,0.45), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(0,255,200,0.3), transparent 55%),
+    rgba(0,0,0,0.88);
+}
+#win-overlay .result-card {
+  background:linear-gradient(145deg,rgba(28,0,55,0.97),rgba(0,18,36,0.97));
+  border:1px solid rgba(179,0,255,0.55);
+  box-shadow:0 0 60px rgba(140,0,255,0.55), 0 0 120px rgba(0,255,200,0.2);
+  animation:cardPop 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+/* LOSE overlay */
+#lose-overlay { background:radial-gradient(ellipse at 50% 40%,rgba(255,40,40,0.2),transparent 60%),rgba(0,0,0,0.9); }
+
+@keyframes cardPop { from{transform:scale(0.72);opacity:0} to{transform:scale(1);opacity:1} }
+
+.result-card {
+  padding:34px 40px; border-radius:18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  text-align:center; min-width:320px;
+  box-shadow:0 0 60px rgba(140,0,255,0.35);
+}
+.stars-row { display:flex; justify-content:center; gap:10px; margin:14px 0; }
+.star-icon {
+  font-size:40px; opacity:0.2;
+  transition:opacity 0.4s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1), filter 0.4s;
+  transform:scale(0.5);
+}
+.star-icon.lit { opacity:1; transform:scale(1.2) rotate(-5deg); filter:drop-shadow(0 0 14px #ffd700); animation:starWobble 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes starWobble { 0%{transform:scale(0.3) rotate(30deg)} 60%{transform:scale(1.35) rotate(-8deg)} 100%{transform:scale(1.2) rotate(-5deg)} }
+
+.result-title { font-size:22px; font-weight:800; letter-spacing:4px; }
+.result-title.win {
+  background:linear-gradient(90deg,#00ff99,#00ccff,#b300ff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; filter:drop-shadow(0 0 10px rgba(0,255,150,0.5));
+}
+.result-title.lose { color:#ff4444; text-shadow:0 0 20px #ff4444; }
+.result-sub { font-size:11px; color:#888; margin:8px 0 14px; line-height:1.6; }
+.result-rewards {
+  font-size:13px; font-weight:700; margin-bottom:14px;
+  background:linear-gradient(90deg,#ffd700,#ff9900);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.btn-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.res-btn {
+  padding:10px 20px; border-radius:8px; border:none;
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:700; letter-spacing:2px;
+  cursor:pointer; transition:0.2s;
+}
+.res-btn.primary { background:linear-gradient(90deg,#7a00ff,#ff00cc); color:#fff; }
+.res-btn.primary:hover { transform:scale(1.05); }
+.res-btn.secondary { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#aaa; }
+
+/* ── CONFETTI ── */
+.confetti-piece {
+  position:fixed; border-radius:2px; z-index:210;
+  pointer-events:none; animation:confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%  { opacity:1; transform:translateY(-30px) rotate(0deg); }
+  80% { opacity:1; }
+  100%{ opacity:0; transform:translateY(105vh) rotate(900deg); }
+}
+
+/* ── LEVEL-UP OVERLAY ── */
+#levelup-overlay {
+  background:
+    radial-gradient(ellipse at 50% 40%,rgba(255,200,0,0.35),transparent 60%),
+    radial-gradient(ellipse at 30% 70%,rgba(179,0,255,0.4), transparent 50%),
+    rgba(0,0,0,0.92);
+}
+.levelup-card {
+  padding:38px 46px; border-radius:20px;
+  background:linear-gradient(145deg,rgba(30,20,0,0.97),rgba(20,0,40,0.97));
+  border:1px solid rgba(255,200,0,0.55);
+  box-shadow:0 0 80px rgba(255,200,0,0.5), 0 0 140px rgba(179,0,255,0.3);
+  text-align:center; min-width:330px;
+  animation:levelCardIn 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes levelCardIn { from{transform:scale(0.6) rotate(-3deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+.levelup-flash { font-size:46px; animation:flashSpin 0.8s cubic-bezier(0.34,1.56,0.64,1); display:inline-block; }
+@keyframes flashSpin { from{transform:scale(0) rotate(-180deg)} to{transform:scale(1) rotate(0)} }
+.levelup-title {
+  font-size:28px; font-weight:800; letter-spacing:6px;
+  background:linear-gradient(90deg,#ffd700,#ffaa00,#ff6600);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  filter:drop-shadow(0 0 16px rgba(255,180,0,0.8));
+  margin:10px 0 4px; animation:levelTitleGlow 1.5s infinite alternate;
+}
+@keyframes levelTitleGlow {
+  from{ filter:drop-shadow(0 0 8px rgba(255,180,0,0.6)); }
+  to  { filter:drop-shadow(0 0 24px rgba(255,220,0,1)); }
+}
+.levelup-num  { font-size:13px; letter-spacing:4px; color:#fff; opacity:0.85; margin-bottom:16px; }
+.levelup-sub  { font-size:10px; color:#888; letter-spacing:1px; margin-bottom:18px; }
+.gift-box {
+  background:rgba(255,200,0,0.07); border:1px solid rgba(255,200,0,0.3);
+  border-radius:12px; padding:16px 22px; margin:0 auto 22px; display:inline-block; min-width:190px;
+  animation:giftReveal 0.6s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes giftReveal { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+.gift-icon  { font-size:34px; margin-bottom:7px; }
+.gift-label { font-size:12px; font-weight:700; letter-spacing:2px; color:#ffd700; text-shadow:0 0 12px rgba(255,215,0,0.7); }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND CANVAS -->
+<canvas id="intel-bg"></canvas>
+
+<!-- FULL-SCREEN FLASH OVERLAY -->
+<div id="flash-overlay"></div>
+
+<!-- ── TOP BAR ── -->
+<div class="topbar">
+  <a class="back-btn" href="home.html">← HQ</a>
+  <div class="mission-info">
+    <div class="mission-title" id="mission-title">INTEL MISSION</div>
+    <div class="q-counter"     id="q-counter">Q 1 / 10</div>
+  </div>
+  <!-- CHANCES here (top-right, swapped) -->
+  <div class="top-right-hud">
+    <div class="chances-wrap">
+      <span class="chances-label">CHANCES</span>
+      <div class="chance-dot" id="c0"></div>
+      <div class="chance-dot" id="c1"></div>
+      <div class="chance-dot" id="c2"></div>
+    </div>
+    <span class="hints-display">💡 <span id="st-hints">3</span></span>
+    <span class="timer-secs"   id="timer-secs-badge">60s</span>
+  </div>
+</div>
+
+<!-- TIMER BAR -->
+<div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+
+<!-- ── GAME AREA ── -->
+<div class="game-area">
+
+  <!-- QUESTION CARD with ? bubble -->
+  <div class="q-section">
+    <div class="q-bubble">?</div>
+    <div class="q-card">
+      <div class="scenario-strip" id="scenario-strip">
+        <div class="scenario-tag" id="scenario-tag">LOADING…</div>
+        <div id="scenario-content"></div>
+      </div>
+      <div class="q-divider"></div>
+      <div class="question-text" id="question-text">Loading question…</div>
+    </div>
+  </div>
+
+  <!-- 2×2 ANSWER GRID -->
+  <div class="answers" id="answers"></div>
+
+  <!-- FEEDBACK -->
+  <div class="feedback-bar" id="feedback-bar"></div>
+
+</div>
+
+<!-- ── BOTTOM BAR ── -->
+<div class="bottom-bar">
+  <!-- HEARTS here (bottom-left, swapped) -->
+  <div class="hearts-bottom">
+    ♥ <span id="st-hearts">5</span><span class="regen-cd" id="regen-cd"></span>
+  </div>
+  <div class="hint-btns">
+    <button class="hint-btn" onclick="useHint('eliminate')">✂ ELIMINATE</button>
+    <button class="hint-btn" onclick="useHint('spotlight')">🔦 SPOTLIGHT</button>
+    <button class="hint-btn" onclick="useHint('beta')">▶ AGENT BETA</button>
+  </div>
+</div>
+
+<!-- HINT TOAST -->
+<div class="hint-toast" id="hint-toast"></div>
+
+<!-- LEVEL-UP OVERLAY -->
+<div class="overlay" id="levelup-overlay">
+  <div id="confetti-lu"></div>
+  <div class="levelup-card">
+    <div class="levelup-flash" id="lu-flash">⚡</div>
+    <div class="levelup-title">LEVEL UP!</div>
+    <div class="levelup-num" id="lu-num">LEVEL 2</div>
+    <div class="levelup-sub">A reward has been unlocked for your dedication, Agent</div>
+    <div class="gift-box">
+      <div class="gift-icon"  id="gift-icon">🎁</div>
+      <div class="gift-label" id="gift-label">Loading…</div>
+    </div>
+    <div class="btn-row">
+      <button class="res-btn primary" onclick="collectGift()">⚡ COLLECT REWARD</button>
+    </div>
+  </div>
+</div>
+
+<!-- WIN OVERLAY -->
+<div class="overlay" id="win-overlay">
+  <div id="confetti-container"></div>
+  <div class="result-card">
+    <div class="result-title win">CASE CLOSED</div>
+    <div class="stars-row">
+      <div class="star-icon" id="star1">⭐</div>
+      <div class="star-icon" id="star2">⭐</div>
+      <div class="star-icon" id="star3">⭐</div>
+    </div>
+    <div class="result-sub">"Case closed. ShadowPhish loses one more agent." — Agent Beta</div>
+    <div class="result-rewards" id="win-rewards"></div>
+    <div class="btn-row">
+      <button class="res-btn primary"    onclick="location.href='intel.html'">NEXT MISSION</button>
+      <button class="res-btn secondary"  onclick="location.href='home.html'">HOME</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOSE OVERLAY -->
+<div class="overlay" id="lose-overlay">
+  <div class="result-card">
+    <div class="result-title lose">MISSION FAILED</div>
+    <div class="result-sub">"They got away this time. But we'll find them." — Agent Beta</div>
+    <div class="result-sub" id="lose-explanation"></div>
+    <div class="btn-row">
+      <button class="res-btn primary"   onclick="location.href='intel.html'">TRY AGAIN</button>
+      <button class="res-btn secondary" onclick="location.href='home.html'">HOME</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────── BACKGROUND CANVAS ───────────────────────
+(function drawBG() {
+  const cv = document.getElementById("intel-bg");
+  cv.width = window.innerWidth; cv.height = window.innerHeight;
+  const c = cv.getContext("2d"), W = cv.width, H = cv.height;
+  function rng(seed){ let s=seed; return()=>{ s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296; }; }
+  // Sky
+  const sky=c.createLinearGradient(0,0,0,H);
+  sky.addColorStop(0,"#020008"); sky.addColorStop(0.6,"#040012"); sky.addColorStop(1,"#060010");
+  c.fillStyle=sky; c.fillRect(0,0,W,H);
+  // Radial glows
+  [{x:0.2,y:0.3,r:"rgba(100,0,180,0.15)"},{x:0.8,y:0.6,r:"rgba(0,100,180,0.1)"}].forEach(g=>{
+    const gr=c.createRadialGradient(W*g.x,H*g.y,0,W*g.x,H*g.y,W*0.4);
+    gr.addColorStop(0,g.r); gr.addColorStop(1,"rgba(0,0,0,0)");
+    c.fillStyle=gr; c.fillRect(0,0,W,H);
+  });
+  // Stars
+  const r1=rng(42);
+  for(let i=0;i<200;i++){
+    c.beginPath(); c.arc(r1()*W,r1()*H*0.6,r1()*1.3+0.2,0,Math.PI*2);
+    c.fillStyle=`rgba(180,210,255,${r1()*0.55+0.1})`; c.fill();
+  }
+  // City silhouette (bottom)
+  const r2=rng(88);
+  for(let x=0;x<W;x+=14+r2()*8){
+    const h=30+r2()*140, w=12+r2()*24;
+    c.fillStyle=`rgba(${Math.floor(r2()*8)},${Math.floor(r2()*10)},${Math.floor(18+r2()*22)},0.9)`;
+    c.fillRect(x,H*0.62-h,w,h);
+    const r3=rng(x*33);
+    for(let wy=H*0.62-h+6;wy<H*0.62-6;wy+=12)
+      for(let wx=x+3;wx<x+w-3;wx+=9)
+        if(r3()>0.44){ const cols=["rgba(255,200,50,0.4)","rgba(0,200,255,0.28)","rgba(160,0,255,0.28)"]; c.fillStyle=cols[Math.floor(r3()*3)]; c.fillRect(wx,wy,4,5); }
+  }
+  // Ground — keep transparent enough for grid to show through
+  const gg=c.createLinearGradient(0,H*0.60,0,H);
+  gg.addColorStop(0,"rgba(3,1,12,0)"); gg.addColorStop(0.4,"rgba(3,1,14,0.55)"); gg.addColorStop(1,"rgba(2,0,10,0.72)");
+  c.fillStyle=gg; c.fillRect(0,H*0.56,W,H*0.44);
+  // Hex grid — full canvas, brighter toward bottom for coverage
+  const hs=60;
+  for(let row=0;row<H/hs+1;row++){
+    const yFrac=(row*hs*0.87)/H;
+    const alpha=yFrac>0.55 ? 0.07+((yFrac-0.55)/0.45)*0.07 : 0.04;
+    c.strokeStyle=`rgba(0,160,210,${alpha.toFixed(3)})`; c.lineWidth=0.8;
+    for(let col=0;col<W/hs+1;col++){
+      const ox=(row%2)*hs*0.5, cx=col*hs+ox, cy=row*hs*0.87;
+      c.beginPath();
+      for(let i=0;i<6;i++){ const a=Math.PI/3*i-Math.PI/6, rx=cx+hs*0.5*Math.cos(a), ry=cy+hs*0.5*Math.sin(a); i===0?c.moveTo(rx,ry):c.lineTo(rx,ry); }
+      c.closePath(); c.stroke();
+    }
+  }
+  // Bottom ambient glow — fills lower third so it never looks empty
+  const bg1=c.createRadialGradient(W*0.25,H,0,W*0.25,H,W*0.55);
+  bg1.addColorStop(0,"rgba(100,0,180,0.18)"); bg1.addColorStop(1,"rgba(0,0,0,0)");
+  c.fillStyle=bg1; c.fillRect(0,H*0.5,W,H*0.5);
+  const bg2=c.createRadialGradient(W*0.75,H,0,W*0.75,H,W*0.55);
+  bg2.addColorStop(0,"rgba(0,100,180,0.14)"); bg2.addColorStop(1,"rgba(0,0,0,0)");
+  c.fillStyle=bg2; c.fillRect(0,H*0.5,W,H*0.5);
+})();
+
+// ─────────────────────── QUESTION BANK ───────────────────────
+const QUESTIONS = [
+  { type:"spot", bg:"email",
+    scenario:["FROM: noreply@paypa1-secure.com","SUBJECT: ⚠️ URGENT: Verify your account NOW","Your PayPal account has been limited. Verify within 24h or it will be permanently suspended.","[VERIFY ACCOUNT →]"],
+    question:"What is the primary red flag in this email?",
+    options:["Sender domain is fake (paypa1-secure.com)","Subject line is too alarming","PayPal never sends emails","The button uses an arrow"],
+    correct:0, explanation:"paypa1-secure.com replaces 'l' with '1' — typosquatting. Always check the full sender domain carefully." },
+  { type:"spot", bg:"email",
+    scenario:["FROM: ceo.maxwell@globcorp-mail.net","SUBJECT: Confidential — Wire Transfer Needed","Hi, I'm in a meeting. Wire $15,000 to our new vendor ASAP. Keep this between us.","— David Maxwell, CEO"],
+    question:"What type of social engineering attack is this?",
+    options:["CEO Fraud / Business Email Compromise","Smishing (SMS phishing)","Pharming attack","Watering hole attack"],
+    correct:0, explanation:"CEO Fraud impersonates executives to pressure employees into transfers. The urgency and secrecy are major red flags." },
+  { type:"spot", bg:"email",
+    scenario:["FROM: updates@amazon.com","SUBJECT: Your order #302-8841923 has shipped","Your order is on its way. Estimated delivery: 2–4 business days. Track via your account.","Amazon Customer Service"],
+    question:"Is this email a phishing attempt?",
+    options:["No — this appears to be a legitimate notification","Yes — Amazon never emails about shipments","Yes — the subject line is suspicious","Yes — the sender address is fake"],
+    correct:0, explanation:"No red flags here: real domain, no urgency, no request for personal info, no suspicious links." },
+  { type:"spot", bg:"sms",
+    scenario:["SMS from: +1-855-492-0011","IRS NOTICE: A tax refund of $1,847 is pending. Provide your bank details at irs-refunds.net to claim within 48 hours."],
+    question:"What type of scam is this?",
+    options:["Smishing — SMS phishing","Vishing — voice call scam","Spear phishing","Whaling attack"],
+    correct:0, explanation:"Smishing uses SMS. The IRS never texts about refunds, and irs-refunds.net is not a .gov domain." },
+  { type:"spot", bg:"email",
+    scenario:["FROM: helpdesk@microsoft-support-center.com","SUBJECT: Critical Security Alert — Action Required","Your Windows PC has been infected with 3 viruses. Download our security patch immediately.","[DOWNLOAD PATCH →]"],
+    question:"Which two red flags identify this as phishing?",
+    options:["Fake domain + unsolicited download link","Too many words in the subject","Microsoft uses a different logo","The email is written in English"],
+    correct:0, explanation:"microsoft-support-center.com is not Microsoft's domain. Legitimate companies don't send unsolicited patch downloads." },
+  { type:"url", bg:"url",
+    scenario:["Which of these is the REAL PayPal login URL?"],
+    question:"Select the legitimate website address:",
+    options:["paypal.com/signin","paypa1.com/signin","paypal-secure-login.com","www.paypal-verify.net"],
+    correct:0, explanation:"paypal.com is the only legitimate domain. Others use typosquatting or misleading words like 'secure' or 'verify'." },
+  { type:"url", bg:"url",
+    scenario:["You receive a support email with a link. Identify Microsoft's real URL."],
+    question:"Which URL is legitimate?",
+    options:["support.microsoft.com","microsoft-support.com","micros0ft.com/support","microsoft.com.tech-help.net"],
+    correct:0, explanation:"support.microsoft.com is a subdomain of microsoft.com. The others impersonate Microsoft." },
+  { type:"url", bg:"url",
+    scenario:["You're logging into your company's HR portal. Which URL is safe?"],
+    question:"Select the correct and safe URL:",
+    options:["hr.yourcompany.com/login","yourcompany-hrportal.com","login-hr-yourcompany.net","yourcompany.com.hr-access.org"],
+    correct:0, explanation:"hr.yourcompany.com is a legitimate subdomain. The others put the company name in an uncontrolled domain." },
+  { type:"response", bg:"email",
+    scenario:["Your bank sends an email asking you to confirm your account by clicking a link and entering your password and card number."],
+    question:"What is the CORRECT response?",
+    options:["Do not click — call your bank using the number on your card","Click but only enter your username","Reply asking if it's real","Forward to friends to verify"],
+    correct:0, explanation:"Legitimate banks never request passwords or card numbers via email. Call the number on your physical card." },
+  { type:"response", bg:"call",
+    scenario:["Phone call: 'This is Microsoft Tech Support. We detected a virus on your computer. Give us remote access so we can fix it.'"],
+    question:"What should you do?",
+    options:["Hang up immediately — this is a vishing scam","Give them access to fix the problem","Ask for their name and call back later","Allow them to scan only your desktop"],
+    correct:0, explanation:"Microsoft never calls users unsolicited about viruses. This is vishing. Hang up and report it." },
+  { type:"response", bg:"email",
+    scenario:["Urgent email from the CFO asking you to wire $25,000 to a new supplier. The CFO is 'travelling' and can only be reached by email."],
+    question:"What is the correct procedure?",
+    options:["Call the CFO directly on their known phone number","Process it — the CFO needs it urgently","Reply to the email to confirm","Transfer half now to reduce risk"],
+    correct:0, explanation:"Always verify financial requests through a separate channel. This is classic Business Email Compromise." },
+  { type:"response", bg:"screen",
+    scenario:["Pop-up: 'VIRUS DETECTED! Your computer is at risk. Call Microsoft Support: 1-800-XXX-XXXX immediately!'"],
+    question:"What is the CORRECT action?",
+    options:["Close the browser — do not call the number","Call the number to get help","Download the suggested removal tool","Enter your email to get a free scan"],
+    correct:0, explanation:"Legitimate security alerts never include phone numbers. This is a tech support scam. Force-close the browser." },
+  { type:"classify", bg:"sms",
+    scenario:["SMS: 'FedEx: Your package couldn't be delivered. Update delivery preferences at fedex-delivery-update.com'"],
+    question:"What type of attack is this?",
+    options:["Smishing (SMS phishing)","Vishing (voice phishing)","Spear phishing","Pharming"],
+    correct:0, explanation:"Smishing uses SMS. The fake domain 'fedex-delivery-update.com' is the giveaway." },
+  { type:"classify", bg:"email",
+    scenario:["A cybercriminal researches a target on LinkedIn — name, role, colleagues — then sends a perfectly crafted email pretending to be their project partner."],
+    question:"This is an example of:",
+    options:["Spear phishing — targeted, personalised phishing","Generic phishing blast","Smishing","Watering hole attack"],
+    correct:0, explanation:"Spear phishing targets specific individuals using personal research to make the attack highly convincing." },
+  { type:"classify", bg:"email",
+    scenario:["A hacker sends mass emails to thousands claiming they've won a lottery and need to provide bank details to claim the prize."],
+    question:"What type of attack is this?",
+    options:["Mass phishing (generic blast)","Spear phishing","Whaling","Vishing"],
+    correct:0, explanation:"Mass phishing is untargeted — sent to thousands, relying on volume rather than personal research." },
+  { type:"classify", bg:"call",
+    scenario:["An attacker calls the company's finance department, pretends to be the auditor, and asks for account numbers over the phone."],
+    question:"This is an example of:",
+    options:["Vishing (voice phishing)","Smishing","Phishing email","Spear phishing"],
+    correct:0, explanation:"Vishing uses voice calls to extract sensitive information through social engineering." },
+  { type:"fill", bg:"email",
+    scenario:["New Employee Checklist:","✓ Create strong unique password","✓ Set account recovery email","[ ? ] — THIS STEP IS MISSING","✓ Restrict admin access","✓ Review permissions"],
+    question:"What critical security step is missing?",
+    options:["Enable Multi-Factor Authentication (MFA)","Add a profile picture","Set your timezone","Install a screensaver"],
+    correct:0, explanation:"MFA adds a second layer — even a stolen password alone cannot grant access without the second factor." },
+  { type:"fill", bg:"email",
+    scenario:["Password Reset Flow: 1. User requests reset  2. System emails link  3. [ MISSING STEP ]  4. User sets new password  5. Session invalidated"],
+    question:"What is the missing verification step?",
+    options:["Verify identity via secondary method (SMS code, security question, or backup email)","Send a second reset link","Auto-logout all sessions","Email the admin"],
+    correct:0, explanation:"A secondary identity verification step prevents account takeover during the reset process." },
+  { type:"spot", bg:"email",
+    scenario:["FROM: support@dropbox.com","SUBJECT: Action Required: Your Dropbox storage is full","Your Dropbox is 100% full. Upgrade or files will be deleted in 7 days.","[MANAGE STORAGE]"],
+    question:"How should you respond to this email?",
+    options:["Navigate directly to dropbox.com — don't click the email link","It's safe — the domain looks real, click the link","Dropbox never emails about storage, delete it","Only suspicious if you don't use Dropbox"],
+    correct:0, explanation:"Even with a real-looking domain, always navigate to the site directly rather than clicking email links." },
+  { type:"classify", bg:"email",
+    scenario:["An attacker compromises a popular industry news website visited by executives, planting malware that downloads automatically when the page loads."],
+    question:"What type of attack is this?",
+    options:["Watering hole attack","Spear phishing","Smishing","Vishing"],
+    correct:0, explanation:"A watering hole attack compromises legitimate websites frequented by the target group. No email click required." },
+];
+
+// ─────────────────────── GAME STATE ───────────────────────
+let questions=[], qIndex=0, chances=3, score=0, totalTime=0, hintsUsed=0;
+let timerInterval, questionStart, pendingGift=null;
+
+function getTimerSecs(){ const s=getState(); return Math.max(30,60-(s.level-1)*5); }
+function getState(){
+  return JSON.parse(localStorage.getItem("sp_state"))||{
+    codename:"Agent",coins:50,hintTokens:3,hearts:5,maxHearts:5,
+    lastHeartTime:Date.now(),xp:0,level:1,intelDone:0,chaseDone:0,
+    highestDistance:0,longestStreak:0
+  };
+}
+function saveState(s){ localStorage.setItem("sp_state",JSON.stringify(s)); }
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+// ─────────────────────── INIT ───────────────────────
+function init(){
+  const s=getState();
+  document.getElementById("st-hearts").textContent=s.hearts;
+  document.getElementById("st-hints").textContent=s.hintTokens;
+  document.getElementById("timer-secs-badge").textContent=getTimerSecs()+"s";
+  questions=shuffle(QUESTIONS).slice(0,10);
+  startHeartCountdown();
+  loadQuestion();
+}
+
+// ─────────────────────── HEART COUNTDOWN ───────────────────────
+function startHeartCountdown(){
+  function update(){
+    const s=getState(), cd=document.getElementById("regen-cd");
+    if(s.hearts>=s.maxHearts){cd.textContent="";return;}
+    const rem=30*60*1000-(Date.now()-s.lastHeartTime)%(30*60*1000);
+    const m=Math.floor(rem/60000), sec=Math.floor((rem%60000)/1000);
+    cd.textContent=" +"+m+":"+String(sec).padStart(2,"0");
+  }
+  update(); setInterval(update,1000);
+}
+
+// ─────────────────────── LOAD QUESTION ───────────────────────
+const TAGS={email:"📧 INTERCEPTED EMAIL",sms:"📱 INTERCEPTED SMS",url:"🔗 URL ANALYSIS",call:"📞 CALL TRANSCRIPT",screen:"🖥 SCREEN ALERT"};
+const BG_MAP={email:"email-bg",sms:"sms-bg",url:"url-bg",call:"call-bg",screen:"email-bg"};
+
+function loadQuestion(){
+  if(qIndex>=questions.length){endRound();return;}
+  const q=questions[qIndex];
+  document.getElementById("q-counter").textContent="Q "+(qIndex+1)+" / "+questions.length;
+  document.getElementById("mission-title").textContent="INTEL MISSION — "+q.type.toUpperCase();
+
+  // Scenario strip
+  const strip=document.getElementById("scenario-strip");
+  strip.className="scenario-strip "+(BG_MAP[q.bg]||"");
+  document.getElementById("scenario-tag").textContent=TAGS[q.bg]||"📋 SCENARIO";
+  const sc=document.getElementById("scenario-content");
+  sc.innerHTML="";
+  q.scenario.forEach((line,i)=>{
+    const d=document.createElement("div");
+    if(i===0&&(q.bg==="email"||q.bg==="sms")) d.className="s-from";
+    else if(i===1&&q.bg==="email") d.className="s-subj";
+    else if(line.startsWith("[")) d.className="s-link";
+    else d.className="s-body";
+    d.textContent=line; sc.appendChild(d);
+  });
+
+  document.getElementById("question-text").textContent=q.question;
+
+  // Answer buttons
+  const KEYS=["A","B","C","D"];
+  const ad=document.getElementById("answers"); ad.innerHTML="";
+  q.options.forEach((opt,i)=>{
+    const btn=document.createElement("button");
+    btn.className="ans-btn";
+    btn.id="ans-"+i;
+    btn.innerHTML=`<span class="ans-key">${KEYS[i]}</span><span class="ans-text">${opt}</span>`;
+    btn.onclick=()=>answer(i);
+    ad.appendChild(btn);
+  });
+
+  // Reset feedback
+  const fb=document.getElementById("feedback-bar");
+  fb.className="feedback-bar"; fb.textContent="";
+
+  startTimer();
+  questionStart=Date.now();
+}
+
+// ─────────────────────── TIMER ───────────────────────
+function startTimer(){
+  clearInterval(timerInterval);
+  const TOTAL=getTimerSecs();
+  let secs=TOTAL;
+  const bar=document.getElementById("timer-bar"), badge=document.getElementById("timer-secs-badge");
+  bar.style.width="100%"; bar.style.background="linear-gradient(90deg,#7a00ff,#ff00cc)";
+  badge.className="timer-secs"; badge.textContent=TOTAL+"s";
+  timerInterval=setInterval(()=>{
+    secs--;
+    const pct=(secs/TOTAL)*100;
+    bar.style.width=pct+"%"; badge.textContent=secs+"s";
+    if(pct<25){bar.style.background="linear-gradient(90deg,#ff4400,#ff0000)";badge.className="timer-secs crit";}
+    else if(pct<55){bar.style.background="linear-gradient(90deg,#ff8800,#ffcc00)";badge.className="timer-secs warn";}
+    else badge.className="timer-secs";
+    if(secs<=0){clearInterval(timerInterval);timeUp();}
+  },1000);
+}
+function timeUp(){ loseChance("Time's up!"); }
+
+// ─────────────────────── FLASH SCREEN ───────────────────────
+function flashScreen(isCorrect){
+  const el=document.getElementById("flash-overlay");
+  el.className=isCorrect?"correct show":"wrong show";
+  setTimeout(()=>el.className=isCorrect?"correct":"wrong",650);
+  setTimeout(()=>el.className="",900);
+}
+
+// ─────────────────────── ANSWER ───────────────────────
+function answer(idx){
+  clearInterval(timerInterval);
+  const q=questions[qIndex];
+  const elapsed=(Date.now()-questionStart)/1000;
+  totalTime+=elapsed;
+
+  const btns=document.querySelectorAll(".ans-btn");
+  btns.forEach(b=>b.disabled=true);
+
+  const fb=document.getElementById("feedback-bar");
+
+  if(idx===q.correct){
+    // ── CORRECT ──
+    btns[idx].classList.add("correct");
+    btns.forEach((b,i)=>{ if(i!==idx) b.classList.add("dim"); });
+    fb.className="feedback-bar correct-fb show";
+    fb.textContent="✓ Correct! "+q.explanation;
+    score++;
+    setTimeout(nextQuestion,1900);
+  } else {
+    // ── WRONG ──
+    btns[idx].classList.add("wrong");
+    btns[q.correct].classList.add("correct");
+    btns.forEach((b,i)=>{ if(i!==idx&&i!==q.correct) b.classList.add("dim"); });
+    fb.className="feedback-bar wrong-fb show";
+    fb.textContent="✗ Wrong. "+q.explanation;
+    loseChance(q.explanation);
+  }
+}
+
+function loseChance(reason){
+  clearInterval(timerInterval);
+  chances--; updateChanceDots();
+  if(chances<=0){
+    const s=getState();
+    s.hearts=Math.max(0,s.hearts-1); saveState(s);
+    document.getElementById("st-hearts").textContent=s.hearts;
+    setTimeout(()=>{
+      document.getElementById("lose-explanation").textContent=
+        s.hearts<=0?"You've run out of hearts. Come back in 30 min to regenerate.":"Last mistake: "+reason;
+      document.getElementById("lose-overlay").classList.add("show");
+    },1300);
+  } else {
+    setTimeout(nextQuestion,1900);
+  }
+}
+
+function updateChanceDots(){
+  for(let i=0;i<3;i++) document.getElementById("c"+i).classList.toggle("lost",i>=chances);
+}
+function nextQuestion(){ qIndex++; loadQuestion(); }
+
+// ─────────────────────── HINTS ───────────────────────
+const HINT_COST=[1,2,3,5];
+function useHint(type){
+  const s=getState();
+  const cost=HINT_COST[Math.min(hintsUsed,3)];
+  if(s.hintTokens<cost){showToast("Need "+cost+" hint tokens. You have "+s.hintTokens+".");return;}
+  s.hintTokens-=cost; hintsUsed++;
+  saveState(s); document.getElementById("st-hints").textContent=s.hintTokens;
+  const q=questions[qIndex];
+  if(type==="eliminate"){
+    const wrong=[0,1,2,3].filter(i=>i!==q.correct);
+    const toEl=wrong[Math.floor(Math.random()*wrong.length)];
+    const btn=document.getElementById("ans-"+toEl);
+    btn.disabled=true; btn.style.opacity="0.2";
+    showToast("✂ ELIMINATE: One wrong answer removed. (Cost: "+cost+" token"+(cost>1?"s":"")+")\n");
+  } else if(type==="spotlight"){
+    showToast("🔦 SPOTLIGHT: Focus on the sender domain and any URLs. Look for subtle misspellings.");
+  } else {
+    const tips=["Look carefully — scammers rely on you being in a hurry.","Check the sender domain character by character. One wrong letter = phishing.","Would a real company ask for this? If not, it's a scam.","Urgency is a manipulation tactic. Slow down and think.","When in doubt, verify through a completely separate channel."];
+    showToast("▶ AGENT BETA: "+tips[Math.floor(Math.random()*tips.length)]);
+  }
+}
+function showToast(msg){
+  const t=document.getElementById("hint-toast");
+  t.textContent=msg; t.className="hint-toast show";
+  setTimeout(()=>t.className="hint-toast",3500);
+}
+
+// ─────────────────────── END ROUND ───────────────────────
+const LEVEL_GIFTS=[
+  {icon:"◈",label:"+50 Coins",           apply:s=>{s.coins+=50;}},
+  {icon:"💡",label:"+2 Hint Tokens",     apply:s=>{s.hintTokens+=2;}},
+  {icon:"♥", label:"Full Hearts Restored!",apply:s=>{s.hearts=s.maxHearts;s.lastHeartTime=Date.now();}},
+  {icon:"◈",label:"+30 Coins",           apply:s=>{s.coins+=30;}},
+  {icon:"💡",label:"+1 Hint Token",      apply:s=>{s.hintTokens+=1;}},
+];
+
+function endRound(){
+  clearInterval(timerInterval);
+  const s=getState(), oldLevel=s.level;
+  const avgTime=totalTime/questions.length;
+  let stars=1;
+  if(score>=9&&avgTime<12) stars=3;
+  else if(score>=7||(score>=5&&avgTime<18)) stars=2;
+  const coins=[30,75,150][stars-1], tokens=[1,2,3][stars-1], xpGain=score*15+stars*20;
+  s.coins+=coins; s.hintTokens+=tokens; s.xp+=xpGain;
+  s.intelDone=(s.intelDone||0)+1;
+  const levelled=s.xp>=s.level*200;
+  if(levelled){s.xp-=s.level*200;s.level++;}
+  saveState(s);
+  setTimeout(()=>{
+    if(levelled) showLevelUp(oldLevel+1,coins,tokens,xpGain,stars);
+    else showWinScreen(coins,tokens,xpGain,stars);
+  },400);
+}
+
+function showLevelUp(newLevel,coins,tokens,xpGain,stars){
+  pendingGift={...LEVEL_GIFTS[Math.floor(Math.random()*LEVEL_GIFTS.length)],coins,tokens,xpGain,stars};
+  document.getElementById("lu-num").textContent="LEVEL "+newLevel;
+  document.getElementById("gift-icon").textContent=pendingGift.icon;
+  document.getElementById("gift-label").textContent=pendingGift.label;
+  const fl=document.getElementById("lu-flash"); fl.style.animation="none"; requestAnimationFrame(()=>fl.style.animation="");
+  spawnConfetti(80,"confetti-lu");
+  document.getElementById("levelup-overlay").classList.add("show");
+}
+
+function collectGift(){
+  if(!pendingGift)return;
+  const s=getState(); pendingGift.apply(s); saveState(s);
+  document.getElementById("levelup-overlay").classList.remove("show");
+  showWinScreen(pendingGift.coins,pendingGift.tokens,pendingGift.xpGain,pendingGift.stars);
+  pendingGift=null;
+}
+
+function showWinScreen(coins,tokens,xpGain,stars){
+  document.getElementById("win-rewards").innerHTML=
+    "<span style='color:#ffd700'>+"+coins+" coins</span>  •  "+
+    "<span style='color:#00ccff'>+"+tokens+" hints</span>  •  "+
+    "<span style='color:#b300ff'>+"+xpGain+" XP</span>";
+  const els=[document.getElementById("star1"),document.getElementById("star2"),document.getElementById("star3")];
+  els.forEach((el,i)=>{el.classList.remove("lit");setTimeout(()=>{if(i<stars)el.classList.add("lit");},i*350+200);});
+  spawnConfetti(60,"confetti-container");
+  document.getElementById("win-overlay").classList.add("show");
+}
+
+// ─────────────────────── CONFETTI ───────────────────────
+const CC=["#ff00cc","#7a00ff","#00ffcc","#ffd700","#ff4466","#00ccff","#ff9900","#00ff80"];
+function spawnConfetti(count,containerId){
+  const el=document.querySelector(".overlay.show #"+containerId)||document.getElementById(containerId);
+  if(!el)return; el.innerHTML="";
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div");
+    d.className="confetti-piece";
+    d.style.left=(Math.random()*100)+"vw"; d.style.top="-20px";
+    d.style.width=(6+Math.random()*8)+"px"; d.style.height=(6+Math.random()*8)+"px";
+    d.style.background=CC[Math.floor(Math.random()*CC.length)];
+    d.style.animationDuration=(1.5+Math.random()*2)+"s";
+    d.style.animationDelay=(Math.random()*0.8)+"s";
+    d.style.borderRadius=Math.random()>0.5?"50%":"2px";
+    el.appendChild(d); setTimeout(()=>d.remove(),3500);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
