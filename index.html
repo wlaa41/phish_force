@@ -251,6 +251,7 @@ function login() {
   if (accounts[user.toLowerCase()] === pass) {
     showSuccess("Access Granted... Welcome back, " + user);
     initState(user);
+    localStorage.setItem("sp_last_user", user);
     setTimeout(() => window.location.href = "home.html", 1200);
   } else {
     showError("Access Denied! Invalid codename or password.");
