@@ -84,6 +84,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 - **General public** wanting to protect themselves online
 - **Organisations** looking for engaging, low-cost security awareness training for staff
 - **Anyone** who uses email, SMS or the internet
+- **Completely free** â€” no account required, no data collected, no cost
 
 ---
 
