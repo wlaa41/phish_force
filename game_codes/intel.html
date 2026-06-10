@@ -697,7 +697,6 @@ function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=M
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function init(){
-  localStorage.setItem("sp_midgame", JSON.stringify({game:"intel"}));
   const s=getState();
   document.getElementById("st-hearts").textContent=s.hearts;
   document.getElementById("st-hints").textContent=s.hintTokens;
@@ -796,6 +795,7 @@ function flashScreen(isCorrect){
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ANSWER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function answer(idx){
+  localStorage.setItem("sp_midgame", JSON.stringify({game:"intel"}));
   clearInterval(timerInterval);
   const q=questions[qIndex];
   const elapsed=(Date.now()-questionStart)/1000;

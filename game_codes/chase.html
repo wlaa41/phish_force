@@ -737,6 +737,9 @@ let raf;
 function update() {
   if (!state.running || state.paused) return;
 
+  // Set midgame flag after player has actually started moving
+  if (state.frame === 1) localStorage.setItem("sp_midgame", JSON.stringify({game:"chase"}));
+
   state.frame++;
   state.distance += state.speed * 0.35;
 
@@ -1019,7 +1022,6 @@ function startGame() {
     return;
   }
   state.hearts = Math.min(3, ps.hearts);
-  localStorage.setItem("sp_midgame", JSON.stringify({game:"chase"}));
   updateHUD();
   state.running = true;
   loop();
