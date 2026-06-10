@@ -772,7 +772,8 @@ function update() {
   const gf = document.getElementById("gap-fill");
   if (state.gap > 75) gf.classList.add("critical");
   else gf.classList.remove("critical");
-  if (state.gap >= 100) { endGame(false); return; }
+  // Game over condition: gap reaches 100% (ShadowPhish fully catches up)
+if (state.gap >= 100) { endGame(false); return; }
 
   checkCollisions();
 
