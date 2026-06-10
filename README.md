@@ -52,6 +52,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 | Feature | Description |
 |---------|-------------|
 |---------|-------------|
+|---------|-------------|
 | 🕵️ **Intel Mission** | Quiz-based game — read phishing scenarios and pick the correct response |
 | 🏍️ **Highway Chase** | Endless runner — collect coins and answer checkpoints for speed boosts |
 | 💰 **Coin Economy** | Earn coins in Highway Chase, spend them on hints in Intel Mission |
