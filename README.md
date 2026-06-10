@@ -73,7 +73,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 | **Phishing** | Deceptive emails with fake links, spoofed senders, or malicious attachments |
 | **Smishing** | SMS-based scams impersonating banks, delivery services, or government agencies |
 | **Vishing** | Voice call deception — fake bank or tech support calls |
-| **Spear Phishing** | Targeted personal attacks using your own information |
+| **Spear Phishing** | Highly targeted attacks personalised with your name, employer, or recent activity |
 | **Whaling** | High-value attacks targeting executives and senior staff |
 
 ---
