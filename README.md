@@ -220,6 +220,8 @@ The game content, questions, and scenarios are original work by the PhishForce g
 
 > **Status:** Submitted for assessment — Module 503IT, Coventry University, Academic Year 2025/26.
 
+> **Status:** Submitted for assessment — Module 503IT, Coventry University, Academic Year 2025/26.
+
 © 2026 PhishForce Group — Coventry University BSc Computing Science
 
 ---
