@@ -72,7 +72,7 @@
     requestAnimationFrame(() => {
       document.getElementById("sp-bar").style.width = "100%";
     });
-    setTimeout(() => { window.location.href = url; }, 950);
+    setTimeout(() => { window.location.href = url; }, 900);
   }
 
   // ── Intercept all <a> clicks that stay on-site ────────────────────────────
