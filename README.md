@@ -2,8 +2,8 @@
 
 > A browser-based cybersecurity awareness game where players **learn to identify and respond** to phishing, smishing, vishing, spear phishing, and whaling attacks — through immersive gameplay scenarios.
 
-[![Play Now](https://img.shields.io/badge/%E2%96%B6%20PLAY%20NOW%20%E2%86%97-ShadowPhish-8B00FF?style=for-the-badge)](https://wlaa41.github.io/phish_force/game_codes/)
-[![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=for-the-badge&logo=github)](https://wlaa41.github.io/phish_force/game_codes/)
+[![Play Now](https://img.shields.io/badge/%E2%96%B6%20PLAY%20NOW%20%E2%86%97-ShadowPhish-8B00FF?style=for-the-badge)](https://wlaa41.github.io/phish_force/)
+[![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=for-the-badge&logo=github)](https://wlaa41.github.io/phish_force/)
 [![Version](https://img.shields.io/badge/Version-3.1-7a00ff?style=for-the-badge)]()
 [![Module](https://img.shields.io/badge/Module-503IT-00C8FF?style=for-the-badge)](https://www.coventry.ac.uk)
 [![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)]()
@@ -147,11 +147,11 @@ phish_force/
 
 **Online (recommended):**
 
-👉 **[Click here to play ↗](https://wlaa41.github.io/phish_force/game_codes/)** *(right-click → open in new tab)*
+👉 **[Click here to play ↗](https://wlaa41.github.io/phish_force/)** *(right-click → open in new tab)*
 
 **Locally:**
 1. Clone the repo: `git clone https://github.com/wlaa41/phish_force.git`
-2. Open `game_codes/index.html` in your browser
+2. Open `index.html` in your browser
 3. Login with an existing account, create one, or tap **Play as Guest** — no setup needed
 
 ---
@@ -212,5 +212,5 @@ The game content, questions, and scenarios are original work by the PhishForce g
 <p align="center">
   <strong>ShadowPhish Cyber Defense Academy</strong><br/>
   Module 503IT &nbsp;·&nbsp; BSc Computing Science &nbsp;·&nbsp; Coventry University<br/>
-  <a href="https://wlaa41.github.io/phish_force/game_codes/">wlaa41.github.io/phish_force/game_codes</a>
+  <a href="https://wlaa41.github.io/phish_force/">wlaa41.github.io/phish_force</a>
 </p>
