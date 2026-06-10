@@ -16,7 +16,9 @@
 
 The game makes cybersecurity training engaging by putting players in real-world phishing scenarios. Instead of reading slides, players make decisions, earn rewards, and build instincts for spotting cyber threats — all inside a cyberpunk-themed game world.
 
-No installation needed. No frameworks. Just open a browser and play.
+No installation needed. No frameworks. No accounts required. Just open a browser and play.
+
+> Built entirely with vanilla HTML, CSS and JavaScript â€” zero dependencies, works offline.
 
 ---
 
