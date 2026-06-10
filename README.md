@@ -109,6 +109,8 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 > **Browser support:** Chrome 90+, Firefox 88+, Edge 90+, Safari 14+
 
+> **Architecture:** Single-page HTML files with embedded CSS/JS — no build step, no bundler, no backend.
+
 ---
 
 ## 👨‍💻 Group Members — PhishForce
