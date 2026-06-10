@@ -100,6 +100,8 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 > Zero frameworks. Zero dependencies. Runs in any modern browser.
 
+> **Browser support:** Chrome 90+, Firefox 88+, Edge 90+, Safari 14+
+
 ---
 
 ## 👨‍💻 Group Members — PhishForce
