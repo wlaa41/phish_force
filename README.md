@@ -96,7 +96,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 | **CSS3** | Cyberpunk styling, animations, responsive design |
 | **Vanilla JavaScript** | Game logic, scoring, account system |
 | **Canvas API** | Highway Chase real-time rendering engine (480Ã—680 game world) |
-| **localStorage** | Player progress, accounts, leaderboard |
+| **localStorage** | Player progress, accounts, settings, leaderboard â€” all client-side |
 | **GitHub Pages** | Free hosting — no server required |
 
 > Zero frameworks. Zero dependencies. Runs in any modern browser.
