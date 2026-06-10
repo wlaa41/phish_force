@@ -937,8 +937,8 @@ function loadUI() {
   const contItem = document.getElementById("continue-item");
   const sub = document.getElementById("continue-sub");
   if (midgame) {
-    contItem.style.display = "";
-    sub.style.display = "";
+    contItem.style.display = "flex";
+    sub.style.display = "block";
     contItem.href = midgame.game === "chase" ? "chase.html" : "intel.html";
     sub.textContent = (midgame.game === "chase" ? "HIGHWAY CHASE" : "INTEL MISSION") + " \xB7 LEVEL " + s.level;
   } else {
