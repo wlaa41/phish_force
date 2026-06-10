@@ -914,6 +914,7 @@ function getState() {
   return s;
 }
 
+// loadUI â€” reads sp_state from localStorage and updates all HUD elements
 function loadUI() {
   const s=getState(); if(!s) return;
   const xpCap=s.level*200, pct=Math.min(100,(s.xp/xpCap)*100);
