@@ -28,7 +28,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 - Teach players to **recognise, classify, and respond** to real-world phishing attacks
 - Make cybersecurity education **fun, interactive, replayable and accessible**
-- Cover **5 attack types** through scenario-based gameplay
+- Cover **5 real-world attack types** through scenario-based gameplay across 20+ questions
 - Build **lasting awareness** through repetition and reward
 
 ---
