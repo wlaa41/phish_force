@@ -71,7 +71,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 | Attack Type | Description |
 |-------------|-------------|
 | **Phishing** | Deceptive emails with fake links, spoofed senders, or malicious attachments |
-| **Smishing** | SMS-based scams pretending to be trusted services |
+| **Smishing** | SMS-based scams impersonating banks, delivery services, or government agencies |
 | **Vishing** | Voice call deception — fake bank or tech support calls |
 | **Spear Phishing** | Targeted personal attacks using your own information |
 | **Whaling** | High-value attacks targeting executives and senior staff |
