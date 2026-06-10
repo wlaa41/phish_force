@@ -74,7 +74,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 | **Smishing** | SMS-based scams impersonating banks, delivery services, or government agencies |
 | **Vishing** | Voice call deception — fake bank or tech support calls |
 | **Spear Phishing** | Highly targeted attacks personalised with your name, employer, or recent activity |
-| **Whaling** | High-value attacks targeting executives and senior staff |
+| **Whaling** | High-value attacks targeting C-suite executives â€” often involving wire transfer fraud |
 
 ---
 
