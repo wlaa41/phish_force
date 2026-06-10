@@ -459,7 +459,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   opacity:0; transform:translateY(10px);
   transition:opacity 0.4s, transform 0.4s;
   pointer-events:none;
-  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
   box-shadow:0 0 16px rgba(0,200,255,0.2);
 }
 .beta-bubble.show { opacity:1; transform:translateY(0); }
