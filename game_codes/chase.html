@@ -66,8 +66,13 @@ canvas {
   height: 100%;
   background: linear-gradient(90deg, #00ff80, #ffcc00, #ff4444);
   border-radius: 4px;
-  transition: width 0.3s;
+  transition: width 0.3s, box-shadow 0.3s;
 }
+.gap-fill.critical {
+  box-shadow: 0 0 10px #ff4444;
+  animation: gapPulse 0.5s infinite alternate;
+}
+@keyframes gapPulse { from{opacity:1} to{opacity:0.6} }
 
 /* ── CHECKPOINT OVERLAY ── */
 .checkpoint-overlay {
@@ -143,7 +148,7 @@ canvas {
   padding: 30px 36px; border-radius: 16px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  text-align: center; min-width: 300px;
+  text-align: center; min-width: 320px;
   box-shadow: 0 0 50px rgba(140,0,255,0.3);
 }
 .end-title { font-size: 20px; font-weight: 800; letter-spacing: 4px; margin-bottom: 8px; }
@@ -211,12 +216,31 @@ canvas {
   <!-- CHECKPOINT OVERLAY -->
   <div class="checkpoint-overlay" id="cp-overlay">
     <div class="cp-header">⚡ QUESTION ZONE</div>
-    <div class="cp-sub">3/3 CORRECT = SPEED BOOST — ANSWER TO PROCEED</div>
+    <div class="cp-sub">3/3 CORRECT = SPEED BOOST &nbsp;|&nbsp; ANSWER TO CLOSE THE GAP</div>
     <div class="cp-timer-bar"><div class="cp-timer-fill" id="cp-timer"></div></div>
     <div class="cp-progress" id="cp-prog">QUESTION 1 / 3</div>
     <div class="cp-question" id="cp-question"></div>
     <div class="cp-answers" id="cp-answers"></div>
     <div class="cp-result" id="cp-result"></div>
+  </div>
+
+  <!-- MOBILE CONTROLS -->
+  <div id="mobile-controls" style="
+    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    display:flex; gap:16px; z-index:10; pointer-events:all;
+  ">
+    <button onclick="mobileMove(-1)" style="
+      width:56px;height:56px;border-radius:50%;
+      background:rgba(0,0,0,0.65);border:1px solid rgba(179,0,255,0.4);
+      color:#b300ff;font-size:22px;cursor:pointer;
+      box-shadow:0 0 12px rgba(179,0,255,0.3);
+    ">◀</button>
+    <button onclick="mobileMove(1)" style="
+      width:56px;height:56px;border-radius:50%;
+      background:rgba(0,0,0,0.65);border:1px solid rgba(0,200,255,0.4);
+      color:#00ccff;font-size:22px;cursor:pointer;
+      box-shadow:0 0 12px rgba(0,200,255,0.3);
+    ">▶</button>
   </div>
 
   <!-- END OVERLAY -->
@@ -265,6 +289,18 @@ const CP_QUESTIONS = [
     ans:0 },
   { q:"Which action best protects you from credential theft?",
     opts:["Using a unique strong password + MFA on every account","Using the same password everywhere for easy recall","Changing your password every day","Writing it on paper and keeping it at your desk"],
+    ans:0 },
+  { q:"What does a padlock icon in the browser address bar guarantee?",
+    opts:["The connection is encrypted — but NOT that the site is safe","The site is completely safe to use","The site is verified by the government","Your payment details are protected"],
+    ans:0 },
+  { q:"A stranger on social media asks for your date of birth to 'verify your identity'. You should:",
+    opts:["Refuse — this is a social engineering attempt to harvest personal data","Share it — it is public information","Share just the year, not the full date","Ask them to verify themselves first"],
+    ans:0 },
+  { q:"A website URL starts with 'http://' instead of 'https://'. This means:",
+    opts:["The connection is unencrypted — your data could be intercepted","The site is definitely a phishing page","The site is faster to load","The site is safe for shopping"],
+    ans:0 },
+  { q:"What is 'whaling' in cybersecurity?",
+    opts:["Targeted phishing attacks aimed at senior executives (CEO, CFO)","Phishing attacks on fishing industry websites","Mass email phishing targeting millions","Attacks via WhatsApp messages"],
     ans:0 },
   { q:"What is 'vishing'?",
     opts:["Voice call phishing — scammers call pretending to be trusted organisations","A type of malware","Phishing via video","Phishing via email"],
@@ -359,7 +395,7 @@ function drawBackground() {
 
   // Neon gutter lines
   ctx.lineWidth = 2;
-  ctx.shadowBlur = 10; ctx.shadowColor = "#00ff60";
+  ctx.shadowBlur = 12; ctx.shadowColor = "#00ff80";
   ctx.strokeStyle = "rgba(0,255,80,0.5)";
   ctx.beginPath(); ctx.moveTo(ROAD_L, 0); ctx.lineTo(ROAD_L, H); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(ROAD_R, 0); ctx.lineTo(ROAD_R, H); ctx.stroke();
@@ -448,7 +484,7 @@ function drawBike(x, y, glowColor, isBoosting) {
   const bh = 64, bw = 14;
   const frontWheelY = y - bh * 0.40;
   const rearWheelY  = y + bh * 0.40;
-  const bodyColor   = isBoosting ? "#00ff80" : "#1a66ff";
+  const bodyColor   = isBoosting ? "#00ff80" : "#2277ff";
 
   // ── Rear wheel ──
   ctx.shadowBlur = 10; ctx.shadowColor = glowColor;
@@ -698,6 +734,15 @@ function update() {
   state.frame++;
   state.distance += state.speed * 0.35;
 
+  // Milestone celebrations
+  if (Math.floor(state.distance) === 1000 || Math.floor(state.distance) === 2000 ||
+      Math.floor(state.distance) === 3000 || Math.floor(state.distance) === 5000) {
+    if (!state["milestone_"+Math.floor(state.distance)]) {
+      state["milestone_"+Math.floor(state.distance)] = true;
+      showFlash("🎯 " + Math.floor(state.distance) + "m REACHED!", "#00ccff");
+    }
+  }
+
   // Speed scaling
   state.speed = Math.min(12, 3.5 + state.distance / 600);
   if (state.boosting > 0) { state.speed = Math.min(16, state.speed + 4); state.boosting--; }
@@ -720,6 +765,9 @@ function update() {
 
   // Gap: increases over time, correct answers close it
   state.gap = Math.min(100, state.gap + 0.015);
+  const gf = document.getElementById("gap-fill");
+  if (state.gap > 75) gf.classList.add("critical");
+  else gf.classList.remove("critical");
   if (state.gap >= 100) { endGame(false); return; }
 
   checkCollisions();
@@ -905,13 +953,28 @@ function endGame(win) {
     if (state.gap >= 100) sub.textContent = "The operative escaped with the data. Regroup and try again.";
     else sub.textContent = "Your vehicle was disabled. The chase is over for now.";
   }
-  rewards.textContent = "+" + coins + " coins  •  " + Math.floor(state.distance) + "m distance  •  +" + xp + " XP";
+  const ps2 = getPlayerState();
+  const bestDist = ps2.highestDistance || 0;
+  const isNewBest = Math.floor(state.distance) > bestDist;
+  rewards.textContent = "+" + coins + " coins  •  " + Math.floor(state.distance) + "m" +
+    (isNewBest ? " 🏆 NEW BEST!" : " (best: " + bestDist + "m)") + "  •  +" + xp + " XP";
   ov.classList.add("show");
+}
+
+// ── MOBILE BUTTON HANDLER ──
+function mobileMove(dir) {
+  if (!state.running || state.paused) return;
+  if (dir === -1 && state.playerLane > 0) { state.playerLane--; state.targetX = LANES[state.playerLane]; }
+  if (dir ===  1 && state.playerLane < 2) { state.playerLane++; state.targetX = LANES[state.playerLane]; }
 }
 
 // ────────────────── INPUT ──────────────────
 document.addEventListener("keydown", e => {
   if (!state.running || state.paused) return;
+  if (e.key === "p" || e.key === "P") {
+    if (state.running) { state.paused = !state.paused; if (!state.paused) loop(); }
+    return;
+  }
   if (e.key === "ArrowLeft"  || e.key === "a" || e.key === "A") {
     if (state.playerLane > 0) { state.playerLane--; state.targetX = LANES[state.playerLane]; }
   }

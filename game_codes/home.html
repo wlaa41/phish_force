@@ -790,7 +790,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 <div class="brand-corner">
   <div class="brand-academy">◈ CYBER DEFENSE ACADEMY</div>
   <div class="brand-title">SHADOW<span>PHISH</span></div>
-  <div class="brand-tagline">TRUST NOTHING · VERIFY EVERYTHING</div>
+  <div class="brand-tagline">VERIFY EVERYTHING · TRUST NO ONE</div>
 </div>
 
 <!-- ── AGENT BETA ── -->
@@ -983,6 +983,10 @@ const THREATS=[
   "CEO fraud emails reported across 40 companies this morning",
   "New smishing wave: fake delivery notifications with malicious links",
   "Three new phishing domains registered overnight — blocklists updated",
+  "Credential stuffing attack detected — 8,400 accounts targeted using leaked passwords",
+  "Fake job offer phishing wave targeting graduates — verify all recruitment emails",
+  "QR code phishing ('quishing') incidents rising — scan with caution in public spaces",
+  "Deepfake voice used in vishing attack — CEO impersonation nets $200K in fraudulent transfer",
 ];
 let threatIdx=0;
 function buildDots(){
@@ -1014,6 +1018,10 @@ const TIPS=[
   "Hover over links before clicking — the real URL reveals everything.",
   "When in doubt, verify through a completely separate channel.",
   "ShadowPhish is watching. So are we. Stay sharp, agent.",
+  "Two-factor authentication blocks 99% of automated attacks. Enable it everywhere.",
+  "Public Wi-Fi is a trap. Never log into banking or sensitive accounts on it.",
+  "Check email headers — the display name can lie, but the domain cannot hide.",
+  "The weakest link in any security system is human trust. Don't be the weakest link.",
 ];
 let betaIdx=0;
 function showBeta(){
@@ -1040,7 +1048,7 @@ function modalBgClose(e, id) {
 function buildLeaderboard() {
   const s = getState(); if (!s) return;
   const MOCK = [
-    {name:"ShadowHunter", intel:18, streak:12, chaseRuns:15, bestDist:4820, xp:3400},
+    {name:"ShadowHunter", intel:22, streak:15, chaseRuns:18, bestDist:5240, xp:4200},
     {name:"ByteBreaker",  intel:14, streak:9,  chaseRuns:11, bestDist:3900, xp:2650},
     {name:"NullPointer",  intel:11, streak:7,  chaseRuns:8,  bestDist:3100, xp:1980},
     {name:"PhishSlayer",  intel:8,  streak:5,  chaseRuns:6,  bestDist:2500, xp:1420},
@@ -1104,6 +1112,13 @@ buildDots();
 setInterval(cycleThreat,6000);
 setTimeout(showBeta,3500);
 setInterval(showBeta,22000);
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    ["modal-modes","modal-lb","modal-settings"].forEach(id => closeModal(id));
+    closeProfile();
+  }
+});
 
 window.addEventListener("resize",()=>{
   const cv=document.getElementById("scene-bg");

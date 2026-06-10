@@ -44,7 +44,7 @@ body {
   border-radius: 15px;
   border: 1px solid rgba(255,255,255,0.1);
   text-align: center; color: white;
-  box-shadow: 0 0 40px rgba(140,0,255,0.3);
+  box-shadow: 0 0 50px rgba(140,0,255,0.4), 0 0 100px rgba(100,0,200,0.15);
   transition: 0.3s;
 }
 
@@ -59,7 +59,7 @@ body {
   to{text-shadow:0 0 20px #ff00cc, 0 0 40px #6a00ff}
 }
 
-.subtitle { font-size:12px; margin-bottom:20px; color:#ccc; }
+.subtitle { font-size:11px; margin-bottom:20px; color:#aaa; letter-spacing:1px; }
 
 /* ── FORM PANELS ── */
 .form-panel { display:none; }
@@ -78,6 +78,14 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="password"]:focus {
   border-color: rgba(179,0,255,0.5);
+}
+input.input-error {
+  border-color: rgba(255,50,80,0.7) !important;
+  box-shadow: 0 0 0 2px rgba(255,50,80,0.15);
+  animation: inputShake 0.25s;
+}
+@keyframes inputShake {
+  0%,100%{transform:translateX(0)} 33%{transform:translateX(-4px)} 66%{transform:translateX(4px)}
 }
 input::placeholder { color:#666; }
 
@@ -151,7 +159,10 @@ input::placeholder { color:#666; }
     <!-- ── LOGIN PANEL ── -->
     <div class="form-panel active" id="panel-login">
       <input id="login-user" type="text"     placeholder="Codename / Username">
-      <input id="login-pass" type="password" placeholder="Password">
+      <div style="position:relative;">
+      <input id="login-pass" type="password" placeholder="Password" style="padding-right:38px;width:100%;">
+      <span onclick="togglePwd('login-pass',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:13px;color:#666;user-select:none;">👁</span>
+    </div>
 
       <button class="btn-main" onclick="login()">LOGIN</button>
       <button class="btn-main btn-guest" onclick="guestLogin()">PLAY AS GUEST</button>
@@ -178,6 +189,21 @@ input::placeholder { color:#666; }
 
     <p id="msg"></p>
 
+    <!-- Feedback link -->
+    <div style="margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.07);">
+      <a href="feedback.html"
+         style="font-size:10px; letter-spacing:1.5px; color:#555e80;
+                text-decoration:none; font-family:'Orbitron',sans-serif;
+                transition:color 0.2s;"
+         onmouseover="this.style.color='#b300ff'"
+         onmouseout="this.style.color='#555e80'">
+        ✦ LEAVE FEEDBACK
+      </a>
+    </div>
+    <div style="margin-top:8px;font-size:8px;color:#333;letter-spacing:2px;font-family:'Orbitron',sans-serif;">
+      v3.1 · CYBER DEFENSE ACADEMY
+    </div>
+
   </div>
 </div>
 
@@ -186,7 +212,7 @@ input::placeholder { color:#666; }
 const emojis = ["🎮","👾","🔥","💀","⚔️","🕹️","🚀","💻","🎯"];
 (function createParticles() {
   const c = document.getElementById("particles");
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 35; i++) {
     let s = document.createElement("span");
     s.innerText = emojis[Math.floor(Math.random() * emojis.length)];
     s.style.left = Math.random() * 100 + "vw";
@@ -228,6 +254,7 @@ function login() {
   if (accounts[user.toLowerCase()] === pass) {
     showSuccess("Access Granted... Welcome back, " + user);
     initState(user);
+    localStorage.setItem("sp_last_user", user);
     setTimeout(() => window.location.href = "home.html", 1200);
   } else {
     showError("Access Denied! Invalid codename or password.");
@@ -293,6 +320,22 @@ function showSuccess(text) {
   msg.style.color = "#00ff99";
   msg.innerText = text;
 }
+
+/* ── PASSWORD TOGGLE ── */
+function togglePwd(id, icon) {
+  const inp = document.getElementById(id);
+  if (inp.type === "password") { inp.type = "text"; icon.style.color="#b300ff"; }
+  else { inp.type = "password"; icon.style.color="#666"; }
+}
+
+/* ── ENTER KEY SUPPORT ── */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    const panel = document.querySelector(".form-panel.active");
+    if (panel && panel.id === "panel-login") login();
+    else if (panel && panel.id === "panel-signup") register();
+  }
+});
 
 /* ── AUTO-FILL saved user ── */
 window.onload = () => {
