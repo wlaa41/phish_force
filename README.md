@@ -80,7 +80,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 ## 👥 Target Audience
 
-- **University students** learning cybersecurity fundamentals
+- **University students** studying cybersecurity, computing, or digital literacy
 - **General public** wanting to protect themselves online
 - **Organisations** looking for engaging security awareness training
 - **Anyone** who uses email, SMS or the internet
