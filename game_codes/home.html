@@ -88,6 +88,8 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   font-family:'Rajdhani',sans-serif; letter-spacing:2px;
   margin-left:42px; margin-top:-10px; margin-bottom:4px;
 }
+#continue-item { display:none; }
+#continue-sub  { display:none; }
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TOP-LEFT PROFILE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .profile-hud {
@@ -239,7 +241,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   animation: floatBadge 4s ease-in-out infinite;
   filter: drop-shadow(0 0 18px rgba(0,200,255,0.5));
   transition: filter 0.3s;
-  cursor:default;
+  cursor:pointer;
 }
 .holo-wrap:hover {
   filter: drop-shadow(0 0 32px rgba(0,200,255,0.9)) drop-shadow(0 0 60px rgba(0,180,255,0.4));
@@ -558,7 +560,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 <!-- â”€â”€ LEFT MENU â”€â”€ -->
 <div class="left-panel">
   <div class="menu-list">
-    <a class="menu-item active" href="intel.html">
+    <a class="menu-item active" id="continue-item" href="intel.html">
       <span class="menu-label">Continue</span>
     </a>
     <div class="menu-continue-sub" id="continue-sub">INTEL MISSION Â· LEVEL 1</div>
@@ -702,7 +704,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 </div>
 
 <!-- â”€â”€ HOLOGRAPHIC CSA BADGE â€” Fish+Hook SVG Logo â”€â”€ -->
-<div class="holo-wrap">
+<div class="holo-wrap" onclick="openModal('modal-modes',event)" title="View Levels">
   <svg viewBox="0 0 300 300" width="260" height="260" xmlns="http://www.w3.org/2000/svg">
 
     <!-- â”€â”€ OUTER CIRCUIT RING â”€â”€ -->
@@ -930,9 +932,19 @@ function loadUI() {
   document.getElementById("hud-coins").textContent  = s.coins;
   document.getElementById("hud-hearts").textContent = s.hearts+"/"+s.maxHearts;
 
-  // Continue sub-label
+  // Continue — only visible if a game was left midway
+  const midgame = JSON.parse(localStorage.getItem("sp_midgame") || "null");
+  const contItem = document.getElementById("continue-item");
   const sub = document.getElementById("continue-sub");
-  sub.textContent = missions>0 ? "MISSION "+missions+" Â· LEVEL "+s.level : "START YOUR FIRST MISSION";
+  if (midgame) {
+    contItem.style.display = "";
+    sub.style.display = "";
+    contItem.href = midgame.game === "chase" ? "chase.html" : "intel.html";
+    sub.textContent = (midgame.game === "chase" ? "HIGHWAY CHASE" : "INTEL MISSION") + " \xB7 LEVEL " + s.level;
+  } else {
+    contItem.style.display = "none";
+    sub.style.display = "none";
+  }
 
   // Popup
   document.getElementById("pp-name").textContent  = s.codename.toUpperCase();

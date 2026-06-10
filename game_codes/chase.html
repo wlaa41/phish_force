@@ -934,6 +934,7 @@ function showFlash(msg, color) {
 function endGame(win) {
   state.running = false;
   cancelAnimationFrame(raf);
+  localStorage.removeItem("sp_midgame");
 
   const ps = getPlayerState();
   const coins = win ? 200 : Math.min(50, state.coins * 5);
@@ -1018,6 +1019,7 @@ function startGame() {
     return;
   }
   state.hearts = Math.min(3, ps.hearts);
+  localStorage.setItem("sp_midgame", JSON.stringify({game:"chase"}));
   updateHUD();
   state.running = true;
   loop();

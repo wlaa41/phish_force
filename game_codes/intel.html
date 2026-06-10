@@ -697,6 +697,7 @@ function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=M
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function init(){
+  localStorage.setItem("sp_midgame", JSON.stringify({game:"intel"}));
   const s=getState();
   document.getElementById("st-hearts").textContent=s.hearts;
   document.getElementById("st-hints").textContent=s.hintTokens;
@@ -832,6 +833,7 @@ function loseChance(reason){
     const s=getState();
     s.hearts=Math.max(0,s.hearts-1); saveState(s);
     document.getElementById("st-hearts").textContent=s.hearts;
+    localStorage.removeItem("sp_midgame");
     setTimeout(()=>{
       document.getElementById("lose-explanation").textContent=
         s.hearts<=0?"You've run out of hearts. Come back in 30 min to regenerate.":"Last mistake: "+reason;
@@ -922,6 +924,7 @@ function collectGift(){
 }
 
 function showWinScreen(coins,tokens,xpGain,stars){
+  localStorage.removeItem("sp_midgame");
   document.getElementById("win-rewards").innerHTML=
     "<span style='color:#ffd700'>+"+coins+" coins</span>  â€¢  "+
     "<span style='color:#00ccff'>+"+tokens+" hints</span>  â€¢  "+
