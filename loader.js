@@ -38,7 +38,7 @@
     #sp-loader .sp-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #7a00ff, #00ccff);
+      background: linear-gradient(90deg, #7a00ff, #b300ff, #00ccff);
       border-radius: 2px;
       transition: width 0.85s cubic-bezier(0.4, 0, 0.2, 1);
     }
