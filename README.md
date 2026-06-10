@@ -151,7 +151,7 @@ phish_force/
 
 ## 💬 Feedback
 
-Played the game? We'd love to hear your thoughts!
+Played the game? We'd love to hear your thoughts â€” your feedback directly helps us improve!
 
 👉 [**Leave Feedback**](https://wlaa41.github.io/phish_force/feedback.html)
 
