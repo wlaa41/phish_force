@@ -193,6 +193,8 @@ Played the game? We'd love to hear your thoughts â€” your feedback directly
 
 > This is an academic group project. External contributions are welcome for educational purposes.
 
+> This is an academic group project. External contributions are welcome for educational purposes.
+
 Want to help improve ShadowPhish?
 
 1. Fork the repository
