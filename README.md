@@ -1,10 +1,20 @@
 # 🎮 ShadowPhish — Cyber Defense Academy
 
-> A browser-based cybersecurity awareness game where players learn to identify phishing, smishing, vishing, spear phishing, and whaling attacks — through gameplay.
+> A browser-based cybersecurity awareness game where players **learn to identify and respond** to phishing, smishing, vishing, spear phishing, and whaling attacks — through immersive gameplay scenarios.
 
-[![Play Now](https://img.shields.io/badge/▶%20PLAY%20NOW-ShadowPhish-8B00FF?style=for-the-badge)](https://wlaa41.github.io/phish_force/game_codes/)
-[![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=for-the-badge&logo=github)](https://wlaa41.github.io/phish_force/game_codes/)
+[![Play Now](https://img.shields.io/badge/%E2%96%B6%20PLAY%20NOW%20%E2%86%97-ShadowPhish-8B00FF?style=for-the-badge)](https://wlaa41.github.io/phish_force/)
+[![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=for-the-badge&logo=github)](https://wlaa41.github.io/phish_force/)
+[![Version](https://img.shields.io/badge/Version-3.1-7a00ff?style=for-the-badge)]()
 [![Module](https://img.shields.io/badge/Module-503IT-00C8FF?style=for-the-badge)](https://www.coventry.ac.uk)
+[![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)]()
+[![HTML5](https://img.shields.io/badge/Built%20with-HTML5-E34F26?style=for-the-badge&logo=html5)]()
+[![Stars](https://img.shields.io/github/stars/wlaa41/phish_force?style=for-the-badge)](https://github.com/wlaa41/phish_force)
+
+---
+
+## 🎯 Project Summary
+
+ShadowPhish is a gamified cybersecurity awareness platform built to help everyday users recognise and defend against real-world phishing attacks.
 
 ---
 
@@ -14,15 +24,17 @@
 
 The game makes cybersecurity training engaging by putting players in real-world phishing scenarios. Instead of reading slides, players make decisions, earn rewards, and build instincts for spotting cyber threats — all inside a cyberpunk-themed game world.
 
-No installation needed. No frameworks. Just open a browser and play.
+No installation needed. No frameworks. No accounts required. Just open a browser and play.
+
+> Built entirely with vanilla HTML, CSS and JavaScript — zero dependencies, works offline.
 
 ---
 
 ## 🎯 Objective
 
-- Teach players to **recognise and respond** to real phishing attacks
-- Make cybersecurity education **fun, interactive and accessible**
-- Cover **5 attack types** through scenario-based gameplay
+- Teach players to **recognise, classify, and respond** to real-world phishing attacks
+- Make cybersecurity education **fun, interactive, replayable and accessible**
+- Cover **5 real-world attack types** through scenario-based gameplay across 20+ questions
 - Build **lasting awareness** through repetition and reward
 
 ---
@@ -34,7 +46,7 @@ No installation needed. No frameworks. Just open a browser and play.
 | 🕵️ **Intel Mission** | Quiz-based game — read phishing scenarios and pick the correct response |
 | 🏍️ **Highway Chase** | Endless runner — collect coins and answer checkpoints for speed boosts |
 | 💰 **Coin Economy** | Earn coins in Highway Chase, spend them on hints in Intel Mission |
-| ❤️ **Heart System** | Limited lives — wrong answers cost hearts, regenerate over time |
+| ❤️ **Heart System** | Limited lives — wrong answers cost hearts, regenerate every 30 minutes |
 | ⭐ **XP & Levelling** | Gain experience points and level up as your knowledge improves |
 | 💡 **Hint System** | Spend coins to reveal partial answers when stuck |
 | 🏆 **Leaderboard** | Global rankings — compete with other players |
@@ -64,20 +76,21 @@ No installation needed. No frameworks. Just open a browser and play.
 
 | Attack Type | Description |
 |-------------|-------------|
-| **Phishing** | Deceptive emails with fake links or attachments |
-| **Smishing** | SMS-based scams pretending to be trusted services |
-| **Vishing** | Voice call deception — fake bank or tech support calls |
-| **Spear Phishing** | Targeted personal attacks using your own information |
-| **Whaling** | High-value attacks targeting executives and senior staff |
+| **Phishing** | Deceptive emails with fake links, spoofed senders, or malicious attachments |
+| **Smishing** | SMS-based scams impersonating banks, delivery services, or government agencies |
+| **Vishing** | Voice call deception — fake bank, HMRC, or tech support scams creating urgency |
+| **Spear Phishing** | Highly targeted attacks personalised with your name, employer, or recent activity |
+| **Whaling** | High-value attacks targeting C-suite executives — often involving wire transfer fraud |
 
 ---
 
 ## 👥 Target Audience
 
-- **University students** learning cybersecurity fundamentals
+- **University students** studying cybersecurity, computing, or digital literacy
 - **General public** wanting to protect themselves online
-- **Organisations** looking for engaging security awareness training
+- **Organisations** looking for engaging, low-cost security awareness training for staff
 - **Anyone** who uses email, SMS or the internet
+- **Completely free** — no account required, no data collected, no cost
 
 ---
 
@@ -88,11 +101,15 @@ No installation needed. No frameworks. Just open a browser and play.
 | **HTML5** | Page structure and game layout |
 | **CSS3** | Cyberpunk styling, animations, responsive design |
 | **Vanilla JavaScript** | Game logic, scoring, account system |
-| **Canvas API** | Highway Chase rendering engine |
-| **localStorage** | Player progress, accounts, leaderboard |
+| **Canvas API** | Highway Chase real-time rendering engine (480×680 game world) |
+| **localStorage** | Player progress, accounts, settings, leaderboard — all client-side |
 | **GitHub Pages** | Free hosting — no server required |
 
 > Zero frameworks. Zero dependencies. Runs in any modern browser.
+
+> **Browser support:** Chrome 90+, Firefox 88+, Edge 90+, Safari 14+
+
+> **Architecture:** Single-page HTML files with embedded CSS/JS — no build step, no bundler, no backend.
 
 ---
 
@@ -100,16 +117,16 @@ No installation needed. No frameworks. Just open a browser and play.
 
 | # | Name | Student ID | GitHub | Role |
 |---|------|-----------|--------|------|
-| 1 | Prateek Rana | 15646051 | [RanaPrateek](https://github.com/RanaPrateek) | Project Lead / Backend / Deployment |
-| 2 | Prathish Thangaraj | 15973717 | [prathish-5327](https://github.com/prathish-5327) | UI Developer / Documentation |
-| 3 | Allen Twins George | 15629722 | [allentgeorge17-oss](https://github.com/allentgeorge17-oss) | UI/UX Designer / Account System |
-| 4 | Bishal Raut | 15899532 | [rautb-del](https://github.com/rautb-del) | Game Logic / Hint System / QA |
-| 5 | Dipesh Regmi | 15175919 | [deepeshf555-dotcom](https://github.com/deepeshf555-dotcom) | Frontend / Leaderboard / Cross-browser |
-| 6 | Avtar | 15643832 | [avtarpanchal](https://github.com/avtarpanchal)| Content Developer / QA / Logo |
+| 1 | Prateek Rana | | [RanaPrateek](https://github.com/RanaPrateek) | Project Lead / Backend / Deployment |
+| 2 | Prathish Thangaraj | | | UI Developer / Documentation |
+| 3 | Allen Twins George | | | UI/UX Designer / Account System |
+| 4 | Bishal Raut | | | Game Logic / Hint System / QA |
+| 5 | Dipesh Regmi | | | Frontend / Leaderboard / Cross-browser |
+| 6 | Avtar Panchal | | | Content Developer / QA / Logo |
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```
 phish_force/
@@ -117,8 +134,7 @@ phish_force/
 │   ├── index.html       # Login & Sign Up screen
 │   ├── home.html        # Home dashboard
 │   ├── intel.html       # Intel Mission game
-│   ├── chase.html       # Highway Chase game
-│   └── ...              # Assets and scripts
+│   └── chase.html       # Highway Chase game
 ├── meeting_docx_file/   # Meeting records
 ├── meetings_file/       # Sprint notes
 ├── feedback.html        # Player feedback form
@@ -131,24 +147,24 @@ phish_force/
 
 **Online (recommended):**
 
-👉 [**Click here to play**](https://wlaa41.github.io/phish_force/game_codes/)
+👉 **[Click here to play ↗](https://wlaa41.github.io/phish_force/)** *(right-click → open in new tab)*
 
 **Locally:**
 1. Clone the repo: `git clone https://github.com/wlaa41/phish_force.git`
-2. Open `game_codes/index.html` in your browser
-3. Login or tap **Play as Guest** — no setup needed
+2. Open `index.html` in your browser
+3. Login with an existing account, create one, or tap **Play as Guest** — no setup needed
 
 ---
 
 ## 💬 Feedback
 
-Played the game? We'd love to hear your thoughts!
+Played the game? We'd love to hear your thoughts — your feedback directly helps us improve!
 
 👉 [**Leave Feedback**](https://wlaa41.github.io/phish_force/feedback.html)
 
 ---
 
-## 🔐 Quick Cybersecurity Tips
+## 📝 Quick Cybersecurity Tips
 
 > Learn these before you play — test yourself in the game!
 
@@ -161,6 +177,8 @@ Played the game? We'd love to hear your thoughts!
 ---
 
 ## 🤝 How to Contribute
+
+> This is an academic group project. External contributions are welcome for educational purposes.
 
 Want to help improve ShadowPhish?
 
@@ -181,7 +199,11 @@ Want to help improve ShadowPhish?
 
 ## 📄 License
 
-This project was created for **academic purposes** as part of Module 503IT at Coventry University.
+This project was created for **academic and educational purposes** as part of Module 503IT at Coventry University.
+
+The game content, questions, and scenarios are original work by the PhishForce group.
+
+> **Status:** Submitted for assessment — Module 503IT, Coventry University, Academic Year 2025/26.
 
 © 2026 PhishForce Group — Coventry University BSc Computing Science
 
@@ -190,5 +212,5 @@ This project was created for **academic purposes** as part of Module 503IT at Co
 <p align="center">
   <strong>ShadowPhish Cyber Defense Academy</strong><br/>
   Module 503IT &nbsp;·&nbsp; BSc Computing Science &nbsp;·&nbsp; Coventry University<br/>
-  <a href="https://wlaa41.github.io/phish_force/game_codes/">wlaa41.github.io/phish_force/game_codes</a>
+  <a href="https://wlaa41.github.io/phish_force/">wlaa41.github.io/phish_force</a>
 </p>
