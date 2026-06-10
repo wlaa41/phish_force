@@ -26,7 +26,7 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 ## 🎯 Objective
 
-- Teach players to **recognise and respond** to real phishing attacks
+- Teach players to **recognise, classify, and respond** to real-world phishing attacks
 - Make cybersecurity education **fun, interactive and accessible**
 - Cover **5 attack types** through scenario-based gameplay
 - Build **lasting awareness** through repetition and reward
