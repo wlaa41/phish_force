@@ -61,7 +61,7 @@
   overlay.innerHTML = `
     <img class="sp-fish" src="ShadowPhish_logo.png" alt="">
     <div class="sp-bar-wrap"><div class="sp-bar" id="sp-bar"></div></div>
-    <div class="sp-label">Loading...</div>
+    <div class="sp-label">Encrypting channel...</div>
   `;
   document.body.appendChild(overlay);
 
