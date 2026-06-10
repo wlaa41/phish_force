@@ -358,6 +358,7 @@ let state = {
 };
 
 // ────────────────── STATE HELPERS ──────────────────
+// getPlayerState â€” safe getter; initialises default state if sp_state missing
 function getPlayerState() {
   return JSON.parse(localStorage.getItem("sp_state")) || {
     coins:50, hintTokens:3, hearts:5, maxHearts:5,
