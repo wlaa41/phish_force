@@ -190,7 +190,9 @@ Want to help improve ShadowPhish?
 
 ## 📄 License
 
-This project was created for **academic purposes** as part of Module 503IT at Coventry University.
+This project was created for **academic and educational purposes** as part of Module 503IT at Coventry University.
+
+The game content, questions, and scenarios are original work by the PhishForce group.
 
 © 2026 PhishForce Group — Coventry University BSc Computing Science
 
