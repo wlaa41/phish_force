@@ -7,6 +7,8 @@
 [![Module](https://img.shields.io/badge/Module-503IT-00C8FF?style=for-the-badge)](https://www.coventry.ac.uk)
 [![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)]()
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5-E34F26?style=for-the-badge&logo=html5)]()
+[![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)]()
+[![HTML5](https://img.shields.io/badge/Built%20with-HTML5-E34F26?style=for-the-badge&logo=html5)]()
 
 ---
 
