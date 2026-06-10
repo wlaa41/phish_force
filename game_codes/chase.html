@@ -769,7 +769,7 @@ function update() {
   state.pickups.forEach(p   => { p.y += state.speed * 0.85; });
 
   // Gap: increases over time, correct answers close it
-  state.gap = Math.min(100, state.gap + 0.015);
+  state.gap = Math.min(100, state.gap + 0.015); // Grows ~0.9% per second at 60fps
   const gf = document.getElementById("gap-fill");
   if (state.gap > 75) gf.classList.add("critical");
   else gf.classList.remove("critical");
