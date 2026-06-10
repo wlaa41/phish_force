@@ -119,6 +119,8 @@ No installation needed. No frameworks. No accounts required. Just open a browser
 
 > **Architecture:** Single-page HTML files with embedded CSS/JS — no build step, no bundler, no backend.
 
+> **Architecture:** Single-page HTML files with embedded CSS/JS — no build step, no bundler, no backend.
+
 ---
 
 ## 👨‍💻 Group Members — PhishForce
