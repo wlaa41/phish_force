@@ -12,6 +12,12 @@
 
 ---
 
+## 🎯 Project Summary
+
+ShadowPhish is a gamified cybersecurity awareness platform built to help everyday users recognise and defend against real-world phishing attacks.
+
+---
+
 ## 📖 Overview
 
 **ShadowPhish Cyber Defense Academy** is an educational browser game developed as part of **Module 503IT — BSc Computing Science** at **Coventry University**.
