@@ -233,3 +233,4 @@ The game content, questions, and scenarios are original work by the PhishForce g
 </p>
 
 <!-- prateek-extra-4 -->
+<!-- avtar-readme: v1 -->
