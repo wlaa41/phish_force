@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="ShadowPhish HQ â€” Your cyber defense command centre. Track XP, coins, and mission progress.">
-<meta name="description" content="ShadowPhish HQ â€” Your cyber defense command centre. Track XP, coins, and mission progress.">
-<title>ShadowPhish — HQ</title>
+<meta name="description" content="ShadowPhish HQ Ã¢â‚¬â€ Your cyber defense command centre. Track XP, coins, and mission progress.">
+<meta name="description" content="ShadowPhish HQ Ã¢â‚¬â€ Your cyber defense command centre. Track XP, coins, and mission progress.">
+<title>ShadowPhish â€” HQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#fff; font-family:'Orbitron',sans-serif; }
 
-/* ────────────── BACKGROUND CANVAS ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BACKGROUND CANVAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #scene-bg {
   position:fixed; inset:0; width:100%; height:100%; z-index:0;
 }
@@ -26,7 +26,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   pointer-events:none;
 }
 
-/* ────────────── LEFT PANEL ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ LEFT PANEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .left-panel {
   position:fixed; left:0; top:0; bottom:50px;
   width:340px; z-index:5;
@@ -35,7 +35,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   padding:130px 0 40px 52px;
 }
 
-/* gradient fade — replaces the hard divider line */
+/* gradient fade â€” replaces the hard divider line */
 .left-panel::after {
   content:'';
   position:absolute; top:0; right:-70px; bottom:0; width:70px;
@@ -43,7 +43,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   pointer-events:none;
 }
 
-/* ── MENU ── */
+/* â”€â”€ MENU â”€â”€ */
 .menu-list { display:flex; flex-direction:column; gap:2px; }
 
 .menu-item {
@@ -82,14 +82,14 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 .menu-item:hover  .menu-label { color:#00e5ff; }
 .menu-item:hover  .menu-icon  { color:#00e5ff; }
 
-/* ── CONTINUE sub-label ── */
+/* â”€â”€ CONTINUE sub-label â”€â”€ */
 .menu-continue-sub {
   font-size:9px; color:rgba(0,200,255,0.5);
   font-family:'Rajdhani',sans-serif; letter-spacing:2px;
   margin-left:42px; margin-top:-10px; margin-bottom:4px;
 }
 
-/* ────────────── TOP-LEFT PROFILE ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TOP-LEFT PROFILE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .profile-hud {
   position:fixed; top:20px; left:20px; z-index:10;
   display:flex; align-items:center; gap:13px;
@@ -153,7 +153,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   font-family:'Rajdhani',sans-serif; letter-spacing:1px;
 }
 
-/* ────────────── TOP-RIGHT RESOURCES ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TOP-RIGHT RESOURCES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .resources-hud {
   position:fixed; top:20px; right:20px; z-index:10;
   display:flex; align-items:center; gap:10px;
@@ -207,7 +207,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   font-family:'Rajdhani',sans-serif; letter-spacing:1px;
 }
 
-/* ────────────── BOTTOM-RIGHT LOGO ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BOTTOM-RIGHT LOGO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .brand-corner {
   position:fixed; bottom:62px; right:32px; z-index:6;
   text-align:right;
@@ -230,7 +230,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   font-family:'Rajdhani',sans-serif; margin-top:5px;
 }
 
-/* ────────────── HOLOGRAPHIC BADGE (center) ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HOLOGRAPHIC BADGE (center) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .holo-wrap {
   position:fixed;
   left:55%; top:50%;
@@ -257,7 +257,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   animation: floatBadge 4s ease-in-out infinite;
 }
 
-/* ────────────── SHARED MODAL ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ SHARED MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .modal-overlay {
   position:fixed; inset:0; z-index:50;
   background:rgba(0,0,0,0.87);
@@ -403,7 +403,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 .settings-btn.primary { background:linear-gradient(90deg,#7a00ff,#ff00cc); border:none; color:#fff; }
 .settings-btn:hover   { transform:scale(1.04); }
 
-/* ────────────── PROFILE POPUP (diagonal card) ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROFILE POPUP (diagonal card) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-backdrop { display:none; position:fixed; inset:0; z-index:20; }
 .pp-backdrop.show { display:block; }
 
@@ -448,7 +448,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 }
 .pp-logout:hover { background:rgba(255,40,40,0.22); }
 
-/* ────────────── AGENT BETA BUBBLE ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ AGENT BETA BUBBLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .beta-bubble {
   position:fixed; bottom:60px; right:22px; z-index:15;
   max-width:200px;
@@ -465,7 +465,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 .beta-bubble.show { opacity:1; transform:translateY(0); }
 .beta-name { color:#00ccff; font-weight:700; font-size:9px; letter-spacing:2px; margin-bottom:5px; }
 
-/* ────────────── THREAT TICKER ────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ THREAT TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .threat-bar {
   position:fixed; bottom:0; left:0; right:0; z-index:10;
   height:50px;
@@ -498,18 +498,18 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
 </head>
 <body>
 
-<!-- ── BACKGROUND CANVAS ── -->
+<!-- â”€â”€ BACKGROUND CANVAS â”€â”€ -->
 <canvas id="scene-bg"></canvas>
 <div class="atmos"></div>
 
-<!-- ── PROFILE POPUP BACKDROP ── -->
+<!-- â”€â”€ PROFILE POPUP BACKDROP â”€â”€ -->
 <div class="pp-backdrop" id="pp-backdrop" onclick="closeProfile()"></div>
 
-<!-- ── PROFILE POPUP (slides from left) ── -->
+<!-- â”€â”€ PROFILE POPUP (slides from left) â”€â”€ -->
 <div class="profile-popup" id="profile-popup">
   <div class="pp-inner">
-    <div class="pp-avatar-lg">🕵️</div>
-    <div class="pp-name" id="pp-name">—</div>
+    <div class="pp-avatar-lg">ðŸ•µï¸</div>
+    <div class="pp-name" id="pp-name">â€”</div>
     <div class="pp-role">CYBER DEFENSE AGENT</div>
     <div class="pp-row"><span>LEVEL</span>   <span class="v"       id="pp-lv">1</span></div>
     <div class="pp-row"><span>COINS</span>   <span class="v g"     id="pp-co">0</span></div>
@@ -518,35 +518,35 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <div class="pp-row"><span>MISSIONS</span><span class="v"       id="pp-ms">0</span></div>
     <div class="pp-xp-lbl"><span>XP</span><span id="pp-xpt">0/200</span></div>
     <div class="pp-xp-t"><div class="pp-xp-f" id="pp-xpf" style="width:0%"></div></div>
-    <button class="pp-logout" onclick="logout()">⏻ LOG OUT</button>
+    <button class="pp-logout" onclick="logout()">â» LOG OUT</button>
   </div>
 </div>
 
-<!-- ── TOP-LEFT PROFILE HUD ── -->
+<!-- â”€â”€ TOP-LEFT PROFILE HUD â”€â”€ -->
 <div class="profile-hud" id="profile-hud" onclick="toggleProfile()">
   <div class="profile-avatar">
-    <span>🕵️</span>
+    <span>ðŸ•µï¸</span>
     <div class="lvl-badge" id="hud-lv">LV1</div>
   </div>
   <div class="profile-info">
-    <div class="profile-name"  id="hud-name">—</div>
-    <div class="profile-rank"  id="hud-rank">◈ FIELD OPERATIVE</div>
+    <div class="profile-name"  id="hud-name">â€”</div>
+    <div class="profile-rank"  id="hud-rank">â—ˆ FIELD OPERATIVE</div>
     <div class="xp-track"><div class="xp-fill" id="hud-xp" style="width:0%"></div></div>
     <div class="xp-label-text" id="hud-xpt">0 / 200 XP</div>
   </div>
 </div>
 
-<!-- ── TOP-RIGHT RESOURCES ── -->
+<!-- â”€â”€ TOP-RIGHT RESOURCES â”€â”€ -->
 <div class="resources-hud">
   <div class="res-chip">
-    <div class="res-icon ci">◈</div>
+    <div class="res-icon ci">â—ˆ</div>
     <div class="res-data">
       <div class="res-lbl">COINS</div>
       <div class="res-val gold" id="hud-coins">50</div>
     </div>
   </div>
   <div class="res-chip">
-    <div class="res-icon hi">♥</div>
+    <div class="res-icon hi">â™¥</div>
     <div class="res-data">
       <div class="res-lbl">LIVES</div>
       <div class="res-val red" id="hud-hearts">5/5</div>
@@ -555,44 +555,44 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   </div>
 </div>
 
-<!-- ── LEFT MENU ── -->
+<!-- â”€â”€ LEFT MENU â”€â”€ -->
 <div class="left-panel">
   <div class="menu-list">
     <a class="menu-item active" href="intel.html">
       <span class="menu-label">Continue</span>
     </a>
-    <div class="menu-continue-sub" id="continue-sub">INTEL MISSION · LEVEL 1</div>
+    <div class="menu-continue-sub" id="continue-sub">INTEL MISSION Â· LEVEL 1</div>
     <a class="menu-item" href="#" onclick="openModal('modal-modes',event)">
-      <span class="menu-icon">⊞</span>
+      <span class="menu-icon">âŠž</span>
       <span class="menu-label">Levels / Modes</span>
     </a>
     <a class="menu-item" href="#" onclick="openModal('modal-lb',event)">
-      <span class="menu-icon">◉</span>
+      <span class="menu-icon">â—‰</span>
       <span class="menu-label">Leaderboard</span>
     </a>
     <a class="menu-item" href="#" onclick="openModal('modal-settings',event)">
-      <span class="menu-icon">⚙</span>
+      <span class="menu-icon">âš™</span>
       <span class="menu-label">Settings</span>
     </a>
   </div>
 </div>
 
-<!-- ══════════ MODAL: LEVELS / MODES ══════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â• MODAL: LEVELS / MODES â•â•â•â•â•â•â•â•â•â• -->
 <div class="modal-overlay" id="modal-modes" onclick="modalBgClose(event,'modal-modes')">
   <div class="modal-card">
-    <button class="modal-close" onclick="closeModal('modal-modes')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-modes')">âœ•</button>
     <div class="modal-title">SELECT MODE</div>
     <div class="modal-sub">CHOOSE YOUR MISSION, AGENT</div>
 
     <div class="mode-grid">
       <a class="mode-card intel" href="intel.html">
-        <span class="mode-icon">🔍</span>
+        <span class="mode-icon">ðŸ”</span>
         <div class="mode-name">Intel Mission</div>
         <div class="mode-desc">Investigate phishing cases, identify scams, and stop ShadowPhish before sensitive data is stolen. Quiz-based investigation mode.</div>
         <span class="mode-tag tag-intel">QUIZ MODE</span>
       </a>
       <a class="mode-card chase" href="chase.html">
-        <span class="mode-icon">🚗</span>
+        <span class="mode-icon">ðŸš—</span>
         <div class="mode-name">Highway Chase</div>
         <div class="mode-desc">Chase ShadowPhish operatives across neon-lit highways. Dodge obstacles, collect data, answer checkpoint questions to gain the edge.</div>
         <span class="mode-tag tag-chase">DRIVING MODE</span>
@@ -602,19 +602,19 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <div class="modal-divider"></div>
     <div class="mode-grid" style="grid-template-columns:1fr">
       <a class="mode-card daily" href="intel.html?daily=1">
-        <span class="mode-icon">📅</span>
+        <span class="mode-icon">ðŸ“…</span>
         <div class="mode-name">Daily Challenge</div>
-        <div class="mode-desc">One special mission per day — refreshes every 24 hours. Double coin rewards and rare trophy progress. Complete both modes on the same day for the "Double Agent" bonus.</div>
+        <div class="mode-desc">One special mission per day â€” refreshes every 24 hours. Double coin rewards and rare trophy progress. Complete both modes on the same day for the "Double Agent" bonus.</div>
         <span class="mode-tag tag-daily">DAILY RESET</span>
       </a>
     </div>
   </div>
 </div>
 
-<!-- ══════════ MODAL: LEADERBOARD ══════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â• MODAL: LEADERBOARD â•â•â•â•â•â•â•â•â•â• -->
 <div class="modal-overlay" id="modal-lb" onclick="modalBgClose(event,'modal-lb')">
   <div class="modal-card">
-    <button class="modal-close" onclick="closeModal('modal-lb')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-lb')">âœ•</button>
     <div class="modal-title">LEADERBOARD</div>
     <div class="modal-sub">REGIONAL &amp; GLOBAL RANKINGS</div>
 
@@ -641,7 +641,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
       </table>
     </div>
     <div id="lb-all" style="display:none">
-      <div class="lb-coming">🌐 GLOBAL LEADERBOARD SYNCS WHEN ONLINE PLAY IS ENABLED<br><br>YOUR STATS ARE SAVED LOCALLY</div>
+      <div class="lb-coming">ðŸŒ GLOBAL LEADERBOARD SYNCS WHEN ONLINE PLAY IS ENABLED<br><br>YOUR STATS ARE SAVED LOCALLY</div>
     </div>
 
     <div class="modal-divider"></div>
@@ -651,10 +651,10 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   </div>
 </div>
 
-<!-- ══════════ MODAL: SETTINGS ══════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â• MODAL: SETTINGS â•â•â•â•â•â•â•â•â•â• -->
 <div class="modal-overlay" id="modal-settings" onclick="modalBgClose(event,'modal-settings')">
   <div class="modal-card">
-    <button class="modal-close" onclick="closeModal('modal-settings')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-settings')">âœ•</button>
     <div class="modal-title">SETTINGS</div>
     <div class="modal-sub">CONFIGURE YOUR EXPERIENCE</div>
 
@@ -685,7 +685,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <div class="settings-section">
       <div class="settings-label">ACCOUNT</div>
       <div class="setting-row">
-        <div class="setting-name">Codename<small id="s-codename-display">—</small></div>
+        <div class="setting-name">Codename<small id="s-codename-display">â€”</small></div>
         <span style="font-size:9px;color:rgba(0,200,255,0.5);letter-spacing:2px;font-family:'Rajdhani',sans-serif;">LOCKED</span>
       </div>
       <div class="setting-row">
@@ -695,17 +695,17 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     </div>
 
     <div style="display:flex;gap:10px;margin-top:8px;">
-      <button class="settings-btn danger" onclick="logout()">⏻ LOG OUT</button>
+      <button class="settings-btn danger" onclick="logout()">â» LOG OUT</button>
       <button class="settings-btn primary" onclick="closeModal('modal-settings')">SAVE &amp; CLOSE</button>
     </div>
   </div>
 </div>
 
-<!-- ── HOLOGRAPHIC CSA BADGE — Fish+Hook SVG Logo ── -->
+<!-- â”€â”€ HOLOGRAPHIC CSA BADGE â€” Fish+Hook SVG Logo â”€â”€ -->
 <div class="holo-wrap">
   <svg viewBox="0 0 300 300" width="260" height="260" xmlns="http://www.w3.org/2000/svg">
 
-    <!-- ── OUTER CIRCUIT RING ── -->
+    <!-- â”€â”€ OUTER CIRCUIT RING â”€â”€ -->
     <circle cx="150" cy="150" r="138" fill="none" stroke="rgba(0,160,210,0.28)" stroke-width="1"/>
 
     <!-- N arm + dot -->
@@ -734,14 +734,14 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <line x1="52"  y1="52"  x2="36"  y2="36"  stroke="#00aacc" stroke-width="1"/>
     <line x1="36"  y1="36"  x2="20"  y2="36"  stroke="#00aacc" stroke-width="1"/>
 
-    <!-- ── HEXAGON ── -->
+    <!-- â”€â”€ HEXAGON â”€â”€ -->
     <polygon points="150,38 248,92 248,208 150,262 52,208 52,92"
              fill="#05101e" stroke="#00ccff" stroke-width="2.8"/>
     <!-- inner dim border -->
     <polygon points="150,46 240,97 240,203 150,254 60,203 60,97"
              fill="none" stroke="rgba(0,80,120,0.45)" stroke-width="1"/>
 
-    <!-- ── FISH BODY (head faces right) ── -->
+    <!-- â”€â”€ FISH BODY (head faces right) â”€â”€ -->
     <ellipse cx="147" cy="153" rx="54" ry="40"
              fill="none" stroke="#00ccff" stroke-width="2.5"/>
 
@@ -754,7 +754,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <path d="M 128 114 Q 144 100 160 113"
           fill="none" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
 
-    <!-- Eye — crosshair circle -->
+    <!-- Eye â€” crosshair circle -->
     <circle cx="177" cy="147" r="12" fill="none" stroke="#00ccff" stroke-width="2"/>
     <circle cx="177" cy="147" r="4"  fill="#00ccff" opacity="0.75"/>
     <line x1="177" y1="134" x2="177" y2="140" stroke="#00ccff" stroke-width="1" opacity="0.5"/>
@@ -771,7 +771,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
     <path d="M 198 155 Q 203 161 198 167"
           fill="none" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
 
-    <!-- ── FISHING HOOK (red) ── -->
+    <!-- â”€â”€ FISHING HOOK (red) â”€â”€ -->
     <!-- T-bar at top -->
     <line x1="196" y1="80" x2="222" y2="80"
           stroke="#ff3355" stroke-width="2.5" stroke-linecap="round"/>
@@ -788,28 +788,28 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   </svg>
 </div>
 
-<!-- ── BRAND CORNER (bottom-right) ── -->
+<!-- â”€â”€ BRAND CORNER (bottom-right) â”€â”€ -->
 <div class="brand-corner">
-  <div class="brand-academy">◈ CYBER DEFENSE ACADEMY</div>
+  <div class="brand-academy">â—ˆ CYBER DEFENSE ACADEMY</div>
   <div class="brand-title">SHADOW<span>PHISH</span></div>
-  <div class="brand-tagline">VERIFY EVERYTHING · TRUST NO ONE</div>
+  <div class="brand-tagline">VERIFY EVERYTHING Â· TRUST NO ONE</div>
 </div>
 
-<!-- ── AGENT BETA ── -->
+<!-- â”€â”€ AGENT BETA â”€â”€ -->
 <div class="beta-bubble" id="beta-bubble">
-  <div class="beta-name">▶ AGENT BETA</div>
+  <div class="beta-name">â–¶ AGENT BETA</div>
   <div id="beta-msg"></div>
 </div>
 
-<!-- ── THREAT BAR ── -->
+<!-- â”€â”€ THREAT BAR â”€â”€ -->
 <div class="threat-bar">
-  <div class="threat-tag">⚠ LIVE THREAT</div>
+  <div class="threat-tag">âš  LIVE THREAT</div>
   <div class="threat-text fade-in" id="threat-text"></div>
   <div class="t-dots" id="t-dots"></div>
 </div>
 
 <script>
-/* ──────────── BACKGROUND SCENE ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BACKGROUND SCENE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function drawScene() {
   const cv = document.getElementById("scene-bg");
   cv.width = window.innerWidth; cv.height = window.innerHeight;
@@ -901,7 +901,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; color:#f
   c.fillStyle=bf; c.fillRect(0,H*0.78,W,H*0.22);
 })();
 
-/* ──────────── STATE ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function getState() {
   let s = JSON.parse(localStorage.getItem("sp_state"));
   if (!s) { window.location.href="index.html"; return null; }
@@ -914,7 +914,7 @@ function getState() {
   return s;
 }
 
-// loadUI â€” reads sp_state from localStorage and updates all HUD elements
+// loadUI Ã¢â‚¬â€ reads sp_state from localStorage and updates all HUD elements
 function loadUI() {
   const s=getState(); if(!s) return;
   const xpCap=s.level*200, pct=Math.min(100,(s.xp/xpCap)*100);
@@ -932,7 +932,7 @@ function loadUI() {
 
   // Continue sub-label
   const sub = document.getElementById("continue-sub");
-  sub.textContent = missions>0 ? "MISSION "+missions+" · LEVEL "+s.level : "START YOUR FIRST MISSION";
+  sub.textContent = missions>0 ? "MISSION "+missions+" Â· LEVEL "+s.level : "START YOUR FIRST MISSION";
 
   // Popup
   document.getElementById("pp-name").textContent  = s.codename.toUpperCase();
@@ -945,7 +945,7 @@ function loadUI() {
   document.getElementById("pp-xpf").style.width   = pct+"%";
 }
 
-/* ──────────── HEART COUNTDOWN ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HEART COUNTDOWN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function startHeartCountdown() {
   function tick() {
     const s=getState(); if(!s) return;
@@ -958,7 +958,7 @@ function startHeartCountdown() {
   tick(); setInterval(tick,1000);
 }
 
-/* ──────────── PROFILE TOGGLE ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROFILE TOGGLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function toggleProfile() {
   const pp=document.getElementById("profile-popup");
   const bd=document.getElementById("pp-backdrop");
@@ -969,29 +969,29 @@ function closeProfile() {
   document.getElementById("profile-popup").classList.remove("open");
   document.getElementById("pp-backdrop").classList.remove("show");
 }
-// logout — clears session flag and returns to login page
-// logout — clears session flag and returns to login page
+// logout â€” clears session flag and returns to login page
+// logout â€” clears session flag and returns to login page
 function logout() {
   localStorage.removeItem("sp_state");
   window.location.href="index.html";
 }
 
-/* ──────────── THREAT TICKER ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ THREAT TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const THREATS=[
-  "Mass phishing campaign targeting bank customers — 12,000 fake emails sent in the last hour",
-  "ShadowPhish operatives spotted near Central Data Hub — situation developing",
-  "Fake tax refund SMS circulating citywide — do not click suspicious links",
-  "Hospital network compromised via spear phishing — patient data at risk",
+  "Mass phishing campaign targeting bank customers â€” 12,000 fake emails sent in the last hour",
+  "ShadowPhish operatives spotted near Central Data Hub â€” situation developing",
+  "Fake tax refund SMS circulating citywide â€” do not click suspicious links",
+  "Hospital network compromised via spear phishing â€” patient data at risk",
   "Clone website impersonating national bank portal detected and flagged",
-  "ShadowPhish courier intercepted on Highway 7 — encrypted drive recovered",
-  "Vishing campaign targeting corporate finance teams — verify all wire requests",
+  "ShadowPhish courier intercepted on Highway 7 â€” encrypted drive recovered",
+  "Vishing campaign targeting corporate finance teams â€” verify all wire requests",
   "CEO fraud emails reported across 40 companies this morning",
   "New smishing wave: fake delivery notifications with malicious links",
-  "Three new phishing domains registered overnight — blocklists updated",
-  "Credential stuffing attack detected — 8,400 accounts targeted using leaked passwords",
-  "Fake job offer phishing wave targeting graduates — verify all recruitment emails",
-  "QR code phishing ('quishing') incidents rising — scan with caution in public spaces",
-  "Deepfake voice used in vishing attack — CEO impersonation nets $200K in fraudulent transfer",
+  "Three new phishing domains registered overnight â€” blocklists updated",
+  "Credential stuffing attack detected â€” 8,400 accounts targeted using leaked passwords",
+  "Fake job offer phishing wave targeting graduates â€” verify all recruitment emails",
+  "QR code phishing ('quishing') incidents rising â€” scan with caution in public spaces",
+  "Deepfake voice used in vishing attack â€” CEO impersonation nets $200K in fraudulent transfer",
 ];
 let threatIdx=0;
 function buildDots(){
@@ -1015,20 +1015,20 @@ function showThreat(){
 }
 function cycleThreat(){ threatIdx=(threatIdx+1)%THREATS.length; showThreat(); }
 
-/* ──────────── AGENT BETA ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ AGENT BETA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const TIPS=[
-  "Always check the full sender domain — not just the display name.",
+  "Always check the full sender domain â€” not just the display name.",
   "Urgency is a weapon. Scammers rush you so you can't think clearly.",
   "A real bank will NEVER ask for your password by email.",
-  "Hover over links before clicking — the real URL reveals everything.",
+  "Hover over links before clicking â€” the real URL reveals everything.",
   "When in doubt, verify through a completely separate channel.",
   "ShadowPhish is watching. So are we. Stay sharp, agent.",
   "Two-factor authentication blocks 99% of automated attacks. Enable it everywhere.",
   "Public Wi-Fi is a trap. Never log into banking or sensitive accounts on it.",
-  "Check email headers — the display name can lie, but the domain cannot hide.",
+  "Check email headers â€” the display name can lie, but the domain cannot hide.",
   "The weakest link in any security system is human trust. Don't be the weakest link.",
-  "Unpatched software is an open door for attackers â€” enable automatic updates on all devices.",
-  "Social media oversharing gives attackers everything they need for spear phishing â€” audit your privacy settings.",
+  "Unpatched software is an open door for attackers Ã¢â‚¬â€ enable automatic updates on all devices.",
+  "Social media oversharing gives attackers everything they need for spear phishing Ã¢â‚¬â€ audit your privacy settings.",
 ];
 let betaIdx=0;
 function showBeta(){
@@ -1037,7 +1037,7 @@ function showBeta(){
   b.classList.add("show"); setTimeout(()=>b.classList.remove("show"),5000);
 }
 
-/* ──────────── MODAL SYSTEM ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ MODAL SYSTEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function openModal(id, e) {
   if (e) e.preventDefault();
   document.getElementById(id).classList.add("show");
@@ -1051,7 +1051,7 @@ function modalBgClose(e, id) {
   if (e.target === document.getElementById(id)) closeModal(id);
 }
 
-/* ──────────── LEADERBOARD ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ LEADERBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function buildLeaderboard() {
   const s = getState(); if (!s) return;
   const MOCK = [
@@ -1095,7 +1095,7 @@ function lbTab(el, panelId) {
   });
 }
 
-/* ──────────── SETTINGS ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ SETTINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function saveSetting(key, val) {
   const cfg = JSON.parse(localStorage.getItem("sp_config")||"{}");
   cfg[key] = val;
@@ -1111,7 +1111,7 @@ function loadSettingsUI() {
   document.getElementById("s-heart-notif").checked= cfg.heartNotif === true;
 }
 
-/* ──────────── BOOT ──────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BOOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 loadUI();
 startHeartCountdown();
 document.getElementById("threat-text").textContent=THREATS[0];
@@ -1130,9 +1130,11 @@ document.addEventListener("keydown", function(e) {
 window.addEventListener("resize",()=>{
   const cv=document.getElementById("scene-bg");
   cv.width=window.innerWidth; cv.height=window.innerHeight;
-  // Redraw on resize — quick re-invoke
+  // Redraw on resize â€” quick re-invoke
   // (just reload to keep it simple for now)
 });
 </script>
 </body>
 </html>
+
+<!-- prateek-extra-1 -->
