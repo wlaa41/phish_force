@@ -5,6 +5,7 @@
 [![Play Now](https://img.shields.io/badge/▶%20PLAY%20NOW-ShadowPhish-8B00FF?style=for-the-badge)](https://wlaa41.github.io/phish_force/game_codes/)
 [![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=for-the-badge&logo=github)](https://wlaa41.github.io/phish_force/game_codes/)
 [![Version](https://img.shields.io/badge/Version-3.1-7a00ff?style=for-the-badge)]()
+[![Version](https://img.shields.io/badge/Version-3.1-7a00ff?style=for-the-badge)]()
 [![Module](https://img.shields.io/badge/Module-503IT-00C8FF?style=for-the-badge)](https://www.coventry.ac.uk)
 [![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)]()
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5-E34F26?style=for-the-badge&logo=html5)]()
