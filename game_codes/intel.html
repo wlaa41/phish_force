@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Intel Mission â€” Identify phishing emails, SMS, and voice attacks in ShadowPhish.">
-<meta name="description" content="Intel Mission â€” Identify phishing emails, SMS, and voice attacks in ShadowPhish.">
-<title>ShadowPhish — Intel Mission</title>
+<meta name="description" content="Intel Mission Ã¢â‚¬â€ Identify phishing emails, SMS, and voice attacks in ShadowPhish.">
+<meta name="description" content="Intel Mission Ã¢â‚¬â€ Identify phishing emails, SMS, and voice attacks in ShadowPhish.">
+<title>ShadowPhish â€” Intel Mission</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
@@ -18,16 +18,16 @@ html, body {
   display:flex; flex-direction:column;
 }
 
-/* ── BACKGROUND ── */
+/* â”€â”€ BACKGROUND â”€â”€ */
 #intel-bg {
   position:fixed; inset:0; z-index:0;
   width:100%; height:100%;
 }
 
-/* ── FLASH OVERLAY — disabled; color feedback is on answer buttons only ── */
+/* â”€â”€ FLASH OVERLAY â€” disabled; color feedback is on answer buttons only â”€â”€ */
 #flash-overlay { display:none; }
 
-/* ── TOP BAR ── */
+/* â”€â”€ TOP BAR â”€â”€ */
 .topbar {
   flex-shrink:0; height:54px;
   position:relative; z-index:10;
@@ -68,11 +68,11 @@ html, body {
 .timer-secs.crit { color:#ff4444; animation:timerPulse 0.45s infinite alternate; }
 @keyframes timerPulse { from{transform:scale(1)} to{transform:scale(1.18)} }
 
-/* ── TIMER BAR ── */
+/* â”€â”€ TIMER BAR â”€â”€ */
 .timer-wrap { flex-shrink:0; height:5px; background:rgba(255,255,255,0.07); position:relative; z-index:10; }
 .timer-bar  { height:100%; background:linear-gradient(90deg,#7a00ff,#ff00cc); transition:width 0.08s linear; }
 
-/* ── GAME AREA (fills remaining height) ── */
+/* â”€â”€ GAME AREA (fills remaining height) â”€â”€ */
 .game-area {
   flex:1; position:relative; z-index:5;
   display:flex; flex-direction:column;
@@ -80,7 +80,7 @@ html, body {
   gap:12px; min-height:0; overflow:hidden;
 }
 
-/* ── QUESTION SECTION (? bubble + card) ── */
+/* â”€â”€ QUESTION SECTION (? bubble + card) â”€â”€ */
 .q-section {
   flex:0 0 auto; position:relative;
   padding-top:28px;
@@ -149,7 +149,7 @@ html, body {
   font-family:'Rajdhani',sans-serif;
 }
 
-/* ── ANSWERS GRID ── */
+/* â”€â”€ ANSWERS GRID â”€â”€ */
 .answers {
   flex-shrink:0;
   display:grid; grid-template-columns:1fr 1fr;
@@ -198,7 +198,7 @@ html, body {
 }
 .ans-text { flex:1; }
 
-/* ── ANSWER STATES ── */
+/* â”€â”€ ANSWER STATES â”€â”€ */
 .ans-btn.correct {
   background:rgba(0,220,100,0.88) !important;
   border-color:#00ff80 !important; color:#000 !important;
@@ -218,7 +218,7 @@ html, body {
   opacity:0.35; transform:scale(0.98);
 }
 
-/* ── FEEDBACK BAR ── */
+/* â”€â”€ FEEDBACK BAR â”€â”€ */
 .feedback-bar {
   flex-shrink:0;
   min-height:56px; padding:10px 16px;
@@ -234,7 +234,7 @@ html, body {
 .feedback-bar.correct-fb { background:rgba(0,255,128,0.12); border-color:rgba(0,255,128,0.35); color:#00ff80; }
 .feedback-bar.wrong-fb   { background:rgba(255,50,50,0.12);  border-color:rgba(255,50,50,0.35);  color:#ff6666; }
 
-/* ── BOTTOM BAR ── */
+/* â”€â”€ BOTTOM BAR â”€â”€ */
 .bottom-bar {
   flex-shrink:0; height:52px;
   position:relative; z-index:10;
@@ -263,7 +263,7 @@ html, body {
 .hint-btn:hover:not(:disabled) { background:rgba(0,200,255,0.18); }
 .hint-btn:disabled { opacity:0.3; cursor:default; }
 
-/* ── HINT TOAST ── */
+/* â”€â”€ HINT TOAST â”€â”€ */
 .hint-toast {
   position:fixed; bottom:62px; left:50%; transform:translateX(-50%);
   z-index:50; background:rgba(0,5,30,0.96);
@@ -275,7 +275,7 @@ html, body {
 .hint-toast.show { display:block; animation:fadeIn 0.3s; }
 @keyframes fadeIn { from{opacity:0;transform:translate(-50%,8px)} to{opacity:1;transform:translate(-50%,0)} }
 
-/* ── OVERLAYS ── */
+/* â”€â”€ OVERLAYS â”€â”€ */
 .overlay {
   position:fixed; inset:0; z-index:100;
   display:none; flex-direction:column;
@@ -341,7 +341,7 @@ html, body {
 .res-btn.primary:hover { transform:scale(1.05); }
 .res-btn.secondary { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#aaa; }
 
-/* ── CONFETTI ── */
+/* â”€â”€ CONFETTI â”€â”€ */
 .confetti-piece {
   position:fixed; border-radius:2px; z-index:210;
   pointer-events:none; animation:confettiFall linear forwards;
@@ -352,7 +352,7 @@ html, body {
   100%{ opacity:0; transform:translateY(105vh) rotate(900deg); }
 }
 
-/* ── LEVEL-UP OVERLAY ── */
+/* â”€â”€ LEVEL-UP OVERLAY â”€â”€ */
 #levelup-overlay {
   background:
     radial-gradient(ellipse at 50% 40%,rgba(255,200,0,0.35),transparent 60%),
@@ -401,9 +401,9 @@ html, body {
 <!-- FULL-SCREEN FLASH OVERLAY -->
 <div id="flash-overlay"></div>
 
-<!-- ── TOP BAR ── -->
+<!-- â”€â”€ TOP BAR â”€â”€ -->
 <div class="topbar">
-  <a class="back-btn" href="home.html">← HQ</a>
+  <a class="back-btn" href="home.html">â† HQ</a>
   <div class="mission-info">
     <div class="mission-title" id="mission-title">INTEL MISSION</div>
     <div class="q-counter"     id="q-counter">Q 1 / 10</div>
@@ -416,7 +416,7 @@ html, body {
       <div class="chance-dot" id="c1"></div>
       <div class="chance-dot" id="c2"></div>
     </div>
-    <span class="hints-display">💡 <span id="st-hints">3</span></span>
+    <span class="hints-display">ðŸ’¡ <span id="st-hints">3</span></span>
     <span class="timer-secs"   id="timer-secs-badge">60s</span>
   </div>
 </div>
@@ -424,7 +424,7 @@ html, body {
 <!-- TIMER BAR -->
 <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
 
-<!-- ── GAME AREA ── -->
+<!-- â”€â”€ GAME AREA â”€â”€ -->
 <div class="game-area">
 
   <!-- QUESTION CARD with ? bubble -->
@@ -432,15 +432,15 @@ html, body {
     <div class="q-bubble">?</div>
     <div class="q-card">
       <div class="scenario-strip" id="scenario-strip">
-        <div class="scenario-tag" id="scenario-tag">LOADING…</div>
+        <div class="scenario-tag" id="scenario-tag">LOADINGâ€¦</div>
         <div id="scenario-content"></div>
       </div>
       <div class="q-divider"></div>
-      <div class="question-text" id="question-text">Loading question…</div>
+      <div class="question-text" id="question-text">Loading questionâ€¦</div>
     </div>
   </div>
 
-  <!-- 2×2 ANSWER GRID -->
+  <!-- 2Ã—2 ANSWER GRID -->
   <div class="answers" id="answers"></div>
 
   <!-- FEEDBACK -->
@@ -448,17 +448,17 @@ html, body {
 
 </div>
 
-<!-- ── BOTTOM BAR ── -->
+<!-- â”€â”€ BOTTOM BAR â”€â”€ -->
 <div class="bottom-bar">
   <!-- HEARTS here (bottom-left, swapped) -->
   <div class="hearts-bottom" style="display:flex;align-items:center;gap:14px;">
-    <span>♥ <span id="st-hearts">5</span><span class="regen-cd" id="regen-cd"></span></span>
+    <span>â™¥ <span id="st-hearts">5</span><span class="regen-cd" id="regen-cd"></span></span>
     <span style="font-size:10px;color:#555;letter-spacing:2px;">SCORE: <span id="live-score" style="color:#00eeff;font-weight:700;text-shadow:0 0 6px rgba(0,200,255,0.4);">0</span></span>
   </div>
   <div class="hint-btns">
-    <button class="hint-btn" onclick="useHint('eliminate')" title="Remove one wrong answer">✂ ELIMINATE</button>
-    <button class="hint-btn" onclick="useHint('spotlight')" title="Get a focus clue">🔦 SPOTLIGHT</button>
-    <button class="hint-btn" onclick="useHint('beta')" title="Receive strategic tip">▶ AGENT BETA</button>
+    <button class="hint-btn" onclick="useHint('eliminate')" title="Remove one wrong answer">âœ‚ ELIMINATE</button>
+    <button class="hint-btn" onclick="useHint('spotlight')" title="Get a focus clue">ðŸ”¦ SPOTLIGHT</button>
+    <button class="hint-btn" onclick="useHint('beta')" title="Receive strategic tip">â–¶ AGENT BETA</button>
   </div>
 </div>
 
@@ -469,16 +469,16 @@ html, body {
 <div class="overlay" id="levelup-overlay">
   <div id="confetti-lu"></div>
   <div class="levelup-card">
-    <div class="levelup-flash" id="lu-flash">⚡</div>
+    <div class="levelup-flash" id="lu-flash">âš¡</div>
     <div class="levelup-title">LEVEL UP!</div>
     <div class="levelup-num" id="lu-num">LEVEL 2</div>
     <div class="levelup-sub">A reward has been unlocked for your dedication, Agent</div>
     <div class="gift-box">
-      <div class="gift-icon"  id="gift-icon">🎁</div>
-      <div class="gift-label" id="gift-label">Loading…</div>
+      <div class="gift-icon"  id="gift-icon">ðŸŽ</div>
+      <div class="gift-label" id="gift-label">Loadingâ€¦</div>
     </div>
     <div class="btn-row">
-      <button class="res-btn primary" onclick="collectGift()">⚡ COLLECT REWARD</button>
+      <button class="res-btn primary" onclick="collectGift()">âš¡ COLLECT REWARD</button>
     </div>
   </div>
 </div>
@@ -489,11 +489,11 @@ html, body {
   <div class="result-card">
     <div class="result-title win">CASE CLOSED</div>
     <div class="stars-row">
-      <div class="star-icon" id="star1">⭐</div>
-      <div class="star-icon" id="star2">⭐</div>
-      <div class="star-icon" id="star3">⭐</div>
+      <div class="star-icon" id="star1">â­</div>
+      <div class="star-icon" id="star2">â­</div>
+      <div class="star-icon" id="star3">â­</div>
     </div>
-    <div class="result-sub">"Outstanding work, Agent. ShadowPhish has been pushed back — for now." — Agent Beta</div>
+    <div class="result-sub">"Outstanding work, Agent. ShadowPhish has been pushed back â€” for now." â€” Agent Beta</div>
     <div class="result-rewards" id="win-rewards"></div>
     <div class="btn-row">
       <button class="res-btn primary"    onclick="location.href='intel.html'">NEXT MISSION</button>
@@ -506,7 +506,7 @@ html, body {
 <div class="overlay" id="lose-overlay">
   <div class="result-card">
     <div class="result-title lose">MISSION FAILED</div>
-    <div class="result-sub">"They got away this time. But we'll find them." — Agent Beta</div>
+    <div class="result-sub">"They got away this time. But we'll find them." â€” Agent Beta</div>
     <div class="result-sub" id="lose-explanation"></div>
     <div class="btn-row">
       <button class="res-btn primary"   onclick="location.href='intel.html'">TRY AGAIN</button>
@@ -516,7 +516,7 @@ html, body {
 </div>
 
 <script>
-// ─────────────────────── BACKGROUND CANVAS ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BACKGROUND CANVAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 (function drawBG() {
   const cv = document.getElementById("intel-bg");
   cv.width = window.innerWidth; cv.height = window.innerHeight;
@@ -549,11 +549,11 @@ html, body {
       for(let wx=x+3;wx<x+w-3;wx+=9)
         if(r3()>0.44){ const cols=["rgba(255,200,50,0.4)","rgba(0,200,255,0.28)","rgba(160,0,255,0.28)"]; c.fillStyle=cols[Math.floor(r3()*3)]; c.fillRect(wx,wy,4,5); }
   }
-  // Ground — keep transparent enough for grid to show through
+  // Ground â€” keep transparent enough for grid to show through
   const gg=c.createLinearGradient(0,H*0.60,0,H);
   gg.addColorStop(0,"rgba(3,1,12,0)"); gg.addColorStop(0.4,"rgba(3,1,14,0.55)"); gg.addColorStop(1,"rgba(2,0,10,0.72)");
   c.fillStyle=gg; c.fillRect(0,H*0.56,W,H*0.44);
-  // Hex grid — full canvas, brighter toward bottom for coverage
+  // Hex grid â€” full canvas, brighter toward bottom for coverage
   const hs=60;
   for(let row=0;row<H/hs+1;row++){
     const yFrac=(row*hs*0.87)/H;
@@ -566,7 +566,7 @@ html, body {
       c.closePath(); c.stroke();
     }
   }
-  // Bottom ambient glow — fills lower third so it never looks empty
+  // Bottom ambient glow â€” fills lower third so it never looks empty
   const bg1=c.createRadialGradient(W*0.25,H,0,W*0.25,H,W*0.55);
   bg1.addColorStop(0,"rgba(100,0,180,0.18)"); bg1.addColorStop(1,"rgba(0,0,0,0)");
   c.fillStyle=bg1; c.fillRect(0,H*0.5,W,H*0.5);
@@ -575,31 +575,31 @@ html, body {
   c.fillStyle=bg2; c.fillRect(0,H*0.5,W,H*0.5);
 })();
 
-// ─────────────────────── QUESTION BANK ───────────────────────
-// Question bank â€” types: spot | url | response | classify | fill
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ QUESTION BANK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Question bank Ã¢â‚¬â€ types: spot | url | response | classify | fill
 const QUESTIONS = [
   { type:"spot", bg:"email",
-    scenario:["FROM: noreply@paypa1-secure.com","SUBJECT: ⚠️ URGENT: Verify your account NOW","Your PayPal account has been limited. Verify within 24h or it will be permanently suspended.","[VERIFY ACCOUNT →]"],
+    scenario:["FROM: noreply@paypa1-secure.com","SUBJECT: âš ï¸ URGENT: Verify your account NOW","Your PayPal account has been limited. Verify within 24h or it will be permanently suspended.","[VERIFY ACCOUNT â†’]"],
     question:"What is the primary red flag in this email?",
     options:["Sender domain is fake (paypa1-secure.com)","Subject line is too alarming","PayPal never sends emails","The button uses an arrow"],
-    correct:0, explanation:"paypa1-secure.com replaces 'l' with '1' — typosquatting. Always check the full sender domain carefully." },
+    correct:0, explanation:"paypa1-secure.com replaces 'l' with '1' â€” typosquatting. Always check the full sender domain carefully." },
   { type:"spot", bg:"email",
-    scenario:["FROM: ceo.maxwell@globcorp-mail.net","SUBJECT: Confidential — Wire Transfer Needed","Hi, I'm in a meeting. Wire $15,000 to our new vendor ASAP. Keep this between us.","— David Maxwell, CEO"],
+    scenario:["FROM: ceo.maxwell@globcorp-mail.net","SUBJECT: Confidential â€” Wire Transfer Needed","Hi, I'm in a meeting. Wire $15,000 to our new vendor ASAP. Keep this between us.","â€” David Maxwell, CEO"],
     question:"What type of social engineering attack is this?",
     options:["CEO Fraud / Business Email Compromise","Smishing (SMS phishing)","Pharming attack","Watering hole attack"],
     correct:0, explanation:"CEO Fraud impersonates executives to pressure employees into transfers. The urgency and secrecy are major red flags." },
   { type:"spot", bg:"email",
-    scenario:["FROM: updates@amazon.com","SUBJECT: Your order #302-8841923 has shipped","Your order is on its way. Estimated delivery: 2–4 business days. Track via your account.","Amazon Customer Service"],
+    scenario:["FROM: updates@amazon.com","SUBJECT: Your order #302-8841923 has shipped","Your order is on its way. Estimated delivery: 2â€“4 business days. Track via your account.","Amazon Customer Service"],
     question:"Is this email a phishing attempt?",
-    options:["No — this appears to be a legitimate notification","Yes — Amazon never emails about shipments","Yes — the subject line is suspicious","Yes — the sender address is fake"],
+    options:["No â€” this appears to be a legitimate notification","Yes â€” Amazon never emails about shipments","Yes â€” the subject line is suspicious","Yes â€” the sender address is fake"],
     correct:0, explanation:"No red flags here: real domain, no urgency, no request for personal info, no suspicious links." },
   { type:"spot", bg:"sms",
     scenario:["SMS from: +1-855-492-0011","IRS NOTICE: A tax refund of $1,847 is pending. Provide your bank details at irs-refunds.net to claim within 48 hours."],
     question:"What type of scam is this?",
-    options:["Smishing — SMS phishing","Vishing — voice call scam","Spear phishing","Whaling attack"],
+    options:["Smishing â€” SMS phishing","Vishing â€” voice call scam","Spear phishing","Whaling attack"],
     correct:0, explanation:"Smishing uses SMS. The IRS never texts about refunds, and irs-refunds.net is not a .gov domain." },
   { type:"spot", bg:"email",
-    scenario:["FROM: helpdesk@microsoft-support-center.com","SUBJECT: Critical Security Alert — Action Required","Your Windows PC has been infected with 3 viruses. Download our security patch immediately.","[DOWNLOAD PATCH →]"],
+    scenario:["FROM: helpdesk@microsoft-support-center.com","SUBJECT: Critical Security Alert â€” Action Required","Your Windows PC has been infected with 3 viruses. Download our security patch immediately.","[DOWNLOAD PATCH â†’]"],
     question:"Which two red flags identify this as phishing?",
     options:["Fake domain + unsolicited download link","Too many words in the subject","Microsoft uses a different logo","The email is written in English"],
     correct:0, explanation:"microsoft-support-center.com is not Microsoft's domain. Legitimate companies don't send unsolicited patch downloads." },
@@ -621,22 +621,22 @@ const QUESTIONS = [
   { type:"response", bg:"email",
     scenario:["Your bank sends an email asking you to confirm your account by clicking a link and entering your password and card number."],
     question:"What is the CORRECT response?",
-    options:["Do not click — call your bank using the number on your card","Click but only enter your username","Reply asking if it's real","Forward to friends to verify"],
+    options:["Do not click â€” call your bank using the number on your card","Click but only enter your username","Reply asking if it's real","Forward to friends to verify"],
     correct:0, explanation:"Legitimate banks never request passwords or card numbers via email. Call the number on your physical card." },
   { type:"response", bg:"call",
     scenario:["Phone call: 'This is Microsoft Tech Support. We detected a virus on your computer. Give us remote access so we can fix it.'"],
     question:"What should you do?",
-    options:["Hang up immediately — this is a vishing scam","Give them access to fix the problem","Ask for their name and call back later","Allow them to scan only your desktop"],
+    options:["Hang up immediately â€” this is a vishing scam","Give them access to fix the problem","Ask for their name and call back later","Allow them to scan only your desktop"],
     correct:0, explanation:"Microsoft never calls users unsolicited about viruses. This is vishing. Hang up and report it." },
   { type:"response", bg:"email",
     scenario:["Urgent email from the CFO asking you to wire $25,000 to a new supplier. The CFO is 'travelling' and can only be reached by email."],
     question:"What is the correct procedure?",
-    options:["Call the CFO directly on their known phone number","Process it — the CFO needs it urgently","Reply to the email to confirm","Transfer half now to reduce risk"],
+    options:["Call the CFO directly on their known phone number","Process it â€” the CFO needs it urgently","Reply to the email to confirm","Transfer half now to reduce risk"],
     correct:0, explanation:"Always verify financial requests through a separate channel. This is classic Business Email Compromise." },
   { type:"response", bg:"screen",
     scenario:["Pop-up: 'VIRUS DETECTED! Your computer is at risk. Call Microsoft Support: 1-800-XXX-XXXX immediately!'"],
     question:"What is the CORRECT action?",
-    options:["Close the browser — do not call the number","Call the number to get help","Download the suggested removal tool","Enter your email to get a free scan"],
+    options:["Close the browser â€” do not call the number","Call the number to get help","Download the suggested removal tool","Enter your email to get a free scan"],
     correct:0, explanation:"Legitimate security alerts never include phone numbers. This is a tech support scam. Force-close the browser." },
   { type:"classify", bg:"sms",
     scenario:["SMS: 'FedEx: Your package couldn't be delivered. Update delivery preferences at fedex-delivery-update.com'"],
@@ -644,25 +644,25 @@ const QUESTIONS = [
     options:["Smishing (SMS phishing)","Vishing (voice phishing)","Spear phishing","Pharming"],
     correct:0, explanation:"Smishing uses SMS. The fake domain 'fedex-delivery-update.com' is the giveaway." },
   { type:"classify", bg:"email",
-    scenario:["A cybercriminal researches a target on LinkedIn — name, role, colleagues — then sends a perfectly crafted email pretending to be their project partner."],
+    scenario:["A cybercriminal researches a target on LinkedIn â€” name, role, colleagues â€” then sends a perfectly crafted email pretending to be their project partner."],
     question:"This is an example of:",
-    options:["Spear phishing — targeted, personalised phishing","Generic phishing blast","Smishing","Watering hole attack"],
+    options:["Spear phishing â€” targeted, personalised phishing","Generic phishing blast","Smishing","Watering hole attack"],
     correct:0, explanation:"Spear phishing targets specific individuals using personal research to make the attack highly convincing." },
   { type:"classify", bg:"email",
     scenario:["A hacker sends mass emails to thousands claiming they've won a lottery and need to provide bank details to claim the prize."],
     question:"What type of attack is this?",
     options:["Mass phishing (generic blast)","Spear phishing","Whaling","Vishing"],
-    correct:0, explanation:"Mass phishing is untargeted — sent to thousands, relying on volume rather than personal research." },
+    correct:0, explanation:"Mass phishing is untargeted â€” sent to thousands, relying on volume rather than personal research." },
   { type:"classify", bg:"call",
     scenario:["An attacker calls the company's finance department, pretends to be the auditor, and asks for account numbers over the phone."],
     question:"This is an example of:",
     options:["Vishing (voice phishing)","Smishing","Phishing email","Spear phishing"],
     correct:0, explanation:"Vishing uses voice calls to extract sensitive information through social engineering." },
   { type:"fill", bg:"email",
-    scenario:["New Employee Checklist:","✓ Create strong unique password","✓ Set account recovery email","[ ? ] — THIS STEP IS MISSING","✓ Restrict admin access","✓ Review permissions"],
+    scenario:["New Employee Checklist:","âœ“ Create strong unique password","âœ“ Set account recovery email","[ ? ] â€” THIS STEP IS MISSING","âœ“ Restrict admin access","âœ“ Review permissions"],
     question:"What critical security step is missing?",
     options:["Enable Multi-Factor Authentication (MFA)","Add a profile picture","Set your timezone","Install a screensaver"],
-    correct:0, explanation:"MFA adds a second layer — even a stolen password alone cannot grant access without the second factor." },
+    correct:0, explanation:"MFA adds a second layer â€” even a stolen password alone cannot grant access without the second factor." },
   { type:"fill", bg:"email",
     scenario:["Password Reset Flow: 1. User requests reset  2. System emails link  3. [ MISSING STEP ]  4. User sets new password  5. Session invalidated"],
     question:"What is the missing verification step?",
@@ -671,7 +671,7 @@ const QUESTIONS = [
   { type:"spot", bg:"email",
     scenario:["FROM: support@dropbox.com","SUBJECT: Action Required: Your Dropbox storage is full","Your Dropbox is 100% full. Upgrade or files will be deleted in 7 days.","[MANAGE STORAGE]"],
     question:"How should you respond to this email?",
-    options:["Navigate directly to dropbox.com — don't click the email link","It's safe — the domain looks real, click the link","Dropbox never emails about storage, delete it","Only suspicious if you don't use Dropbox"],
+    options:["Navigate directly to dropbox.com â€” don't click the email link","It's safe â€” the domain looks real, click the link","Dropbox never emails about storage, delete it","Only suspicious if you don't use Dropbox"],
     correct:0, explanation:"Even with a real-looking domain, always navigate to the site directly rather than clicking email links." },
   { type:"classify", bg:"email",
     scenario:["An attacker compromises a popular industry news website visited by executives, planting malware that downloads automatically when the page loads."],
@@ -680,7 +680,7 @@ const QUESTIONS = [
     correct:0, explanation:"A watering hole attack compromises legitimate websites frequented by the target group. No email click required." },
 ];
 
-// ─────────────────────── GAME STATE ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ GAME STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let questions=[], qIndex=0, chances=3, score=0, totalTime=0, hintsUsed=0;
 let timerInterval, questionStart, pendingGift=null;
 
@@ -695,7 +695,7 @@ function getState(){
 function saveState(s){ localStorage.setItem("sp_state",JSON.stringify(s)); }
 function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
-// ─────────────────────── INIT ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function init(){
   const s=getState();
   document.getElementById("st-hearts").textContent=s.hearts;
@@ -706,7 +706,7 @@ function init(){
   loadQuestion();
 }
 
-// ─────────────────────── HEART COUNTDOWN ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HEART COUNTDOWN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function startHeartCountdown(){
   function update(){
     const s=getState(), cd=document.getElementById("regen-cd");
@@ -718,20 +718,20 @@ function startHeartCountdown(){
   update(); setInterval(update,1000);
 }
 
-// ─────────────────────── LOAD QUESTION ───────────────────────
-const TAGS={email:"📧 INTERCEPTED EMAIL",sms:"📱 INTERCEPTED SMS",url:"🔗 URL ANALYSIS",call:"📞 CALL TRANSCRIPT",screen:"🖥 SCREEN ALERT"};
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ LOAD QUESTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+const TAGS={email:"ðŸ“§ INTERCEPTED EMAIL",sms:"ðŸ“± INTERCEPTED SMS",url:"ðŸ”— URL ANALYSIS",call:"ðŸ“ž CALL TRANSCRIPT",screen:"ðŸ–¥ SCREEN ALERT"};
 const BG_MAP={email:"email-bg",sms:"sms-bg",url:"url-bg",call:"call-bg",screen:"email-bg"};
 
 function loadQuestion(){
   if(qIndex>=questions.length){endRound();return;}
   const q=questions[qIndex];
   document.getElementById("q-counter").textContent="Q "+(qIndex+1)+" / "+questions.length;
-  document.getElementById("mission-title").textContent="INTEL MISSION — "+q.type.toUpperCase();
+  document.getElementById("mission-title").textContent="INTEL MISSION â€” "+q.type.toUpperCase();
 
   // Scenario strip
   const strip=document.getElementById("scenario-strip");
   strip.className="scenario-strip "+(BG_MAP[q.bg]||"");
-  document.getElementById("scenario-tag").textContent=TAGS[q.bg]||"📋 SCENARIO";
+  document.getElementById("scenario-tag").textContent=TAGS[q.bg]||"ðŸ“‹ SCENARIO";
   const sc=document.getElementById("scenario-content");
   sc.innerHTML="";
   q.scenario.forEach((line,i)=>{
@@ -765,7 +765,7 @@ function loadQuestion(){
   questionStart=Date.now();
 }
 
-// ─────────────────────── TIMER ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TIMER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function startTimer(){
   clearInterval(timerInterval);
   const TOTAL=getTimerSecs();
@@ -785,7 +785,7 @@ function startTimer(){
 }
 function timeUp(){ loseChance("Time's up!"); }
 
-// ─────────────────────── FLASH SCREEN ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FLASH SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function flashScreen(isCorrect){
   const el=document.getElementById("flash-overlay");
   el.className=isCorrect?"correct show":"wrong show";
@@ -793,7 +793,7 @@ function flashScreen(isCorrect){
   setTimeout(()=>el.className="",900);
 }
 
-// ─────────────────────── ANSWER ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ANSWER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function answer(idx){
   clearInterval(timerInterval);
   const q=questions[qIndex];
@@ -806,21 +806,21 @@ function answer(idx){
   const fb=document.getElementById("feedback-bar");
 
   if(idx===q.correct){
-    // ── CORRECT ──
+    // â”€â”€ CORRECT â”€â”€
     btns[idx].classList.add("correct");
     btns.forEach((b,i)=>{ if(i!==idx) b.classList.add("dim"); });
     fb.className="feedback-bar correct-fb show";
-    fb.textContent="✓ Correct! "+q.explanation;
+    fb.textContent="âœ“ Correct! "+q.explanation;
     score++;
     document.getElementById("live-score").textContent = score;
     setTimeout(nextQuestion,1900);
   } else {
-    // ── WRONG ──
+    // â”€â”€ WRONG â”€â”€
     btns[idx].classList.add("wrong");
     btns[q.correct].classList.add("correct");
     btns.forEach((b,i)=>{ if(i!==idx&&i!==q.correct) b.classList.add("dim"); });
     fb.className="feedback-bar wrong-fb show";
-    fb.textContent="✗ Wrong. "+q.explanation;
+    fb.textContent="âœ— Wrong. "+q.explanation;
     loseChance(q.explanation);
   }
 }
@@ -847,7 +847,7 @@ function updateChanceDots(){
 }
 function nextQuestion(){ qIndex++; loadQuestion(); }
 
-// ─────────────────────── HINTS ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const HINT_COST=[1,2,3,5];
 function useHint(type){
   const s=getState();
@@ -861,12 +861,12 @@ function useHint(type){
     const toEl=wrong[Math.floor(Math.random()*wrong.length)];
     const btn=document.getElementById("ans-"+toEl);
     btn.disabled=true; btn.style.opacity="0.2";
-    showToast("✂ ELIMINATE: One wrong answer removed. (Cost: "+cost+" token"+(cost>1?"s":"")+")\n");
+    showToast("âœ‚ ELIMINATE: One wrong answer removed. (Cost: "+cost+" token"+(cost>1?"s":"")+")\n");
   } else if(type==="spotlight"){
-    showToast("🔦 SPOTLIGHT: Focus on the sender domain and any URLs. Look for subtle misspellings.");
+    showToast("ðŸ”¦ SPOTLIGHT: Focus on the sender domain and any URLs. Look for subtle misspellings.");
   } else {
-    const tips=["Look carefully — scammers rely on you being in a hurry.","Check the sender domain character by character. One wrong letter = phishing.","Would a real company ask for this? If not, it's a scam.","Urgency is a manipulation tactic. Slow down and think.","When in doubt, verify through a completely separate channel."];
-    showToast("▶ AGENT BETA: "+tips[Math.floor(Math.random()*tips.length)]);
+    const tips=["Look carefully â€” scammers rely on you being in a hurry.","Check the sender domain character by character. One wrong letter = phishing.","Would a real company ask for this? If not, it's a scam.","Urgency is a manipulation tactic. Slow down and think.","When in doubt, verify through a completely separate channel."];
+    showToast("â–¶ AGENT BETA: "+tips[Math.floor(Math.random()*tips.length)]);
   }
 }
 function showToast(msg){
@@ -875,13 +875,13 @@ function showToast(msg){
   setTimeout(()=>t.className="hint-toast",3500);
 }
 
-// ─────────────────────── END ROUND ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ END ROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const LEVEL_GIFTS=[
-  {icon:"◈",label:"+50 Coins",           apply:s=>{s.coins+=50;}},
-  {icon:"💡",label:"+2 Hint Tokens",     apply:s=>{s.hintTokens+=2;}},
-  {icon:"♥", label:"Full Hearts Restored!",apply:s=>{s.hearts=s.maxHearts;s.lastHeartTime=Date.now();}},
-  {icon:"◈",label:"+30 Coins",           apply:s=>{s.coins+=30;}},
-  {icon:"💡",label:"+1 Hint Token",      apply:s=>{s.hintTokens+=1;}},
+  {icon:"â—ˆ",label:"+50 Coins",           apply:s=>{s.coins+=50;}},
+  {icon:"ðŸ’¡",label:"+2 Hint Tokens",     apply:s=>{s.hintTokens+=2;}},
+  {icon:"â™¥", label:"Full Hearts Restored!",apply:s=>{s.hearts=s.maxHearts;s.lastHeartTime=Date.now();}},
+  {icon:"â—ˆ",label:"+30 Coins",           apply:s=>{s.coins+=30;}},
+  {icon:"ðŸ’¡",label:"+1 Hint Token",      apply:s=>{s.hintTokens+=1;}},
 ];
 
 function endRound(){
@@ -923,8 +923,8 @@ function collectGift(){
 
 function showWinScreen(coins,tokens,xpGain,stars){
   document.getElementById("win-rewards").innerHTML=
-    "<span style='color:#ffd700'>+"+coins+" coins</span>  •  "+
-    "<span style='color:#00ccff'>+"+tokens+" hints</span>  •  "+
+    "<span style='color:#ffd700'>+"+coins+" coins</span>  â€¢  "+
+    "<span style='color:#00ccff'>+"+tokens+" hints</span>  â€¢  "+
     "<span style='color:#b300ff'>+"+xpGain+" XP</span>";
   const els=[document.getElementById("star1"),document.getElementById("star2"),document.getElementById("star3")];
   els.forEach((el,i)=>{el.classList.remove("lit");setTimeout(()=>{if(i<stars)el.classList.add("lit");},i*350+200);});
@@ -932,7 +932,7 @@ function showWinScreen(coins,tokens,xpGain,stars){
   document.getElementById("win-overlay").classList.add("show");
 }
 
-// ─────────────────────── CONFETTI ───────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CONFETTI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const CC=["#ff00cc","#7a00ff","#00ffcc","#ffd700","#ff4466","#00ccff","#ff9900","#00ff80"];
 function spawnConfetti(count,containerId){
   const el=document.querySelector(".overlay.show #"+containerId)||document.getElementById(containerId);
@@ -950,7 +950,7 @@ function spawnConfetti(count,containerId){
   }
 }
 
-/* ── KEYBOARD SHORTCUTS ── */
+/* â”€â”€ KEYBOARD SHORTCUTS â”€â”€ */
 document.addEventListener("keydown", function(e) {
   const map = {"1":0,"2":1,"3":2,"4":3};
   if (e.key in map) {
@@ -969,3 +969,5 @@ init();
 </script>
 </body>
 </html>
+
+<!-- prateek-extra-2 -->
