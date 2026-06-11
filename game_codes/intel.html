@@ -194,17 +194,88 @@ html, body {
 /* Email body */
 .scenario-body {
   flex:1;
-  padding:14px 16px 16px;
+  padding:18px 20px 20px;
   background:#f7f7f9;
+  display:flex; flex-direction:column; gap:10px;
 }
-.s-body { color:#333; font-size:11.5px; line-height:1.7; font-family:'Rajdhani',sans-serif; font-weight:700; }
+.s-body {
+  color:#222; font-size:15px; line-height:1.75;
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+}
 .s-link {
-  display:inline-block; margin-top:10px;
-  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:800; letter-spacing:1.5px;
-  padding:7px 16px; border-radius:6px; cursor:default;
+  display:inline-block; margin-top:12px;
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:800; letter-spacing:1.5px;
+  padding:10px 20px; border-radius:8px; cursor:default;
   background:#1a73e8; color:#fff;
-  border:none;
+  border:none; align-self:flex-start;
   box-shadow:0 2px 8px rgba(26,115,232,0.4);
+}
+
+/* ── SMS / CALL / URL body styling ── */
+.sms-contact-bar {
+  display:flex; align-items:center; gap:12px;
+  padding:16px 20px;
+  background:rgba(0,0,0,0.6);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.sms-avatar {
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#ff3377,#ff8800);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.sms-contact-info { display:flex; flex-direction:column; gap:2px; }
+.sms-contact-num  { font-size:14px; font-weight:800; color:#fff; font-family:'Rajdhani',sans-serif; }
+.sms-contact-sub  { font-size:9px; letter-spacing:2px; color:#666; font-family:'Orbitron',sans-serif; }
+
+.sms-body {
+  flex:1; padding:20px;
+  background:rgba(5,0,15,0.85);
+  display:flex; align-items:flex-start;
+}
+.sms-bubble {
+  max-width:85%;
+  background:rgba(40,40,60,0.9);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px 18px 18px 18px;
+  padding:14px 18px;
+  position:relative;
+}
+.sms-bubble::before {
+  content:'';
+  position:absolute; top:0; left:-8px;
+  border:8px solid transparent;
+  border-right-color:rgba(40,40,60,0.9);
+  border-top-color:rgba(40,40,60,0.9);
+}
+.sms-text {
+  font-size:16px; line-height:1.7; color:#eee;
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+}
+.sms-link-pill {
+  display:inline-block; margin-top:10px;
+  font-size:13px; color:#4fc3f7; text-decoration:underline;
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+}
+
+/* URL / call body — full-card centered content */
+.scenario-info-card {
+  flex:1; padding:24px 22px;
+  background:rgba(5,0,15,0.85);
+  display:flex; flex-direction:column; justify-content:center; gap:14px;
+}
+.info-line {
+  font-size:15px; line-height:1.7; color:#ddd;
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+}
+.info-line.highlight { color:#ffcc00; font-size:17px; }
+.info-link-pill {
+  display:inline-block; margin-top:4px;
+  padding:8px 16px; border-radius:8px;
+  background:rgba(0,200,255,0.1); color:#00ccff;
+  border:1px solid rgba(0,200,255,0.35);
+  font-size:13px; font-family:'Rajdhani',sans-serif; font-weight:800;
+  word-break:break-all;
 }
 
 .q-divider {
@@ -896,19 +967,37 @@ function loadQuestion(){
         d.className="s-body"; d.textContent=line; sc.appendChild(d);
       }
     });
-  } else {
-    // SMS / URL / call — keep original flat layout
+  } else if(q.bg==="sms"){
     fields.style.display="none";
-    q.scenario.forEach((line,i)=>{
-      const d=document.createElement("div");
-      if(i===0&&q.bg==="sms") d.className="s-from";
-      else if(line.startsWith("[")){
-        d.className="s-link";
-        d.textContent=line.replace(/^\[|\]$/g,"");
-        sc.appendChild(d); return;
-      } else d.className="s-body";
-      d.textContent=line; sc.appendChild(d);
-    });
+    // SMS bubble UI
+    const from=q.scenario[0]||"Unknown";
+    sc.innerHTML=`
+      <div class="sms-contact-bar">
+        <div class="sms-avatar">📱</div>
+        <div class="sms-contact-info">
+          <div class="sms-contact-num">${from.replace(/^SMS from:\s*/i,"").replace(/^FROM:\s*/i,"")}</div>
+          <div class="sms-contact-sub">INCOMING SMS</div>
+        </div>
+      </div>
+      <div class="sms-body">
+        <div class="sms-bubble">
+          ${q.scenario.slice(1).map(line=>
+            line.startsWith("[")
+              ? `<div class="sms-link-pill">${line.replace(/^\[|\]$/g,"")}</div>`
+              : `<div class="sms-text">${line}</div>`
+          ).join("")}
+        </div>
+      </div>`;
+  } else {
+    // URL / call / screen — info card layout
+    fields.style.display="none";
+    sc.innerHTML=`<div class="scenario-info-card">${
+      q.scenario.map(line=>
+        line.startsWith("[")
+          ? `<div class="info-link-pill">${line.replace(/^\[|\]$/g,"")}</div>`
+          : `<div class="info-line ${line.length<60?"highlight":""}">${line}</div>`
+      ).join("")
+    }</div>`;
   }
 
   document.getElementById("question-text").textContent=q.question;
