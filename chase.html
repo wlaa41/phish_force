@@ -1452,15 +1452,6 @@ function update() {
 
   // Milestone celebrations
 
-  const mCheck = Math.floor(state.distance / 1000);
-
-  if (mCheck > 0 && !state["milestone_" + mCheck]) {
-
-    state["milestone_" + mCheck] = true;
-
-    showMilestone(mCheck * 1000);
-
-  }
 
 
 
@@ -1768,7 +1759,7 @@ function finishCheckpoint() {
 
     state.gap = Math.max(0, state.gap - 20);
 
-    showFlash("PERFECT! SPEED BOOST ACTIVATED! ", "#00ff80");
+    showSpeedBoost();
 
   } else if (cpCorrect === 2) {
 
@@ -1826,27 +1817,27 @@ function showFlash(msg, color) {
 
 
 
-function showMilestone(meters) {
+function showSpeedBoost() {
 
   const div = document.createElement(“div”);
 
-  div.innerHTML = `<div style=”font-size:9px;letter-spacing:3px;opacity:0.8;margin-bottom:4px;”>DISTANCE REACHED</div>
-    <div style=”font-size:22px;font-weight:900;letter-spacing:2px;”>${meters}m</div>
-    <div style=”font-size:9px;letter-spacing:2px;margin-top:4px;opacity:0.7;”>KEEP RIDING &#9650;</div>`;
+  div.innerHTML = `<div style=”font-size:10px;letter-spacing:3px;margin-bottom:6px;opacity:0.9;”>&#9889; SPEED BOOST</div>
+    <div style=”font-size:18px;font-weight:900;letter-spacing:2px;”>ACTIVATED!</div>
+    <div style=”font-size:9px;letter-spacing:2px;margin-top:6px;opacity:0.7;”>ALL 3 CORRECT</div>`;
 
   div.style.cssText = `
-    position:absolute;top:22%;left:50%;transform:translate(-50%,-50%) scale(0.6);
+    position:absolute;top:30%;left:50%;transform:translate(-50%,-50%) scale(0.7);
     z-index:16;padding:14px 28px;
-    background:linear-gradient(135deg,rgba(0,0,0,0.92),rgba(20,0,40,0.92));
-    border:2px solid #00ccff;border-radius:12px;
-    color:#00ccff;text-align:center;pointer-events:none;
-    box-shadow:0 0 24px rgba(0,204,255,0.5);
+    background:linear-gradient(135deg,rgba(0,0,0,0.92),rgba(0,40,10,0.92));
+    border:2px solid #00ff80;border-radius:12px;
+    color:#00ff80;text-align:center;pointer-events:none;
+    box-shadow:0 0 28px rgba(0,255,128,0.5);
     font-family:'Orbitron',sans-serif;
-    animation:milestoneIn 0.3s forwards, fadeOut 1.2s 1.4s forwards;`;
+    animation:milestoneIn 0.25s forwards, fadeOut 1.2s 1.2s forwards;`;
 
   document.getElementById(“game-wrap”).appendChild(div);
 
-  setTimeout(() => div.remove(), 2800);
+  setTimeout(() => div.remove(), 2600);
 
 }
 
