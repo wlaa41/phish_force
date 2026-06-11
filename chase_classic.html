@@ -737,6 +737,9 @@ let raf;
 function update() {
   if (!state.running || state.paused) return;
 
+  // Set midgame flag after player has actually started moving
+  if (state.frame === 1) localStorage.setItem("sp_midgame", JSON.stringify({game:"chase"}));
+
   state.frame++;
   state.distance += state.speed * 0.35;
 
@@ -934,6 +937,7 @@ function showFlash(msg, color) {
 function endGame(win) {
   state.running = false;
   cancelAnimationFrame(raf);
+  localStorage.removeItem("sp_midgame");
 
   const ps = getPlayerState();
   const coins = win ? 200 : Math.min(50, state.coins * 5);
@@ -1058,4 +1062,6 @@ startGame();
 // bishal-logic: gap reduce on correct
 // bishal-logic: frame counter wrap
 // bishal-logic: player y bounds
+
+
 
