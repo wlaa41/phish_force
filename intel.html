@@ -114,52 +114,89 @@ html, body {
   display:flex; flex-direction:column; gap:10px;
 }
 
-/* scenario strip inside the card */
+/* ── EMAIL CLIENT CARD ── */
 .scenario-strip {
-  font-size:11px; line-height:1.7; color:#bbb;
-  border-radius:10px; overflow:hidden;
-  background:rgba(0,0,0,0.35);
-  border:1px solid rgba(255,255,255,0.08);
   flex-shrink:0;
+  border-radius:14px; overflow:hidden;
+  border:1.5px solid rgba(255,60,120,0.35);
+  box-shadow:0 0 40px rgba(255,0,80,0.18), 0 0 80px rgba(120,0,255,0.12);
+  animation:cardBreath 3s ease-in-out infinite;
 }
-.scenario-strip.email-bg { border-color:rgba(255,0,128,0.25); }
-.scenario-strip.sms-bg   { border-color:rgba(0,200,255,0.25); }
-.scenario-strip.url-bg   { border-color:rgba(255,200,0,0.25); }
-.scenario-strip.call-bg  { border-color:rgba(0,255,128,0.25); }
+@keyframes cardBreath {
+  0%,100%{ box-shadow:0 0 30px rgba(255,0,80,0.15),0 0 60px rgba(120,0,255,0.1); }
+  50%    { box-shadow:0 0 50px rgba(255,0,80,0.30),0 0 90px rgba(120,0,255,0.2); }
+}
+.scenario-strip.sms-bg  { border-color:rgba(0,200,255,0.35); animation:cardBreathBlue 3s ease-in-out infinite; }
+.scenario-strip.url-bg  { border-color:rgba(255,200,0,0.35);  animation:cardBreathGold 3s ease-in-out infinite; }
+.scenario-strip.call-bg { border-color:rgba(0,255,128,0.35);  animation:cardBreathGreen 3s ease-in-out infinite; }
+@keyframes cardBreathBlue  { 0%,100%{box-shadow:0 0 30px rgba(0,200,255,0.15)} 50%{box-shadow:0 0 50px rgba(0,200,255,0.35)} }
+@keyframes cardBreathGold  { 0%,100%{box-shadow:0 0 30px rgba(255,200,0,0.15)}  50%{box-shadow:0 0 50px rgba(255,200,0,0.35)} }
+@keyframes cardBreathGreen { 0%,100%{box-shadow:0 0 30px rgba(0,255,128,0.15)} 50%{box-shadow:0 0 50px rgba(0,255,128,0.35)} }
 
-/* Header bar above the email content */
-.scenario-header {
-  display:flex; align-items:center; gap:8px;
-  padding:7px 12px;
+/* Window chrome — looks like a real email client titlebar */
+.scenario-chrome {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 14px;
+  background:rgba(20,5,35,0.95);
   border-bottom:1px solid rgba(255,255,255,0.07);
 }
-.email-bg .scenario-header  { background:rgba(255,0,100,0.12); }
-.sms-bg .scenario-header    { background:rgba(0,200,255,0.1); }
-.url-bg .scenario-header    { background:rgba(255,200,0,0.1); }
-.call-bg .scenario-header   { background:rgba(0,255,128,0.1); }
-
-.scenario-header-dot {
-  width:7px; height:7px; border-radius:50%; flex-shrink:0;
+.scenario-chrome-dots { display:flex; gap:6px; align-items:center; }
+.chrome-dot {
+  width:10px; height:10px; border-radius:50%;
 }
-.email-bg .scenario-header-dot  { background:#ff3377; box-shadow:0 0 6px #ff3377; }
-.sms-bg .scenario-header-dot    { background:#00ccff; box-shadow:0 0 6px #00ccff; }
-.url-bg .scenario-header-dot    { background:#ffcc00; box-shadow:0 0 6px #ffcc00; }
-.call-bg .scenario-header-dot   { background:#00ff88; box-shadow:0 0 6px #00ff88; }
-
+.chrome-dot.red    { background:#ff5f57; box-shadow:0 0 6px rgba(255,95,87,0.6); }
+.chrome-dot.yellow { background:#febc2e; box-shadow:0 0 6px rgba(254,188,46,0.6); }
+.chrome-dot.green  { background:#28c840; box-shadow:0 0 6px rgba(40,200,64,0.6); }
 .scenario-tag {
-  font-size:8px; letter-spacing:3px; color:#888;
-  text-transform:uppercase;
-  font-family:'Rajdhani',sans-serif; font-weight:800;
+  font-size:8px; letter-spacing:3px; color:#666;
+  text-transform:uppercase; font-family:'Rajdhani',sans-serif; font-weight:800;
 }
-.scenario-body { padding:10px 14px; }
-.s-from   { color:#ff6699; font-size:11px; font-weight:800; }
-.s-subj   { color:#ffd700; font-weight:900; font-size:12px; margin:3px 0; }
-.s-body   { color:#aaa; margin-top:5px; font-size:10.5px; line-height:1.6; }
-.s-link   {
-  display:inline-block; margin-top:6px;
-  color:#00ccff; text-decoration:underline; font-size:10px;
-  background:rgba(0,200,255,0.08); padding:2px 8px; border-radius:4px;
-  border:1px solid rgba(0,200,255,0.2);
+.scenario-warn-badge {
+  font-size:8px; letter-spacing:2px; font-weight:800; font-family:'Orbitron',sans-serif;
+  padding:3px 8px; border-radius:4px;
+  background:rgba(255,40,80,0.2); color:#ff6688;
+  border:1px solid rgba(255,40,80,0.4);
+}
+
+/* Field rows — FROM / SUBJECT style */
+.scenario-fields {
+  background:rgba(8,2,20,0.9);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:0;
+}
+.s-field-row {
+  display:flex; align-items:baseline; gap:0;
+  padding:7px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.s-field-row:last-child { border-bottom:none; }
+.s-field-label {
+  font-size:9px; letter-spacing:2px; color:#444; font-weight:800;
+  font-family:'Orbitron',sans-serif; min-width:68px; flex-shrink:0;
+  text-transform:uppercase;
+}
+.s-from {
+  font-size:12px; font-weight:800; color:#ff6699;
+  font-family:'Rajdhani',sans-serif;
+}
+.s-subj {
+  font-size:12px; font-weight:900; color:#ffd700;
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* Email body */
+.scenario-body {
+  padding:12px 16px 14px;
+  background:rgba(5,0,15,0.85);
+}
+.s-body { color:#bbb; font-size:11.5px; line-height:1.7; font-family:'Rajdhani',sans-serif; font-weight:700; }
+.s-link {
+  display:inline-block; margin-top:10px;
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:800; letter-spacing:1.5px;
+  padding:7px 16px; border-radius:6px; cursor:default;
+  background:rgba(0,200,255,0.1); color:#00ccff;
+  border:1px solid rgba(0,200,255,0.4);
+  box-shadow:0 0 12px rgba(0,200,255,0.15);
 }
 
 .q-divider {
@@ -518,10 +555,16 @@ html, body {
     <div class="q-bubble">?</div>
     <div class="q-card">
       <div class="scenario-strip" id="scenario-strip">
-        <div class="scenario-header">
-          <div class="scenario-header-dot"></div>
+        <div class="scenario-chrome">
+          <div class="scenario-chrome-dots">
+            <div class="chrome-dot red"></div>
+            <div class="chrome-dot yellow"></div>
+            <div class="chrome-dot green"></div>
+          </div>
           <div class="scenario-tag" id="scenario-tag">LOADING…</div>
+          <div class="scenario-warn-badge">⚠ SUSPICIOUS</div>
         </div>
+        <div class="scenario-fields" id="scenario-fields"></div>
         <div class="scenario-body" id="scenario-content"></div>
       </div>
       <div class="q-divider"></div>
@@ -821,16 +864,37 @@ function loadQuestion(){
   const strip=document.getElementById("scenario-strip");
   strip.className="scenario-strip "+(BG_MAP[q.bg]||"");
   document.getElementById("scenario-tag").textContent=TAGS[q.bg]||"📋 SCENARIO";
+
+  const fields=document.getElementById("scenario-fields");
   const sc=document.getElementById("scenario-content");
-  sc.innerHTML="";
-  q.scenario.forEach((line,i)=>{
-    const d=document.createElement("div");
-    if(i===0&&(q.bg==="email"||q.bg==="sms")) d.className="s-from";
-    else if(i===1&&q.bg==="email") d.className="s-subj";
-    else if(line.startsWith("[")) d.className="s-link";
-    else d.className="s-body";
-    d.textContent=line; sc.appendChild(d);
-  });
+  fields.innerHTML=""; sc.innerHTML="";
+
+  if(q.bg==="email"){
+    // Render as real email client: FROM / SUBJECT rows, then body
+    q.scenario.forEach((line,i)=>{
+      if(i===0){
+        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">FROM</span><span class="s-from">${line}</span></div>`;
+      } else if(i===1){
+        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">SUBJECT</span><span class="s-subj">${line}</span></div>`;
+      } else if(line.startsWith("[")){
+        const d=document.createElement("div");
+        d.className="s-link"; d.textContent=line; sc.appendChild(d);
+      } else {
+        const d=document.createElement("div");
+        d.className="s-body"; d.textContent=line; sc.appendChild(d);
+      }
+    });
+  } else {
+    // SMS / URL / call — keep original flat layout
+    fields.style.display="none";
+    q.scenario.forEach((line,i)=>{
+      const d=document.createElement("div");
+      if(i===0&&q.bg==="sms") d.className="s-from";
+      else if(line.startsWith("[")) d.className="s-link";
+      else d.className="s-body";
+      d.textContent=line; sc.appendChild(d);
+    });
+  }
 
   document.getElementById("question-text").textContent=q.question;
 
