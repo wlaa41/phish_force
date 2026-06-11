@@ -76,8 +76,8 @@ html, body {
 .game-area {
   flex:1; position:relative; z-index:5;
   display:flex; flex-direction:column;
-  padding:14px 48px 10px;
-  gap:12px; min-height:0; overflow:hidden;
+  padding:10px 48px 8px;
+  gap:8px; min-height:0; overflow:hidden;
 }
 
 /* ── QUESTION SECTION (? bubble + card) ── */
@@ -873,12 +873,18 @@ function loadQuestion(){
     // Render as real email client: FROM / SUBJECT rows, then body
     q.scenario.forEach((line,i)=>{
       if(i===0){
-        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">FROM</span><span class="s-from">${line}</span></div>`;
+        // Strip leading "FROM: " prefix if present — label already shows it
+        const val=line.replace(/^FROM:\s*/i,"");
+        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">FROM</span><span class="s-from">${val}</span></div>`;
       } else if(i===1){
-        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">SUBJECT</span><span class="s-subj">${line}</span></div>`;
+        // Strip leading "SUBJECT: " prefix if present
+        const val=line.replace(/^SUBJECT:\s*/i,"");
+        fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">SUBJECT</span><span class="s-subj">${val}</span></div>`;
       } else if(line.startsWith("[")){
         const d=document.createElement("div");
-        d.className="s-link"; d.textContent=line; sc.appendChild(d);
+        d.className="s-link";
+        d.textContent=line.replace(/^\[|\]$/g,""); // strip [ ]
+        sc.appendChild(d);
       } else {
         const d=document.createElement("div");
         d.className="s-body"; d.textContent=line; sc.appendChild(d);
@@ -890,8 +896,11 @@ function loadQuestion(){
     q.scenario.forEach((line,i)=>{
       const d=document.createElement("div");
       if(i===0&&q.bg==="sms") d.className="s-from";
-      else if(line.startsWith("[")) d.className="s-link";
-      else d.className="s-body";
+      else if(line.startsWith("[")){
+        d.className="s-link";
+        d.textContent=line.replace(/^\[|\]$/g,"");
+        sc.appendChild(d); return;
+      } else d.className="s-body";
       d.textContent=line; sc.appendChild(d);
     });
   }
