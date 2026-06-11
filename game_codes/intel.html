@@ -72,17 +72,18 @@ html, body {
 .timer-wrap { flex-shrink:0; height:5px; background:rgba(255,255,255,0.07); position:relative; z-index:10; }
 .timer-bar  { height:100%; background:linear-gradient(90deg,#7a00ff,#ff00cc); transition:width 0.08s linear; }
 
-/* ── GAME AREA (fills remaining height) ── */
+/* ── GAME AREA — 2-column grid ── */
 .game-area {
   flex:1; position:relative; z-index:5;
-  display:flex; flex-direction:column;
-  padding:10px 48px 8px;
-  gap:8px; min-height:0; overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  padding:12px 24px 10px;
+  gap:16px; min-height:0; overflow:hidden;
 }
 
-/* ── QUESTION SECTION (? bubble + card) ── */
+/* LEFT column: email card */
 .q-section {
-  flex:1; position:relative;
+  position:relative;
   padding-top:28px;
   display:flex; flex-direction:column;
   min-height:0;
@@ -91,10 +92,10 @@ html, body {
 /* Floating ? bubble */
 .q-bubble {
   position:absolute; top:0; left:50%; transform:translateX(-50%);
-  width:58px; height:58px; border-radius:50%; z-index:2;
+  width:52px; height:52px; border-radius:50%; z-index:2;
   background:linear-gradient(135deg,#7a00ff,#00ccff);
   display:flex; align-items:center; justify-content:center;
-  font-size:24px; font-weight:900; color:#fff;
+  font-size:22px; font-weight:900; color:#fff;
   box-shadow:0 0 24px rgba(0,200,255,0.7), 0 0 50px rgba(120,0,255,0.4);
   font-family:'Orbitron',sans-serif;
   animation:bubblePulse 2.5s ease-in-out infinite;
@@ -104,16 +105,18 @@ html, body {
   50%     { box-shadow:0 0 32px rgba(0,200,255,0.9),0 0 70px rgba(120,0,255,0.6); }
 }
 
-/* The card itself */
+/* The card wrapper — fills left column */
 .q-card {
   flex:1; min-height:0;
-  background:rgba(255,255,255,0.05);
-  border:1.5px solid rgba(0,200,255,0.22);
-  border-radius:18px;
-  padding:36px 28px 18px;
-  backdrop-filter:blur(14px);
-  box-shadow:0 0 40px rgba(0,200,255,0.08), inset 0 0 30px rgba(0,0,20,0.3);
-  display:flex; flex-direction:column; gap:10px;
+  display:flex; flex-direction:column;
+  border-radius:16px; overflow:hidden;
+}
+
+/* RIGHT column: question + answers + feedback */
+.right-panel {
+  display:flex; flex-direction:column;
+  justify-content:center;
+  gap:14px; min-height:0;
 }
 
 /* ── EMAIL CLIENT CARD ── */
@@ -121,6 +124,7 @@ html, body {
   flex:1; min-height:0;
   border-radius:14px; overflow:hidden;
   display:flex; flex-direction:column;
+  overflow-y:auto;
   border:1.5px solid rgba(255,60,120,0.35);
   box-shadow:0 0 40px rgba(255,0,80,0.18), 0 0 80px rgba(120,0,255,0.12);
   animation:cardBreath 3s ease-in-out infinite;
@@ -553,7 +557,7 @@ html, body {
 <!-- ── GAME AREA ── -->
 <div class="game-area">
 
-  <!-- QUESTION CARD with ? bubble -->
+  <!-- LEFT: email card -->
   <div class="q-section">
     <div class="q-bubble">?</div>
     <div class="q-card">
@@ -570,16 +574,15 @@ html, body {
         <div class="scenario-fields" id="scenario-fields"></div>
         <div class="scenario-body" id="scenario-content"></div>
       </div>
-      <div class="q-divider"></div>
-      <div class="question-text" id="question-text">Loading question…</div>
     </div>
   </div>
 
-  <!-- 2×2 ANSWER GRID -->
-  <div class="answers" id="answers"></div>
-
-  <!-- FEEDBACK -->
-  <div class="feedback-bar" id="feedback-bar"></div>
+  <!-- RIGHT: question + answers + feedback -->
+  <div class="right-panel">
+    <div class="question-text" id="question-text">Loading question…</div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback-bar" id="feedback-bar"></div>
+  </div>
 
 </div>
 
