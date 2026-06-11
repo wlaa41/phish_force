@@ -221,9 +221,9 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 
 // ── Perspective ──
-const HORIZ_FRAC  = 0.40;   // horizon at 40% from top
-const ROAD_NEAR_W = 0.90;   // road width fraction at player (bottom)
-const ROAD_FAR_W  = 26;     // road width px at horizon
+const HORIZ_FRAC  = 0.36;   // horizon at 36% from top
+const ROAD_NEAR_W = 1.04;   // road wider than screen — fills edge to edge
+const ROAD_FAR_W  = 80;     // road width px at horizon (wider = less triangular)
 
 function project(depth, lanePos) {
   const hy = H * HORIZ_FRAC;
@@ -355,36 +355,46 @@ function drawSky() {
   const rrFar = W/2 + ROAD_FAR_W/2;
   const n = CANYON_L.length - 1;
 
-  // Left canyon
-  ctx.fillStyle = "#6e2b0c";
+  // Left canyon — smooth bezier curves, not sharp spikes
+  ctx.fillStyle = "#7a3312";
   ctx.beginPath();
   ctx.moveTo(0, hy);
+  ctx.lineTo(0, hy * 0.15);
   for (let i = 0; i <= n; i++) {
-    ctx.lineTo((i/n)*rlFar, hy - CANYON_L[i]*hy*0.68);
+    const x = (i/n) * rlFar;
+    const y = hy - CANYON_L[i]*hy*0.60;
+    if (i === 0) ctx.lineTo(x, y);
+    else {
+      const px = ((i-1)/n)*rlFar;
+      const py = hy - CANYON_L[i-1]*hy*0.60;
+      ctx.bezierCurveTo(px + (x-px)*0.5, py, px + (x-px)*0.5, y, x, y);
+    }
   }
   ctx.lineTo(rlFar, hy);
   ctx.closePath(); ctx.fill();
 
-  // Right canyon
-  ctx.fillStyle = "#6e2b0c";
+  // Right canyon — smooth
+  ctx.fillStyle = "#7a3312";
   ctx.beginPath();
-  ctx.moveTo(rrFar, hy);
-  for (let i = 0; i <= n; i++) {
-    ctx.lineTo(rrFar + (i/n)*(W-rrFar), hy - CANYON_R[i]*hy*0.68);
+  ctx.moveTo(W, hy);
+  ctx.lineTo(W, hy * 0.15);
+  for (let i = n; i >= 0; i--) {
+    const x = rrFar + (i/n)*(W-rrFar);
+    const y = hy - CANYON_R[i]*hy*0.60;
+    if (i === n) ctx.lineTo(x, y);
+    else {
+      const nx = rrFar + ((i+1)/n)*(W-rrFar);
+      const ny = hy - CANYON_R[i+1]*hy*0.60;
+      ctx.bezierCurveTo(nx - (nx-x)*0.5, ny, nx - (nx-x)*0.5, y, x, y);
+    }
   }
-  ctx.lineTo(W, hy);
+  ctx.lineTo(rrFar, hy);
   ctx.closePath(); ctx.fill();
 
-  // Darker foreground ridge at road edges (depth)
-  ctx.fillStyle = "rgba(40,12,2,0.55)";
-  ctx.beginPath();
-  ctx.moveTo(0, hy); ctx.lineTo(rlFar*0.35, hy);
-  ctx.lineTo(rlFar*0.12, hy*0.82); ctx.lineTo(0, hy*0.78);
-  ctx.closePath(); ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(W, hy); ctx.lineTo(rrFar + (W-rrFar)*0.65, hy);
-  ctx.lineTo(rrFar + (W-rrFar)*0.88, hy*0.82); ctx.lineTo(W, hy*0.78);
-  ctx.closePath(); ctx.fill();
+  // Second darker layer for depth
+  ctx.fillStyle = "rgba(45,14,4,0.50)";
+  ctx.beginPath(); ctx.moveTo(0,hy); ctx.lineTo(0, hy*0.62); ctx.quadraticCurveTo(rlFar*0.3, hy*0.72, rlFar*0.55, hy); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(W,hy); ctx.lineTo(W, hy*0.62); ctx.quadraticCurveTo(rrFar+(W-rrFar)*0.7, hy*0.72, rrFar+(W-rrFar)*0.45, hy); ctx.closePath(); ctx.fill();
 }
 
 // ── Draw road ──
@@ -394,12 +404,7 @@ function drawRoad() {
   const rlFar  = vpx - ROAD_FAR_W/2,   rrFar  = vpx + ROAD_FAR_W/2;
   const rlNear = vpx - W*ROAD_NEAR_W/2, rrNear = vpx + W*ROAD_NEAR_W/2;
 
-  // Sandy shoulder
-  const sand = ctx.createLinearGradient(0, hy, 0, H);
-  sand.addColorStop(0, "#b8721a"); sand.addColorStop(0.5,"#8a5010"); sand.addColorStop(1,"#5c3008");
-  ctx.fillStyle = sand;
-  ctx.beginPath(); ctx.moveTo(0,H); ctx.lineTo(rlNear,H); ctx.lineTo(rlFar,hy); ctx.lineTo(0,hy); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(rrNear,H); ctx.lineTo(W,H); ctx.lineTo(W,hy); ctx.lineTo(rrFar,hy); ctx.closePath(); ctx.fill();
+  // No visible shoulder — road fills the screen edge to edge
 
   // Asphalt — perspective-shaded strips
   const STRIPS = 20;
@@ -416,10 +421,10 @@ function drawRoad() {
     ctx.closePath(); ctx.fill();
   }
 
-  // Road edge white lines
-  ctx.strokeStyle = "rgba(255,255,255,0.75)"; ctx.lineWidth = 3; ctx.shadowBlur = 0;
-  ctx.beginPath(); ctx.moveTo(rlFar,hy); ctx.lineTo(rlNear,H); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(rrFar,hy); ctx.lineTo(rrNear,H); ctx.stroke();
+  // Road edge — guardrails visible only near horizon where road still fits in screen
+  ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.lineWidth = 2.5; ctx.shadowBlur = 0;
+  if (rlFar >= 0) { ctx.beginPath(); ctx.moveTo(rlFar,hy); ctx.lineTo(Math.max(0,rlNear),H); ctx.stroke(); }
+  if (rrFar <= W) { ctx.beginPath(); ctx.moveTo(rrFar,hy); ctx.lineTo(Math.min(W,rrNear),H); ctx.stroke(); }
 
   // Animated dashed lane lines
   state.dashPhase = (state.dashPhase + state.speed*0.016) % 1;
@@ -502,7 +507,7 @@ const CAR_GLOWS  = ["#ffffff","#4466ff","#ff6633","#44cc66","#888888","#ff6644",
 
 // Car seen from BEHIND (you're overtaking)
 function drawCarBehind(p, col, glow) {
-  const cw = 76*p.scale, ch = 108*p.scale;
+  const cw = Math.max(44, W*0.072*p.scale), ch = cw*1.42;
   const x = p.x, y = p.y;
   ctx.save();
   ctx.shadowBlur = 6*p.scale; ctx.shadowColor = glow;
@@ -550,7 +555,7 @@ function drawCarBehind(p, col, glow) {
 
 // Car coming HEAD-ON (oncoming traffic)
 function drawCarFront(p, col, glow) {
-  const cw = 76*p.scale, ch = 108*p.scale;
+  const cw = Math.max(44, W*0.072*p.scale), ch = cw*1.42;
   const x = p.x, y = p.y;
   ctx.save();
   ctx.shadowBlur = 6*p.scale; ctx.shadowColor = glow;
