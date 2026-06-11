@@ -12,7 +12,7 @@
 
 <meta name="description" content="Highway Chase — Ride fast, collect coins, and answer cybersecurity checkpoints in ShadowPhish.">
 
-<title>ShadowPhish â€” Highway Chase</title>
+<title>ShadowPhish — Highway Chase</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -220,7 +220,7 @@ canvas {
 
 
 
-.cp-question { font-size: 12px; color: #ddd; text-align: center; max-width: 380px; line-height: 1.6; }
+.cp-question { font-size: 12px; font-weight: 700; color: #ddd; text-align: center; max-width: 380px; line-height: 1.6; }
 
 .cp-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 380px; }
 
@@ -238,7 +238,7 @@ canvas {
 
   font-family: 'Orbitron', sans-serif;
 
-  font-size: 9px; cursor: pointer; text-align: left;
+  font-size: 9px; font-weight: 700; cursor: pointer; text-align: left;
 
   transition: 0.2s; line-height: 1.4;
 
@@ -440,7 +440,7 @@ canvas {
 
   <div class="checkpoint-overlay" id="cp-overlay">
 
-    <div class="cp-header">âš¡ QUESTION ZONE</div>
+    <div class="cp-header">⚡ QUESTION ZONE</div>
 
     <div class="cp-sub">3/3 CORRECT = SPEED BOOST &nbsp;|&nbsp; ANSWER TO CLOSE THE GAP</div>
 
@@ -514,7 +514,7 @@ const CP_QUESTIONS = [
 
   { q:"What should you do when you receive an urgent payment request from your 'CEO' by email only?",
 
-    opts:["Call the CEO directly to verify","Process it â€” it's urgent","Reply to the email to confirm","Forward to your team"],
+    opts:["Call the CEO directly to verify","Process it — it's urgent","Reply to the email to confirm","Forward to your team"],
 
     ans:0 },
 
@@ -532,7 +532,7 @@ const CP_QUESTIONS = [
 
   { q:"A pop-up says 'Call Microsoft Support at 1-800-XXX' to fix a virus. You should:",
 
-    opts:["Close the browser â€” this is a tech support scam","Call the number immediately","Download the offered tool","Enter your email for a free scan"],
+    opts:["Close the browser — this is a tech support scam","Call the number immediately","Download the offered tool","Enter your email for a free scan"],
 
     ans:0 },
 
@@ -556,19 +556,19 @@ const CP_QUESTIONS = [
 
   { q:"What does a padlock icon in the browser address bar guarantee?",
 
-    opts:["The connection is encrypted â€” but NOT that the site is safe","The site is completely safe to use","The site is verified by the government","Your payment details are protected"],
+    opts:["The connection is encrypted — but NOT that the site is safe","The site is completely safe to use","The site is verified by the government","Your payment details are protected"],
 
     ans:0 },
 
   { q:"A stranger on social media asks for your date of birth to 'verify your identity'. You should:",
 
-    opts:["Refuse â€” this is a social engineering attempt to harvest personal data","Share it â€” it is public information","Share just the year, not the full date","Ask them to verify themselves first"],
+    opts:["Refuse — this is a social engineering attempt to harvest personal data","Share it — it is public information","Share just the year, not the full date","Ask them to verify themselves first"],
 
     ans:0 },
 
   { q:"A website URL starts with 'http://' instead of 'https://'. This means:",
 
-    opts:["The connection is unencrypted â€” your data could be intercepted","The site is definitely a phishing page","The site is faster to load","The site is safe for shopping"],
+    opts:["The connection is unencrypted — your data could be intercepted","The site is definitely a phishing page","The site is faster to load","The site is safe for shopping"],
 
     ans:0 },
 
@@ -580,13 +580,13 @@ const CP_QUESTIONS = [
 
   { q:"What is 'vishing'?",
 
-    opts:["Voice call phishing â€” scammers call pretending to be trusted organisations","A type of malware","Phishing via video","Phishing via email"],
+    opts:["Voice call phishing — scammers call pretending to be trusted organisations","A type of malware","Phishing via video","Phishing via email"],
 
     ans:0 },
 
   { q:"An email urges you to 'ACT NOW or your account is closed'. This urgency is a sign of:",
 
-    opts:["Social engineering â€” designed to prevent you from thinking clearly","Legitimate security measure","Automated notification","Password reset reminder"],
+    opts:["Social engineering — designed to prevent you from thinking clearly","Legitimate security measure","Automated notification","Password reset reminder"],
 
     ans:0 },
 
@@ -644,7 +644,7 @@ let state = {
 
   hearts: 3,
 
-  gap: 30,       // % â€” opponent gap (0=caught, 100=escaped)
+  gap: 30,       // % — opponent gap (0=caught, 100=escaped)
 
   playerLane: 1,
 
@@ -656,7 +656,7 @@ let state = {
 
   nextLineDist: 1500,
 
-  questionLine: null,   // { y } â€” scrolling checkpoint line
+  questionLine: null,   // { y } — scrolling checkpoint line
 
   frame: 0,
 
@@ -778,7 +778,7 @@ function drawBackground() {
 
 
 
-  // Road surface gradient (subtle depth â€” top slightly lighter)
+  // Road surface gradient (subtle depth — top slightly lighter)
 
   const roadGrad = ctx.createLinearGradient(0, 0, 0, H);
 
@@ -1404,7 +1404,7 @@ function drawDistanceMeter() {
 
   const pct = state.questionLine
 
-    ? 1                                                   // line on screen â€” full
+    ? 1                                                   // line on screen — full
 
     : Math.min(1, (state.distance - segStart) / 1500);
 
