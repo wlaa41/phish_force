@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Highway Chase Ã¢â‚¬â€ Ride fast, collect coins, and answer cybersecurity checkpoints in ShadowPhish.">
-<meta name="description" content="Highway Chase Ã¢â‚¬â€ Ride fast, collect coins, and answer cybersecurity checkpoints in ShadowPhish.">
-<title>ShadowPhish â€” Highway Chase</title>
+<meta name="description" content="Highway Chase — Ride fast, collect coins, and answer cybersecurity checkpoints in ShadowPhish.">
+<meta name="description" content="Highway Chase — Ride fast, collect coins, and answer cybersecurity checkpoints in ShadowPhish.">
+<title>ShadowPhish — Highway Chase</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Orbitron',sans-serif; }
 
@@ -33,7 +33,7 @@ canvas {
   box-shadow: 0 0 40px rgba(140,0,255,0.4), 0 0 80px rgba(0,0,0,0.8);
 }
 
-/* â”€â”€ HUD â”€â”€ */
+/* ── HUD ── */
 .hud {
   position: absolute; top: 0; left: 0; right: 0;
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -47,7 +47,7 @@ canvas {
   padding: 6px 10px;
   font-size: 10px; color: #aaa; letter-spacing: 1px;
 }
-.hud-val { font-size: 14px; font-weight: 700; color: white; }
+.hud-val { font-size: 14px; font-weight: 800; color: white; }
 .hud-val.dist { color: #00ccff; }
 .hud-val.coins { color: #ffd700; }
 .hud-val.hearts { color: #ff4466; }
@@ -78,7 +78,7 @@ canvas {
 }
 @keyframes gapPulse { from{opacity:1} to{opacity:0.6} }
 
-/* â”€â”€ CHECKPOINT OVERLAY â”€â”€ */
+/* ── CHECKPOINT OVERLAY ── */
 .checkpoint-overlay {
   position: absolute; inset: 0;
   background: rgba(0,0,0,0.88);
@@ -137,7 +137,7 @@ canvas {
   font-size: 10px; color: #555; letter-spacing: 2px;
 }
 
-/* â”€â”€ GAME OVER / WIN OVERLAY â”€â”€ */
+/* ── GAME OVER / WIN OVERLAY ── */
 .end-overlay {
   position: absolute; inset: 0; z-index: 30;
   background: rgba(0,0,0,0.9);
@@ -164,7 +164,7 @@ canvas {
 .end-btn {
   padding: 10px 18px; border-radius: 8px; border: none;
   font-family: 'Orbitron', sans-serif;
-  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
   cursor: pointer; transition: 0.2s;
 }
 .end-btn.primary { background: linear-gradient(90deg,#7a00ff,#ff00cc); color: white; }
@@ -189,7 +189,7 @@ canvas {
   <!-- HUD -->
   <div class="hud">
     <div>
-      <a class="back-link" href="home.html">â† HQ</a>
+      <a class="back-link" href="home.html">← HQ</a>
     </div>
     <div class="hud-block">
       <div style="font-size:9px;color:#666;letter-spacing:2px;">DISTANCE</div>
@@ -197,11 +197,11 @@ canvas {
     </div>
     <div class="hud-block">
       <div style="font-size:9px;color:#666;letter-spacing:2px;">COINS</div>
-      <div class="hud-val coins">â—ˆ <span id="hud-coins" title="Coins earned this run Ã¢â‚¬â€ spend them on hints in Intel Mission">0</span></div>
+      <div class="hud-val coins">◈ <span id="hud-coins" title="Coins earned this run — spend them on hints in Intel Mission">0</span></div>
     </div>
     <div class="hud-block">
       <div style="font-size:9px;color:#666;letter-spacing:2px;">LIVES</div>
-      <div class="hud-val hearts"><span id="hud-hearts">â™¥â™¥â™¥</span></div>
+      <div class="hud-val hearts"><span id="hud-hearts">♥♥♥</span></div>
     </div>
   </div>
 
@@ -219,7 +219,7 @@ canvas {
 
   <!-- CHECKPOINT OVERLAY -->
   <div class="checkpoint-overlay" id="cp-overlay">
-    <div class="cp-header">âš¡ QUESTION ZONE</div>
+    <div class="cp-header">⚡ QUESTION ZONE</div>
     <div class="cp-sub">3/3 CORRECT = SPEED BOOST &nbsp;|&nbsp; ANSWER TO CLOSE THE GAP</div>
     <div class="cp-timer-bar"><div class="cp-timer-fill" id="cp-timer"></div></div>
     <div class="cp-progress" id="cp-prog">QUESTION 1 / 3</div>
@@ -238,13 +238,13 @@ canvas {
       background:rgba(0,0,0,0.65);border:1px solid rgba(179,0,255,0.4);
       color:#b300ff;font-size:22px;cursor:pointer;
       box-shadow:0 0 12px rgba(179,0,255,0.3);
-    ">â—€</button>
+    ">◀</button>
     <button onclick="mobileMove(1)" style="
       width:56px;height:56px;border-radius:50%;
       background:rgba(0,0,0,0.65);border:1px solid rgba(0,200,255,0.4);
       color:#00ccff;font-size:22px;cursor:pointer;
       box-shadow:0 0 12px rgba(0,200,255,0.3);
-    ">â–¶</button>
+    ">▶</button>
   </div>
 
   <!-- END OVERLAY -->
@@ -262,8 +262,8 @@ canvas {
 </div>
 
 <script>
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CHECKPOINT QUESTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Checkpoint questions Ã¢â‚¬â€ shown every 1500m during Highway Chase
+// ────────────────── CHECKPOINT QUESTIONS ──────────────────
+// Checkpoint questions — shown every 1500m during Highway Chase
 const CP_QUESTIONS = [
   { q:"Which is a sign of a phishing email?",
     opts:["Urgent call to action + suspicious sender domain","Formal greeting and company logo","Reply-to matches sender","Email contains no links"],
@@ -275,7 +275,7 @@ const CP_QUESTIONS = [
     opts:["Typosquatting","Pharming","Spoofing","Vishing"],
     ans:0 },
   { q:"What should you do when you receive an urgent payment request from your 'CEO' by email only?",
-    opts:["Call the CEO directly to verify","Process it â€” it's urgent","Reply to the email to confirm","Forward to your team"],
+    opts:["Call the CEO directly to verify","Process it — it's urgent","Reply to the email to confirm","Forward to your team"],
     ans:0 },
   { q:"Multi-Factor Authentication (MFA) protects your account by:",
     opts:["Requiring a second form of verification beyond just a password","Encrypting your password","Hiding your email address","Blocking all unknown senders"],
@@ -284,7 +284,7 @@ const CP_QUESTIONS = [
     opts:["gov.example.gov","example-gov.com","example.gov.support.net","gov-example-official.com"],
     ans:0 },
   { q:"A pop-up says 'Call Microsoft Support at 1-800-XXX' to fix a virus. You should:",
-    opts:["Close the browser â€” this is a tech support scam","Call the number immediately","Download the offered tool","Enter your email for a free scan"],
+    opts:["Close the browser — this is a tech support scam","Call the number immediately","Download the offered tool","Enter your email for a free scan"],
     ans:0 },
   { q:"Spear phishing differs from regular phishing because it is:",
     opts:["Targeted at a specific person using personal information","Sent to millions of people","Delivered via SMS","Conducted over the phone"],
@@ -296,26 +296,26 @@ const CP_QUESTIONS = [
     opts:["Using a unique strong password + MFA on every account","Using the same password everywhere for easy recall","Changing your password every day","Writing it on paper and keeping it at your desk"],
     ans:0 },
   { q:"What does a padlock icon in the browser address bar guarantee?",
-    opts:["The connection is encrypted â€” but NOT that the site is safe","The site is completely safe to use","The site is verified by the government","Your payment details are protected"],
+    opts:["The connection is encrypted — but NOT that the site is safe","The site is completely safe to use","The site is verified by the government","Your payment details are protected"],
     ans:0 },
   { q:"A stranger on social media asks for your date of birth to 'verify your identity'. You should:",
-    opts:["Refuse â€” this is a social engineering attempt to harvest personal data","Share it â€” it is public information","Share just the year, not the full date","Ask them to verify themselves first"],
+    opts:["Refuse — this is a social engineering attempt to harvest personal data","Share it — it is public information","Share just the year, not the full date","Ask them to verify themselves first"],
     ans:0 },
   { q:"A website URL starts with 'http://' instead of 'https://'. This means:",
-    opts:["The connection is unencrypted â€” your data could be intercepted","The site is definitely a phishing page","The site is faster to load","The site is safe for shopping"],
+    opts:["The connection is unencrypted — your data could be intercepted","The site is definitely a phishing page","The site is faster to load","The site is safe for shopping"],
     ans:0 },
   { q:"What is 'whaling' in cybersecurity?",
     opts:["Targeted phishing attacks aimed at senior executives (CEO, CFO)","Phishing attacks on fishing industry websites","Mass email phishing targeting millions","Attacks via WhatsApp messages"],
     ans:0 },
   { q:"What is 'vishing'?",
-    opts:["Voice call phishing â€” scammers call pretending to be trusted organisations","A type of malware","Phishing via video","Phishing via email"],
+    opts:["Voice call phishing — scammers call pretending to be trusted organisations","A type of malware","Phishing via video","Phishing via email"],
     ans:0 },
   { q:"An email urges you to 'ACT NOW or your account is closed'. This urgency is a sign of:",
-    opts:["Social engineering â€” designed to prevent you from thinking clearly","Legitimate security measure","Automated notification","Password reset reminder"],
+    opts:["Social engineering — designed to prevent you from thinking clearly","Legitimate security measure","Automated notification","Password reset reminder"],
     ans:0 },
 ];
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CANVAS SETUP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── CANVAS SETUP ──────────────────
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const W = canvas.width;   // 480
@@ -332,7 +332,7 @@ const LANES  = [
   ROAD_L + LANE_W * 2.5,  // ~360
 ];
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ GAME STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── GAME STATE ──────────────────
 let state = {
   running: false,
   paused: false,
@@ -340,13 +340,13 @@ let state = {
   speed: 3.5,
   coins: 0,
   hearts: 3,
-  gap: 30,       // % â€” opponent gap (0=caught, 100=escaped)
+  gap: 30,       // % — opponent gap (0=caught, 100=escaped)
   playerLane: 1,
   playerX: LANES[1],
   targetX: LANES[1],
   lastCheckpoint: 0,
   nextLineDist: 1500,
-  questionLine: null,   // { y } â€” scrolling checkpoint line
+  questionLine: null,   // { y } — scrolling checkpoint line
   frame: 0,
   dashOffset: 0,
   stars: [],
@@ -357,8 +357,8 @@ let state = {
   boosting: 0,
 };
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ STATE HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// getPlayerState Ã¢â‚¬â€ safe getter; initialises default state if sp_state missing
+// ────────────────── STATE HELPERS ──────────────────
+// getPlayerState — safe getter; initialises default state if sp_state missing
 function getPlayerState() {
   return JSON.parse(localStorage.getItem("sp_state")) || {
     coins:50, hintTokens:3, hearts:5, maxHearts:5,
@@ -371,11 +371,11 @@ function savePlayerState(s) { localStorage.setItem("sp_state", JSON.stringify(s)
 function updateHUD() {
   document.getElementById("hud-dist").textContent    = Math.floor(state.distance);
   document.getElementById("hud-coins").textContent   = state.coins;
-  document.getElementById("hud-hearts").textContent  = "â™¥".repeat(Math.max(0, state.hearts));
+  document.getElementById("hud-hearts").textContent  = "♥".repeat(Math.max(0, state.hearts));
   document.getElementById("gap-fill").style.width    = state.gap + "%";
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BACKGROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── BACKGROUND ──────────────────
 function drawBackground() {
   // Full-canvas dark base
   ctx.fillStyle = "#08080f";
@@ -407,7 +407,7 @@ function drawBackground() {
   ctx.beginPath(); ctx.moveTo(ROAD_R, 0); ctx.lineTo(ROAD_R, H); ctx.stroke();
   ctx.shadowBlur = 0;
 
-  // Road surface gradient (subtle depth â€” top slightly lighter)
+  // Road surface gradient (subtle depth — top slightly lighter)
   const roadGrad = ctx.createLinearGradient(0, 0, 0, H);
   roadGrad.addColorStop(0,   "#14141e");
   roadGrad.addColorStop(0.5, "#111118");
@@ -416,7 +416,7 @@ function drawBackground() {
   ctx.fillRect(ROAD_L, 0, ROAD_W, H);
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ROAD MARKINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── ROAD MARKINGS ──────────────────
 function drawRoad() {
   state.dashOffset = (state.dashOffset + state.speed) % 60;
 
@@ -437,7 +437,7 @@ function drawRoad() {
   ctx.lineDashOffset = 0;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CARS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── CARS ──────────────────
 function drawCar(x, y, bodyColor, glowColor, fwd=true) {
   const cw = 44, ch = 70;
   ctx.save();
@@ -483,7 +483,7 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BIKE (player vehicle) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── BIKE (player vehicle) ──────────────────
 function drawBike(x, y, glowColor, isBoosting) {
   ctx.save();
 
@@ -492,7 +492,7 @@ function drawBike(x, y, glowColor, isBoosting) {
   const rearWheelY  = y + bh * 0.40;
   const bodyColor   = isBoosting ? "#00ff80" : "#2277ff";
 
-  // â”€â”€ Rear wheel â”€â”€
+  // ── Rear wheel ──
   ctx.shadowBlur = 10; ctx.shadowColor = glowColor;
   ctx.fillStyle = "#1a1a1a";
   ctx.beginPath(); ctx.ellipse(x, rearWheelY, 10, 13, 0, 0, Math.PI*2); ctx.fill();
@@ -502,27 +502,27 @@ function drawBike(x, y, glowColor, isBoosting) {
   ctx.strokeStyle = "rgba(255,255,255,0.12)"; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.ellipse(x, rearWheelY, 6, 9, 0, 0, Math.PI*2); ctx.stroke();
 
-  // â”€â”€ Front wheel â”€â”€
+  // ── Front wheel ──
   ctx.fillStyle = "#1a1a1a";
   ctx.beginPath(); ctx.ellipse(x, frontWheelY, 10, 13, 0, 0, Math.PI*2); ctx.fill();
   ctx.strokeStyle = "#444"; ctx.lineWidth = 2; ctx.stroke();
   ctx.strokeStyle = "rgba(255,255,255,0.12)"; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.ellipse(x, frontWheelY, 6, 9, 0, 0, Math.PI*2); ctx.stroke();
 
-  // â”€â”€ Frame / body â”€â”€
+  // ── Frame / body ──
   ctx.shadowBlur = 16; ctx.shadowColor = glowColor;
   ctx.fillStyle = bodyColor;
   ctx.beginPath();
   ctx.roundRect(x - bw/2, y - bh*0.30, bw, bh*0.60, 5);
   ctx.fill();
 
-  // â”€â”€ Fuel tank highlight â”€â”€
+  // ── Fuel tank highlight ──
   ctx.fillStyle = isBoosting ? "rgba(255,255,255,0.25)" : "rgba(0,180,255,0.25)";
   ctx.beginPath();
   ctx.ellipse(x, y - bh*0.08, bw*0.35, bh*0.10, 0, 0, Math.PI*2);
   ctx.fill();
 
-  // â”€â”€ Handlebars â”€â”€
+  // ── Handlebars ──
   ctx.shadowBlur = 0;
   ctx.strokeStyle = "#888"; ctx.lineWidth = 2.5;
   ctx.lineCap = "round";
@@ -531,7 +531,7 @@ function drawBike(x, y, glowColor, isBoosting) {
   ctx.lineTo(x + 13, frontWheelY + 14);
   ctx.stroke();
 
-  // â”€â”€ Rider helmet â”€â”€
+  // ── Rider helmet ──
   ctx.shadowBlur = 8; ctx.shadowColor = glowColor;
   ctx.fillStyle = "#111";
   ctx.beginPath(); ctx.arc(x, y - bh*0.10, 8, 0, Math.PI*2); ctx.fill();
@@ -540,7 +540,7 @@ function drawBike(x, y, glowColor, isBoosting) {
   ctx.beginPath(); ctx.ellipse(x, y - bh*0.12, 5, 2.5, 0, 0, Math.PI*2); ctx.fill();
   ctx.globalAlpha = 1;
 
-  // â”€â”€ Exhaust flame (boost only) â”€â”€
+  // ── Exhaust flame (boost only) ──
   if (isBoosting) {
     const flicker = Math.random() * 6;
     const grad = ctx.createLinearGradient(x, rearWheelY + 10, x, rearWheelY + 28 + flicker);
@@ -561,7 +561,7 @@ function drawBike(x, y, glowColor, isBoosting) {
   ctx.restore();
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ SPAWN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── SPAWN ──────────────────
 let spawnTimer = 0;
 let pickupTimer = 0;
 
@@ -576,7 +576,7 @@ function spawnPickup() {
   state.pickups.push({ lane, y: -40, type: "coin" });
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ COLLISION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── COLLISION ──────────────────
 function checkCollisions() {
   const px = state.playerX;
   const py = H - 110;
@@ -627,7 +627,7 @@ function spawnPickupParticle(x, y, type) {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ DRAW PICKUPS & OBSTACLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── DRAW PICKUPS & OBSTACLES ──────────────────
 function drawPickups() {
   state.pickups.forEach(pk => {
     const x = LANES[pk.lane], y = pk.y;
@@ -635,7 +635,7 @@ function drawPickups() {
     ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI*2);
     ctx.fillStyle = "#ffd700"; ctx.shadowBlur=12; ctx.shadowColor="#ffd700"; ctx.fill();
     ctx.fillStyle="#fff"; ctx.font="bold 9px sans-serif"; ctx.textAlign="center";
-    ctx.fillText("â—ˆ", x, y+3);
+    ctx.fillText("◈", x, y+3);
     ctx.shadowBlur=0; ctx.restore();
   });
 }
@@ -671,7 +671,7 @@ function drawParticles() {
   });
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ QUESTION LINE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── QUESTION LINE ──────────────────
 function drawQuestionLine() {
   if (!state.questionLine) return;
   const y = state.questionLine.y;
@@ -696,13 +696,13 @@ function drawQuestionLine() {
   ctx.moveTo(ROAD_L, y); ctx.lineTo(ROAD_R, y);
   ctx.stroke();
 
-  // Chevrons pointing at player (downward â–¼)
+  // Chevrons pointing at player (downward ▼)
   ctx.shadowBlur = 14; ctx.shadowColor = "#ffcc00";
   ctx.fillStyle = `rgba(255,200,0,${pulse})`;
   ctx.font = "bold 13px Orbitron, sans-serif";
   ctx.textAlign = "center";
   [LANES[0], LANES[1], LANES[2]].forEach(lx => {
-    ctx.fillText("â–¼", lx, y + 16);
+    ctx.fillText("▼", lx, y + 16);
   });
 
   // Label
@@ -715,12 +715,12 @@ function drawQuestionLine() {
   ctx.restore();
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ DISTANCE METER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── DISTANCE METER ──────────────────
 // Shows progress to the next question zone (resets each 1500m segment)
 function drawDistanceMeter() {
   const segStart = state.nextLineDist - 1500;
   const pct = state.questionLine
-    ? 1                                                   // line on screen â€” full
+    ? 1                                                   // line on screen — full
     : Math.min(1, (state.distance - segStart) / 1500);
 
   ctx.fillStyle = "rgba(255,200,0,0.08)";
@@ -731,7 +731,7 @@ function drawDistanceMeter() {
   ctx.shadowBlur = 0;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ MAIN LOOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── MAIN LOOP ──────────────────
 let raf;
 
 function update() {
@@ -748,7 +748,7 @@ function update() {
       Math.floor(state.distance) === 3000 || Math.floor(state.distance) === 5000) {
     if (!state["milestone_"+Math.floor(state.distance)]) {
       state["milestone_"+Math.floor(state.distance)] = true;
-      showFlash("ðŸŽ¯ " + Math.floor(state.distance) + "m REACHED!", "#00ccff");
+      showFlash("🎯 " + Math.floor(state.distance) + "m REACHED!", "#00ccff");
     }
   }
 
@@ -825,7 +825,7 @@ function loop() {
   raf = requestAnimationFrame(loop);
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CHECKPOINT SYSTEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── CHECKPOINT SYSTEM ──────────────────
 const CP_TIMER_SECS = 7;
 let cpQuestions, cpIndex, cpCorrect, cpTimerInterval;
 
@@ -885,12 +885,12 @@ function cpAnswer(idx) {
     if (idx >= 0) document.getElementById("cpa-"+idx).classList.add("cp-correct");
     cpCorrect++;
     res.className = "cp-result good";
-    res.textContent = "âœ“ Correct!";
+    res.textContent = "✓ Correct!";
   } else {
     if (idx >= 0) document.getElementById("cpa-"+idx).classList.add("cp-wrong");
     document.getElementById("cpa-"+q.ans).classList.add("cp-correct");
     res.className = "cp-result bad";
-    res.textContent = "âœ— Wrong.";
+    res.textContent = "✗ Wrong.";
   }
   cpIndex++;
   setTimeout(loadCPQuestion, 900);
@@ -904,7 +904,7 @@ function finishCheckpoint() {
   if (cpCorrect === 3) {
     state.boosting = 210;                        // ~3.5s speed boost
     state.gap = Math.max(0, state.gap - 20);
-    showFlash("PERFECT! SPEED BOOST ACTIVATED! ðŸ”¥", "#00ff80");
+    showFlash("PERFECT! SPEED BOOST ACTIVATED! 🔥", "#00ff80");
   } else if (cpCorrect === 2) {
     state.gap = Math.max(0, state.gap - 12);
     showFlash("Good! Gap reduced.", "#00ccff");
@@ -933,7 +933,7 @@ function showFlash(msg, color) {
   setTimeout(() => div.remove(), 1600);
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ END GAME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── END GAME ──────────────────
 function endGame(win) {
   state.running = false;
   cancelAnimationFrame(raf);
@@ -967,19 +967,19 @@ function endGame(win) {
   const ps2 = getPlayerState();
   const bestDist = ps2.highestDistance || 0;
   const isNewBest = Math.floor(state.distance) > bestDist;
-  rewards.textContent = "+" + coins + " coins  â€¢  " + Math.floor(state.distance) + "m" +
-    (isNewBest ? " ðŸ† NEW BEST!" : " (best: " + bestDist + "m)") + "  â€¢  +" + xp + " XP";
+  rewards.textContent = "+" + coins + " coins  •  " + Math.floor(state.distance) + "m" +
+    (isNewBest ? " 🏆 NEW BEST!" : " (best: " + bestDist + "m)") + "  •  +" + xp + " XP";
   ov.classList.add("show");
 }
 
-// â”€â”€ MOBILE BUTTON HANDLER â”€â”€
+// ── MOBILE BUTTON HANDLER ──
 function mobileMove(dir) {
   if (!state.running || state.paused) return;
   if (dir === -1 && state.playerLane > 0) { state.playerLane--; state.targetX = LANES[state.playerLane]; }
   if (dir ===  1 && state.playerLane < 2) { state.playerLane++; state.targetX = LANES[state.playerLane]; }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ INPUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── INPUT ──────────────────
 document.addEventListener("keydown", e => {
   if (!state.running || state.paused) return;
   if (e.key === "p" || e.key === "P") {
@@ -1005,12 +1005,12 @@ canvas.addEventListener("touchend", e => {
   }
 }, {passive:true});
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ STYLE FOR FLASH ANIM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── STYLE FOR FLASH ANIM ──────────────────
 const style = document.createElement("style");
 style.textContent = "@keyframes fadeOut { 0%{opacity:1;transform:translate(-50%,-50%) scale(1)} 70%{opacity:1} 100%{opacity:0;transform:translate(-50%,-60%) scale(0.95)} }";
 document.head.appendChild(style);
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ START â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ────────────────── START ──────────────────
 function startGame() {
   const ps = getPlayerState();
   if (!ps || ps.hearts <= 0) {
@@ -1028,8 +1028,8 @@ function startGame() {
 }
 
 startGame();
-/* Ã‚Â© 2026 PhishForce Ã¢â‚¬â€ Coventry University BSc Computing Science */
-/* Ã‚Â© 2026 PhishForce Ã¢â‚¬â€ Coventry University BSc Computing Science */
+/* © 2026 PhishForce — Coventry University BSc Computing Science */
+/* © 2026 PhishForce — Coventry University BSc Computing Science */
 </script>
 </body>
 </html>
