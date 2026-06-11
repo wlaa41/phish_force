@@ -396,7 +396,7 @@ canvas {
 
       <div style="font-size:9px;color:#666;letter-spacing:2px;">COINS</div>
 
-      <div class="hud-val coins">â—ˆ <span id="hud-coins" title="Coins earned this run — spend them on hints in Intel Mission">0</span></div>
+      <div class="hud-val coins">&#9672; <span id="hud-coins" title="Coins earned this run — spend them on hints in Intel Mission">0</span></div>
 
     </div>
 
@@ -706,7 +706,7 @@ function updateHUD() {
 
   document.getElementById("hud-coins").textContent   = state.coins;
 
-  document.getElementById("hud-hearts").textContent  = "â™¥".repeat(Math.max(0, state.hearts));
+  document.getElementById("hud-hearts").textContent  = "♥".repeat(Math.max(0, state.hearts));
 
   document.getElementById("gap-fill").style.width    = state.gap + "%";
 
@@ -1234,7 +1234,7 @@ function drawPickups() {
 
     ctx.fillStyle="#fff"; ctx.font="bold 9px sans-serif"; ctx.textAlign="center";
 
-    ctx.fillText("â—ˆ", x, y+3);
+    ctx.fillText("◈", x, y+3);
 
     ctx.shadowBlur=0; ctx.restore();
 
@@ -1368,7 +1368,7 @@ function drawQuestionLine() {
 
   [LANES[0], LANES[1], LANES[2]].forEach(lx => {
 
-    ctx.fillText("â–¼", lx, y + 16);
+    ctx.fillText("◈", lx, y + 16);
 
   });
 
@@ -1772,7 +1772,7 @@ function finishCheckpoint() {
 
     state.gap = Math.max(0, state.gap - 20);
 
-    showFlash("PERFECT! SPEED BOOST ACTIVATED! ðŸ”¥", "#00ff80");
+    showFlash("PERFECT! SPEED BOOST ACTIVATED! ", "#00ff80");
 
   } else if (cpCorrect === 2) {
 
@@ -1900,7 +1900,7 @@ function endGame(win) {
 
   rewards.textContent = "+" + coins + " coins  â€¢  " + Math.floor(state.distance) + "m" +
 
-    (isNewBest ? " ðŸ† NEW BEST!" : " (best: " + bestDist + "m)") + "  â€¢  +" + xp + " XP";
+    (isNewBest ? " ***  NEW BEST!" : " (best: " + bestDist + "m)") + "  â€¢  +" + xp + " XP";
 
   ov.classList.add("show");
 
