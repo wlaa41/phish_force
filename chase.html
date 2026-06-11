@@ -1452,17 +1452,13 @@ function update() {
 
   // Milestone celebrations
 
-  if (Math.floor(state.distance) === 1000 || Math.floor(state.distance) === 2000 ||
+  const mCheck = Math.floor(state.distance / 1000);
 
-      Math.floor(state.distance) === 3000 || Math.floor(state.distance) === 5000) {
+  if (mCheck > 0 && !state["milestone_" + mCheck]) {
 
-    if (!state["milestone_"+Math.floor(state.distance)]) {
+    state["milestone_" + mCheck] = true;
 
-      state["milestone_"+Math.floor(state.distance)] = true;
-
-      showFlash("ðŸŽ¯ " + Math.floor(state.distance) + "m REACHED!", "#00ccff");
-
-    }
+    showMilestone(mCheck * 1000);
 
   }
 
@@ -1830,6 +1826,32 @@ function showFlash(msg, color) {
 
 
 
+function showMilestone(meters) {
+
+  const div = document.createElement(“div”);
+
+  div.innerHTML = `<div style=”font-size:9px;letter-spacing:3px;opacity:0.8;margin-bottom:4px;”>DISTANCE REACHED</div>
+    <div style=”font-size:22px;font-weight:900;letter-spacing:2px;”>${meters}m</div>
+    <div style=”font-size:9px;letter-spacing:2px;margin-top:4px;opacity:0.7;”>KEEP RIDING &#9650;</div>`;
+
+  div.style.cssText = `
+    position:absolute;top:22%;left:50%;transform:translate(-50%,-50%) scale(0.6);
+    z-index:16;padding:14px 28px;
+    background:linear-gradient(135deg,rgba(0,0,0,0.92),rgba(20,0,40,0.92));
+    border:2px solid #00ccff;border-radius:12px;
+    color:#00ccff;text-align:center;pointer-events:none;
+    box-shadow:0 0 24px rgba(0,204,255,0.5);
+    font-family:'Orbitron',sans-serif;
+    animation:milestoneIn 0.3s forwards, fadeOut 1.2s 1.4s forwards;`;
+
+  document.getElementById(“game-wrap”).appendChild(div);
+
+  setTimeout(() => div.remove(), 2800);
+
+}
+
+
+
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ END GAME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function endGame(win) {
@@ -1898,9 +1920,9 @@ function endGame(win) {
 
   const isNewBest = Math.floor(state.distance) > bestDist;
 
-  rewards.textContent = "+" + coins + " coins  â€¢  " + Math.floor(state.distance) + "m" +
+  rewards.innerHTML = "+" + coins + " coins &nbsp;&#8226;&nbsp; " + Math.floor(state.distance) + "m" +
 
-    (isNewBest ? " ***  NEW BEST!" : " (best: " + bestDist + "m)") + "  â€¢  +" + xp + " XP";
+    (isNewBest ? " <b>&#11088; NEW BEST!</b>" : " (best: " + bestDist + "m)") + " &nbsp;&#8226;&nbsp; +" + xp + " XP";
 
   ov.classList.add("show");
 
@@ -1978,7 +2000,7 @@ canvas.addEventListener("touchend", e => {
 
 const style = document.createElement("style");
 
-style.textContent = "@keyframes fadeOut { 0%{opacity:1;transform:translate(-50%,-50%) scale(1)} 70%{opacity:1} 100%{opacity:0;transform:translate(-50%,-60%) scale(0.95)} }";
+style.textContent = "@keyframes fadeOut { 0%{opacity:1;transform:translate(-50%,-50%) scale(1)} 70%{opacity:1} 100%{opacity:0;transform:translate(-50%,-60%) scale(0.95)} } @keyframes milestoneIn { from{opacity:0;transform:translate(-50%,-50%) scale(0.6)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }";
 
 document.head.appendChild(style);
 
