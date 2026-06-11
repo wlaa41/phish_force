@@ -196,10 +196,10 @@ html, body {
   flex:1;
   padding:18px 20px 20px;
   background:#f7f7f9;
-  display:flex; flex-direction:column; gap:10px;
+  display:flex; flex-direction:column; justify-content:center; gap:12px;
 }
 .s-body {
-  color:#222; font-size:15px; line-height:1.75;
+  color:#222; font-size:17px; line-height:1.8;
   font-family:'Rajdhani',sans-serif; font-weight:700;
 }
 .s-link {
@@ -261,19 +261,19 @@ html, body {
 /* URL / call body — full-card centered content */
 .scenario-info-card {
   flex:1; padding:24px 22px;
-  background:rgba(5,0,15,0.85);
-  display:flex; flex-direction:column; justify-content:center; gap:14px;
+  background:#f7f7f9;
+  display:flex; flex-direction:column; justify-content:center; gap:16px;
 }
 .info-line {
-  font-size:15px; line-height:1.7; color:#ddd;
+  font-size:17px; line-height:1.75; color:#333;
   font-family:'Rajdhani',sans-serif; font-weight:700;
 }
-.info-line.highlight { color:#ffcc00; font-size:17px; }
+.info-line.highlight { color:#b36200; font-size:18px; font-weight:900; }
 .info-link-pill {
   display:inline-block; margin-top:4px;
   padding:8px 16px; border-radius:8px;
-  background:rgba(0,200,255,0.1); color:#00ccff;
-  border:1px solid rgba(0,200,255,0.35);
+  background:rgba(0,100,200,0.1); color:#1a73e8;
+  border:1px solid rgba(0,100,200,0.25);
   font-size:13px; font-family:'Rajdhani',sans-serif; font-weight:800;
   word-break:break-all;
 }
@@ -945,28 +945,39 @@ function loadQuestion(){
   const fields=document.getElementById("scenario-fields");
   const sc=document.getElementById("scenario-content");
   fields.innerHTML=""; sc.innerHTML="";
+  fields.style.display=""; // reset in case previous question hid it
 
-  if(q.bg==="email"){
+  const isRealEmail = q.bg==="email" && q.scenario[0] && /^FROM:/i.test(q.scenario[0]);
+
+  if(isRealEmail){
     // Render as real email client: FROM / SUBJECT rows, then body
     q.scenario.forEach((line,i)=>{
       if(i===0){
-        // Strip leading "FROM: " prefix if present — label already shows it
         const val=line.replace(/^FROM:\s*/i,"");
         fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">FROM</span><span class="s-from">${val}</span></div>`;
       } else if(i===1){
-        // Strip leading "SUBJECT: " prefix if present
         const val=line.replace(/^SUBJECT:\s*/i,"");
         fields.innerHTML+=`<div class="s-field-row"><span class="s-field-label">SUBJECT</span><span class="s-subj">${val}</span></div>`;
       } else if(line.startsWith("[")){
         const d=document.createElement("div");
         d.className="s-link";
-        d.textContent=line.replace(/^\[|\]$/g,""); // strip [ ]
+        d.textContent=line.replace(/^\[|\]$/g,"");
         sc.appendChild(d);
       } else {
         const d=document.createElement("div");
         d.className="s-body"; d.textContent=line; sc.appendChild(d);
       }
     });
+  } else if(q.bg==="email"){
+    // email bg but no FROM/SUBJECT format — render as plain body text
+    fields.style.display="none";
+    sc.innerHTML=`<div class="scenario-info-card">${
+      q.scenario.map(line=>
+        line.startsWith("[")
+          ? `<div class="info-link-pill">${line.replace(/^\[|\]$/g,"")}</div>`
+          : `<div class="info-line">${line}</div>`
+      ).join("")
+    }</div>`;
   } else if(q.bg==="sms"){
     fields.style.display="none";
     // SMS bubble UI
