@@ -140,18 +140,17 @@ canvas { display:block; width:100%; height:100%; }
 .back-link:hover { color:#b300ff; }
 
 /* mobile controls */
-#mobile-controls {
-  position:absolute; bottom:60px; left:50%; transform:translateX(-50%);
-  display:flex; gap:22px; z-index:10; pointer-events:all;
-}
+#mobile-controls { display:none; /* positioned individually */ }
 .mob-btn {
-  width:64px; height:64px; border-radius:50%;
-  background:rgba(0,0,0,0.7);
+  position:absolute; bottom:50px;
+  width:70px; height:70px; border-radius:50%;
+  background:rgba(0,0,0,0.72);
   display:flex; align-items:center; justify-content:center;
-  font-size:26px; cursor:pointer; user-select:none; -webkit-user-select:none;
+  font-size:28px; cursor:pointer; user-select:none; -webkit-user-select:none;
+  z-index:10; pointer-events:all;
 }
-.mob-btn.left  { border:1.5px solid rgba(179,0,255,0.5); color:#b300ff; box-shadow:0 0 14px rgba(179,0,255,0.3); }
-.mob-btn.right { border:1.5px solid rgba(0,200,255,0.5); color:#00ccff; box-shadow:0 0 14px rgba(0,200,255,0.3); }
+.mob-btn.left  { left:24px;  border:1.5px solid rgba(179,0,255,0.55); color:#b300ff; box-shadow:0 0 16px rgba(179,0,255,0.35); }
+.mob-btn.right { right:24px; border:1.5px solid rgba(0,200,255,0.55); color:#00ccff; box-shadow:0 0 16px rgba(0,200,255,0.35); }
 </style>
 </head>
 <body>
@@ -197,11 +196,9 @@ canvas { display:block; width:100%; height:100%; }
     <div class="cp-result" id="cp-result"></div>
   </div>
 
-  <!-- MOBILE CONTROLS -->
-  <div id="mobile-controls">
-    <div class="mob-btn left"  ontouchstart="mobileMove(-1)" onclick="mobileMove(-1)">◀</div>
-    <div class="mob-btn right" ontouchstart="mobileMove(1)"  onclick="mobileMove(1)">▶</div>
-  </div>
+  <!-- MOBILE CONTROLS — pinned to bottom corners -->
+  <div class="mob-btn left"  ontouchstart="mobileMove(-1)" onclick="mobileMove(-1)">◀</div>
+  <div class="mob-btn right" ontouchstart="mobileMove(1)"  onclick="mobileMove(1)">▶</div>
 
   <!-- END OVERLAY -->
   <div class="end-overlay" id="end-overlay">
@@ -284,11 +281,12 @@ window.addEventListener("resize", () => { resizeCanvas(); });
 
 // Perspective constants
 const HORIZ_FRAC  = 0.40;   // horizon at 40% from top
-const ROAD_NEAR_W = 0.88;   // road width fraction at bottom of screen
-const ROAD_FAR_W  = 28;     // road width in px at horizon
+const ROAD_NEAR_W = 0.98;   // road width fraction at bottom of screen
+const ROAD_FAR_W  = 24;     // road width in px at horizon
 
 // Lane center positions as fraction of road half-width (-1 to 1)
-const LANE_FX = [-0.58, 0, 0.58];
+// Kept narrow so the bike stays near center for a behind-rider feel
+const LANE_FX = [-0.30, 0, 0.30];
 
 // Project a road object to screen
 // depth  : 0 = at horizon (far), 1 = at player (near, bottom)
